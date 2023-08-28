@@ -23,7 +23,7 @@ jobs:
           native-image-job-reports: 'true'
 
       - name: Data Ingestion CLI Native Image build using gradle
-        run: gradlew nativeCompile
+        run: ./gradlew nativeCompile
 #
 #      - name: Data Ingestion CLI Build using Gradle
 #        run: gradlew nativeCompile
