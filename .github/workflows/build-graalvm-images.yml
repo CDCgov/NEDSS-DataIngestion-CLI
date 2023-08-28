@@ -31,5 +31,5 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          name: dataingestion-cli-image-${{ matrix.os }}
-          path: dataingestion-cli-binary-images/
+          name: NEDSS-DataIngestion-CLI-${{ matrix.os }}
+          path: build/native/nativeCompile/
