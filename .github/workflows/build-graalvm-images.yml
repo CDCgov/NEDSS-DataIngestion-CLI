@@ -1,0 +1,35 @@
+name: CLI GraalVM Native Image builds
+#on: [push, pull_request]
+on:
+  push:
+    branches: ["CNDIT-538-dataingestion-cli"]
+  pull_request:
+    branches: ["CNDIT-538-dataingestion-cli"]
+jobs:
+  build:
+    name: Data Ingestion CLI build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '17.0.7'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-job-reports: 'true'
+
+      - name: Data Ingestion CLI Native Image build using gradle
+        run: gradlew nativeCompile
+#
+#      - name: Data Ingestion CLI Build using Gradle
+#        run: gradlew nativeCompile
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: dataingestion-cli-${{ matrix.os }}
+          path: cli-binary-images*

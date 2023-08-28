@@ -57,7 +57,9 @@ class AuthUtilTest {
         Properties propertiesMock = propUtilMock.loadPropertiesFile();
         serviceEndpoint = propertiesMock.getProperty("service.reportsEndpoint");
         authModelMock.setAdminUser(System.getenv("ADMIN_USERNAME"));
+        System.err.println("Admin user name is..." + authModelMock.getAdminUser());
         authModelMock.setAdminPassword(System.getenv("ADMIN_PASSWORD").toCharArray());
+        System.err.println("Admin pass is..." + authModelMock.getAdminPassword());
     }
 
     @AfterEach

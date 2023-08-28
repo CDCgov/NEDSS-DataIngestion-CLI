@@ -23,6 +23,7 @@ repositories {
 }
 
 graalvmNative {
+    // toolchainDetection = true
     binaries.all {
         resources.autodetect()
     }
