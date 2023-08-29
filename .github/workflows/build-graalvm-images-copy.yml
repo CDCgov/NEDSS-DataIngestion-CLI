@@ -35,9 +35,9 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+#    strategy:
+#      matrix:
+#        os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
@@ -60,7 +60,7 @@ jobs:
         run: |
           ls
           pwd
-          chmod 777 -R /Users/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
+          chmod 777 -R ./work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
           chmod 777 -R build/native/nativeCompile
 
 #      - if: matrix.os == 'windows-latest'
@@ -85,8 +85,8 @@ jobs:
           asset_content_type: application/octet-stream
           upload_url: ${{ needs.create_release.outputs.upload_url }}
 
-      - name: Archive binary image asset
-        uses: actions/upload-artifact@v3
-        with:
-          name: NEDSS-DataIngestion-CLI
-          path: build/native/nativeCompile/
+#      - name: Archive binary image asset
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: NEDSS-DataIngestion-CLI
+#          path: build/native/nativeCompile/

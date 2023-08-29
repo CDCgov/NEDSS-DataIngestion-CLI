@@ -74,5 +74,5 @@ jobs:
       - name: Archive binary image asset
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI
+          name: NEDSS-DataIngestion-CLI-${{ matrix.os }}
           path: build/native/nativeCompile/
