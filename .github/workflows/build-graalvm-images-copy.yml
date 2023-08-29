@@ -35,7 +35,7 @@ jobs:
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
 
       - name: Get current date and time
-        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create-release
