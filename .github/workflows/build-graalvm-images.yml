@@ -51,7 +51,7 @@ jobs:
           ls dataingestion-cli-binary-images/${{ matrix.os }}
 
       - if: matrix.os == 'windows-latest'
-        name: Copy linux binary image to destination folder
+        name: Copy windows binary image to destination folder
         run: |
           ls
           mkdir -p dataingestion-cli-binary-images/${{ matrix.os }}
@@ -69,12 +69,19 @@ jobs:
 #          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip
 #          ls
 #
-#      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
-#      - name: Compress zip file in unix/linux
+#      - if: matrix.os == 'ubuntu-latest'
+#        name: Compress zip file in unix/linux
 #        run: |
 #          ls
-#          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip dataingestion-cli-binary-images
-#          ls
+#          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip dataingestion-cli-binary-images
+#          ls dataingestion-cli-binary-images/
+
+      - if: matrix.os == 'macos-latest'
+        name: Compress zip file for macos
+        run: |
+          ls
+          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip dataingestion-cli-binary-images
+          ls dataingestion-cli-binary-images/
 #
 ##      - name: Zip the CLI Folder
 ##        run: |
@@ -97,15 +104,15 @@ jobs:
 #        name: Archive binary image asset for linux
 #        uses: actions/upload-artifact@v3
 #        with:
-#          name: NEDSS-DataIngestion-CLI-linux
-#          path: build/native/nativeCompile
+#          name: NEDSS-DataIngestion-CLI-linux.zip
+#          path: dataingestion-cli-binary-images/
 
       - if: matrix.os == 'macos-latest'
         name: Archive binary image asset for macos
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI-macos
-          path: dataingestion-cli-binary-images/${{ matrix.os }}/
+          name: NEDSS-DataIngestion-CLI-macos.zip
+          path: dataingestion-cli-binary-images/
 
 #      - if: matrix.os == 'windows-latest'
 #        name: Archive binary image asset for windows
