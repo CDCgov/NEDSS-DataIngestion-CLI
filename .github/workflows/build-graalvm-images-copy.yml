@@ -38,12 +38,12 @@ jobs:
         os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          java-version: '17.0.7'
-          distribution: 'graalvm'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          native-image-job-reports: 'true'
+#      - uses: graalvm/setup-graalvm@v1
+#        with:
+#          java-version: '17.0.7'
+#          distribution: 'graalvm'
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          native-image-job-reports: 'true'
 
 #      - name: CLI Native Image build using gradle
 #        run: ./gradlew nativeCompile
@@ -61,6 +61,7 @@ jobs:
         with:
           asset_path: build/native/nativeCompile/
           asset_name: NEDSS-DataIngestion-CLI*
+          asset_content_type: application/octet-stream
           upload_url: ${{ needs.create_release.outputs.upload_url }}
 
 #      - name: Archive binary image asset
