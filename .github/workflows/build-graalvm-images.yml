@@ -38,10 +38,25 @@ jobs:
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
 
-      - name: Zip CLI
+      - name: Zip CLI on Ubuntu
         if: ${{ matrix.os }} == 'ubuntu-latest'
         run: |
-          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+          ls
+          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+          ls
+
+      - name: Zip CLI on Ubuntu
+        if: ${{ matrix.os }} == 'macos-latest'
+        run: |
+          ls
+          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+          ls
+
+      - name: Zip CLI on Ubuntu
+        if: ${{ matrix.os }} == 'windows-latest'
+        run: |
+          ls
+          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI.exe
           ls
 
       - name: Get current date and time
