@@ -56,6 +56,11 @@ jobs:
           echo "${{ github.event.release.upload_url }}"
           echo "${{ needs.create_release.outputs.upload_url }}"
 
+      - name: Run ls & pwd
+        run: |
+          ls
+          pwd
+
       - if: matrix.os == 'windows-latest'
 #      - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
@@ -82,4 +87,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: NEDSS-DataIngestion-CLI
-          path: ./build/native/nativeCompile/
+          path: build/native/nativeCompile/

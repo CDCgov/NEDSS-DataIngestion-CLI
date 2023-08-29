@@ -30,44 +30,46 @@ jobs:
       - name: CLI Native Image build using gradle
         run: ./gradlew nativeCompile
 
-      - name: Copy binary image to destination folder
-        run: |
-          ls
-          mkdir -p dataingestion-cli-binary-images/${{ matrix.os }}
-          pwd
-          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
-          ls dataingestion-cli-binary-images
-
-      - name: Get current date and time
-        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
-
-      - if: matrix.os == 'windows-latest'
-        run: |
-          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip
-          ls
-
-      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
-        run: |
-          ls
-          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip dataingestion-cli-binary-images
-          ls
-
-#      - name: Zip the CLI Folder
+#      - name: Copy binary image to destination folder
 #        run: |
 #          ls
-#          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}--${{ env.DATE }}.zip dataingestion-cli-binary-images
+#          mkdir -p dataingestion-cli-binary-images/${{ matrix.os }}
+#          pwd
+#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
+#          ls dataingestion-cli-binary-images
+#
+#      - name: Get current date and time
+#        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+#
+#      - if: matrix.os == 'windows-latest'
+#      - name: Compress zip file in windows
+#        run: |
+#          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip
 #          ls
-
-      - name: Upload the image generated to the repository (branch - native-built-cli-images)
-        run: |
-          git fetch
-          git checkout native-built-cli-images
-          git status
-          git config user.name "Github Actions"
-          git config user.email "actions@users.noreply.github.com"
-          git add dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip
-          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ env.DATE_TIME }}"
-          git push
+#
+#      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
+#      - name: Compress zip file in unix/linux
+#        run: |
+#          ls
+#          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip dataingestion-cli-binary-images
+#          ls
+#
+##      - name: Zip the CLI Folder
+##        run: |
+##          ls
+##          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}--${{ env.DATE }}.zip dataingestion-cli-binary-images
+##          ls
+#
+#      - name: Upload the image generated to the repository (branch - native-built-cli-images)
+#        run: |
+#          git fetch
+#          git checkout native-built-cli-images
+#          git status
+#          git config user.name "Github Actions"
+#          git config user.email "actions@users.noreply.github.com"
+#          git add dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}-${{ env.DATE_TIME }}.zip
+#          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ env.DATE_TIME }}"
+#          git push
 
       - name: Archive binary image asset
         uses: actions/upload-artifact@v3
