@@ -41,7 +41,7 @@ jobs:
       - name: Zip CLI
         run: |
           ls
-          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}.zip dataingestion-cli-binary-images
+          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}--${{ env.DATE }}.zip dataingestion-cli-binary-images
           ls
 
       - name: Get current date and time
@@ -54,7 +54,7 @@ jobs:
           git status
           git config user.name "Github Actions"
           git config user.email "actions@users.noreply.github.com"
-          git add dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}.zip
+          git add dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}--${{ env.DATE }}.zip
           git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ env.DATE }}"
           git push
 
