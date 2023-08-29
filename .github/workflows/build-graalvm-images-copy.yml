@@ -4,11 +4,11 @@ on:
   push:
     branches: ["CNDIT-538-dataingestion-cli"]
     tags:
-      - '*'
+    - '*'
   pull_request:
     branches: ["CNDIT-538-dataingestion-cli"]
     tags:
-      - '*'
+    - '*'
 jobs:
   create-release:
     runs-on: ubuntu-latest
