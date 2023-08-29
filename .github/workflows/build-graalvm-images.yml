@@ -38,26 +38,25 @@ jobs:
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
 
-      - name: Zip CLI on Ubuntu
-        if: ${{ matrix.os }} == 'ubuntu-latest'
+      - name: Zip CLI
         run: |
           ls
-          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images
           ls
 
-      - name: Zip CLI on Mac OS
-        if: ${{ matrix.os }} == 'macos-latest'
-        run: |
-          ls
-          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
-          ls
-
-      - name: Zip CLI on Windows
-        if: ${{ matrix.os }} == 'windows-latest'
-        run: |
-          ls
-          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI.exe
-          ls
+#      - name: Zip CLI on Mac OS
+#        if: ${{ matrix.os }} == 'macos-latest'
+#        run: |
+#          ls
+#          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+#          ls
+#
+#      - name: Zip CLI on Windows
+#        if: ${{ matrix.os }} == 'windows-latest'
+#        run: |
+#          ls
+#          zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI.exe
+#          ls
 
       - name: Get current date and time
         run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
