@@ -10,24 +10,24 @@ on:
     tags:
       - 'v*'
 jobs:
-  create_release:
-    name: Create release
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-      - name: Get current date and time
-        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
-          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ env.DATE_TIME }}
-          draft: false
-          prerelease: false
+#  create_release:
+#    name: Create release
+#    runs-on: ubuntu-latest
+#    outputs:
+#      upload_url: ${{ steps.create_release.outputs.upload_url }}
+#    steps:
+#      - name: Get current date and time
+#        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+#      - name: Create release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
+#          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ env.DATE_TIME }}
+#          draft: false
+#          prerelease: false
 
   build:
     name: Data Ingestion CLI build on ${{ matrix.os }}
