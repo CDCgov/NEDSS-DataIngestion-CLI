@@ -62,8 +62,6 @@ jobs:
           ls
           mkdir -p dataingestion-cli-binary-images
           pwd
-#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux dataingestion-cli-binary-images/
-          ls dataingestion-cli-binary-images
   
 
 #      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
@@ -71,7 +69,7 @@ jobs:
         run: |
           ls
           zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux
-          ls dataingestion-cli-binary-images/
+          ls dataingestion-cli-binary-images
 
       - name: Run ls & pwd
         run: |
