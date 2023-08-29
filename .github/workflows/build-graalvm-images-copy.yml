@@ -11,11 +11,11 @@ on:
       - 'v*'
 jobs:
   build:
-    name: Data Ingestion CLI build on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+    name: Data Ingestion CLI build on macos-latest
+    runs-on: macos-latest
+#    strategy:
+#      matrix:
+#        os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
@@ -44,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
-          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ env.DATE_TIME }}
+          release_name: Release ${{ github.ref_name }}-macos-latest-${{ env.DATE_TIME }}
           draft: false
           prerelease: false
 
