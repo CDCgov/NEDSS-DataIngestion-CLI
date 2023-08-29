@@ -38,6 +38,12 @@ jobs:
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
 
+      - name: Zip CLI
+        if: ${{ matrix.os }} == 'ubuntu-latest'
+        run: |
+          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+          ls
+
       - name: Get current date and time
         run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
@@ -48,7 +54,7 @@ jobs:
           git status
           git config user.name "Github Actions"
           git config user.email "actions@users.noreply.github.com"
-          git add .
+          git add dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI.zip
           git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ env.DATE }}"
           git push
 
