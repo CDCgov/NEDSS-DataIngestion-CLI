@@ -12,6 +12,7 @@ on:
 jobs:
   create_release:
     name: Create release
+    permissions: write-all
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -94,6 +95,7 @@ jobs:
 #
 #      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
       - name: Upload Release Asset
+        run: ls
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
