@@ -31,10 +31,10 @@ jobs:
           name: NEDSS-DataIngestion-CLI-${{ matrix.os }}
           path: build/native/nativeCompile/
 
-      - name: Move binary image to destination folder
+      - name: Copy binary image to destination folder
         run: |
           mkdir -p dataingestion-cli-binary-images
-          mv $GITHUB_WORKSPACE/build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }} dataingestion-cli-binary-images/
+          cp build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }} dataingestion-cli-binary-images/
 
       - name: Upload the image generated to the repository (branch - native-built-cli-images)
         run: |
@@ -43,4 +43,5 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add dataingestion-cli-binary-images//NEDSS-DataIngestion-CLI-${{ matrix.os }}
           git commit -m "Upload GraalVM binary image for ${{ matrix.os }}"
-          git push origin native-built-cli-images
+          git branch --set-upstream-to=origin/main native-built-cli-images
+          git push
