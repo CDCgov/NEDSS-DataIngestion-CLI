@@ -51,8 +51,8 @@ jobs:
           git config user.name "Github Actions"
           git config user.email "actions@users.noreply.github.com"
           git add .
-          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ steps.date.outputs.datetime }}"
-          git branch --set-upstream-to=origin/main native-built-cli-images
+          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ steps.date.outputs.date }}"
+#          git branch --set-upstream-to=origin/main native-built-cli-images
           git push
 
       - name: Archive binary image asset

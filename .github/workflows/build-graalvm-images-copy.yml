@@ -25,8 +25,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
 
-      - name: CLI Native Image build using gradle
-        run: ./gradlew nativeCompile
+#      - name: CLI Native Image build using gradle
+#        run: ./gradlew nativeCompile
 
 #      - uses: actions/checkout@v3
       - name: GitHub Tag Name example
@@ -45,7 +45,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}-${{ steps.datetime.outputs.datetime }}
           release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ steps.datetime.outputs.datetime }}
           draft: false
           prerelease: false
