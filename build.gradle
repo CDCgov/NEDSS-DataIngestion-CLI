@@ -28,7 +28,7 @@ graalvmNative {
         resources.autodetect()
     }
     binaries.main {
-        // imageName.set("nbs-di-cli-" + System.getProperty('os.arch'))
+        imageName.set("NEDSS-DataIngestion-CLI-" + System.getProperty('os.arch'))
         debug = true
         verbose = true
         buildArgs.add("-H:+ReportExceptionStackTraces")

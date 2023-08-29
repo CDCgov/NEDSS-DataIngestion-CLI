@@ -72,16 +72,16 @@ jobs:
 #          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ env.DATE_TIME }}"
 #          git push
 
-      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
-        name: Archive binary image asset for linux/unix
+#      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
+      - name: Archive binary image asset for ${{ matrix.os }}
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI
-          path: dataingestion-cli-binary-images/${{ matrix.os }}
+          name: NEDSS-DataIngestion-CLI-*
+          path: build/native/nativeCompile
 
-      - if: matrix.os == 'windows-latest'
-        name: Archive binary image asset for windows
-        uses: actions/upload-artifact@v3
-        with:
-          name: NEDSS-DataIngestion-CLI.exe
-          path: dataingestion-cli-binary-images/${{ matrix.os }}
+#      - if: matrix.os == 'windows-latest'
+#        name: Archive binary image asset for windows
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: NEDSS-DataIngestion-CLI.exe
+#          path: dataingestion-cli-binary-images/${{ matrix.os }}
