@@ -61,7 +61,9 @@ jobs:
           ls
           pwd
           chmod 777 -R build/native/nativeCompile
-
+          chmod 777 -R /home/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
+#          /home/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
+#  /home/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
 #      - if: matrix.os == 'windows-latest'
 ##      - name: Upload Release Asset
 #        uses: actions/upload-release-asset@v1

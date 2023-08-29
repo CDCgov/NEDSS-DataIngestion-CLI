@@ -80,7 +80,7 @@ jobs:
           path: dataingestion-cli-binary-images/${{ matrix.os }}
 
       - if: matrix.os == 'windows-latest'
-        name: Archive binary image asset for linux/unix
+        name: Archive binary image asset for windows
         uses: actions/upload-artifact@v3
         with:
           name: NEDSS-DataIngestion-CLI.exe
