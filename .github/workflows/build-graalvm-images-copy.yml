@@ -35,9 +35,7 @@ jobs:
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
 
       - name: Get current date and time
-        id: datetime
-        run:
-          echo "::set-output name=datetime::$(date +'%Y-%m-%d-%H-%M-%S')"
+        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create-release
@@ -45,8 +43,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}-${{ steps.datetime.outputs.datetime }}
-          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ steps.datetime.outputs.datetime }}
+          tag_name: ${{ github.ref_name }}-$DATE_TIME
+          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-$DATE_TIME
           draft: false
           prerelease: false
 
@@ -55,7 +53,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: build/native/nativeCompile/
           asset_name: NEDSS-DataIngestion-CLI*
 
