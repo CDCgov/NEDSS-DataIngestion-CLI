@@ -35,7 +35,7 @@ jobs:
           ls
           mkdir -p dataingestion-cli-binary-images/${{ matrix.os }}
           pwd
-          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
 
       - name: Archive binary image asset
@@ -46,7 +46,8 @@ jobs:
 
       - name: Upload the image generated to the repository (branch - native-built-cli-images)
         run: |
-          git checkout native-built-cli-images
+          git fetch
+          git checkout origin/native-built-cli-images
           git status
           git config user.name "Github Actions"
           git config user.email "actions@users.noreply.github.com"

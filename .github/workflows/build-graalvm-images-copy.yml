@@ -4,30 +4,13 @@ on:
   push:
     branches: ["CNDIT-538-dataingestion-cli"]
     tags:
-    - '*'
+      - 'v*'
   pull_request:
     branches: ["CNDIT-538-dataingestion-cli"]
     tags:
-    - '*'
+      - 'v*'
 jobs:
-  create-release:
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create-release.outputs.upload_url }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Create Release
-        id: create-release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
   build:
-    needs: create-release
     name: Data Ingestion CLI build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -35,7 +18,6 @@ jobs:
         os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
-
       - uses: graalvm/setup-graalvm@v1
         with:
           java-version: '17.0.7'
@@ -46,14 +28,30 @@ jobs:
       - name: CLI Native Image build using gradle
         run: ./gradlew nativeCompile
 
+#      - uses: actions/checkout@v3
+      - name: GitHub Tag Name example
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+      - name: Create Release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: /build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }}
-          asset_name: NEDSS-DataIngestion-CLI-${{ matrix.os }}
+          asset_path: build/native/nativeCompile/
+          asset_name: NEDSS-DataIngestion-CLI*
 
 #
 #      - name: Copy binary image to destination folder
