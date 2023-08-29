@@ -39,9 +39,9 @@ jobs:
           ls dataingestion-cli-binary-images
 
       - name: Get current date and time
-        run: echo "DATE_TIME=$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_ENV
+        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
 
-      - if: {{ matrix.os }} == 'windows-latest'
+      - if: ${{ matrix.os }} == 'windows-latest'
         run: |
           Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}--${{ env.DATE_TIME }}.zip
           ls
