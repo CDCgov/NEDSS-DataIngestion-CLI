@@ -81,10 +81,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_path: build/native/nativeCompile/NEDSS-DataIngestion-CLI*
-          asset_name: NEDSS-DataIngestion-CLI*
+          asset_path: build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux
+          asset_name: NEDSS-DataIngestion-CLI-linux
           asset_content_type: application/octet-stream
           upload_url: ${{ needs.create_release.outputs.upload_url }}
+
+
 
 #      - name: Archive binary image asset
 #        uses: actions/upload-artifact@v3

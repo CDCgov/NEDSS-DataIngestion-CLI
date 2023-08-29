@@ -30,14 +30,14 @@ jobs:
       - name: CLI Native Image build using gradle
         run: ./gradlew nativeCompile
 
-      - name: Copy binary image to destination folder
-        run: |
-          ls
-          mkdir -p dataingestion-cli-binary-images/${{ matrix.os }}
-          pwd
-          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/${{ matrix.os }}
-          ls dataingestion-cli-binary-images
-          ls dataingestion-cli-binary-images/${{ matrix.os }}
+#      - name: Copy binary image to destination folder
+#        run: |
+#          ls
+#          mkdir -p dataingestion-cli-binary-images/${{ matrix.os }}
+#          pwd
+#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/${{ matrix.os }}
+#          ls dataingestion-cli-binary-images
+#          ls dataingestion-cli-binary-images/${{ matrix.os }}
 #
 #      - name: Get current date and time
 #        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
@@ -72,16 +72,23 @@ jobs:
 #          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ env.DATE_TIME }}"
 #          git push
 
-#      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
-      - name: Archive binary image asset for ${{ matrix.os }}
+      - if: matrix.os == 'ubuntu-latest'
+        name: Archive binary image asset for ${{ matrix.os }}
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI*
+          name: NEDSS-DataIngestion-CLI-linux
           path: build/native/nativeCompile
 
-#      - if: matrix.os == 'windows-latest'
-#        name: Archive binary image asset for windows
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: NEDSS-DataIngestion-CLI.exe
-#          path: dataingestion-cli-binary-images/${{ matrix.os }}
+      - if: matrix.os == 'macos-latest'
+        name: Archive binary image asset for ${{ matrix.os }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: NEDSS-DataIngestion-CLI-macos
+          path: build/native/nativeCompile
+
+      - if: matrix.os == 'windows-latest'
+        name: Archive binary image asset for windows
+        uses: actions/upload-artifact@v3
+        with:
+          name: NEDSS-DataIngestion-CLI-windows.exe
+          path: build/native/nativeCompile
