@@ -62,7 +62,7 @@ jobs:
           ls
           mkdir -p dataingestion-cli-binary-images
           pwd
-          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux dataingestion-cli-binary-images/
+#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
   
 
@@ -70,8 +70,8 @@ jobs:
       - name: Compress zip file in unix/linux
         run: |
           ls
-          zip NEDSS-DataIngestion-CLI-linux.zip build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux
-          ls
+          zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux
+          ls dataingestion-cli-binary-images/
 
       - name: Run ls & pwd
         run: |
@@ -95,16 +95,14 @@ jobs:
 #
 #      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
       - name: Upload Release Asset
-        run: ls
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_path: NEDSS-DataIngestion-CLI-linux.zip
+          asset_path: dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip
           asset_name: NEDSS-DataIngestion-CLI-linux.zip
           asset_content_type: application/zip
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-
 
 
 #      - name: Archive binary image asset
