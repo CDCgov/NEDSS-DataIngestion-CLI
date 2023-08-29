@@ -1,0 +1,82 @@
+name: CLI GraalVM Native Image builds
+#on: [push, pull_request]
+on:
+  push:
+    branches: ["CNDIT-538-dataingestion-cli"]
+  pull_request:
+    branches: ["CNDIT-538-dataingestion-cli"]
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create-release.outputs.upload_url }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+  build:
+    needs: create-release
+    name: Data Ingestion CLI build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '17.0.7'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-job-reports: 'true'
+
+      - name: CLI Native Image build using gradle
+        run: ./gradlew nativeCompile
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: /build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }}
+          asset_name: NEDSS-DataIngestion-CLI-${{ matrix.os }}
+
+#
+#      - name: Copy binary image to destination folder
+#        run: |
+#          mkdir -p dataingestion-cli-binary-images
+#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }} dataingestion-cli-binary-images/
+#          ls -ltr dataingestion-cli-binary-images
+#
+#      - name: Archive binary image asset
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: NEDSS-DataIngestion-CLI-${{ matrix.os }}
+#          path: build/native/nativeCompile/
+#
+#      - name: Copy binary image to destination folder
+#        run: |
+#          mkdir -p dataingestion-cli-binary-images
+#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }} dataingestion-cli-binary-images/
+#          ls -ltr dataingestion-cli-binary-images
+#
+#      - name: Upload the image generated to the repository (branch - native-built-cli-images)
+#        run: |
+#          git checkout native-built-cli-images
+#          git status
+#          git config user.name "Github Actions"
+#          git config user.email "actions@users.noreply.github.com"
+#          git add dataingestion-cli-binary-images//NEDSS-DataIngestion-CLI-${{ matrix.os }}
+#          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}"
+#          git branch --set-upstream-to=origin/main native-built-cli-images
+#          git push
