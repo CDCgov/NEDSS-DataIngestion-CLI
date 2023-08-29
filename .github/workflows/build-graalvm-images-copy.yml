@@ -16,6 +16,8 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
+      - name: Get current date and time
+        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -45,9 +47,6 @@ jobs:
 
 #      - name: CLI Native Image build using gradle
 #        run: ./gradlew nativeCompile
-
-      - name: Get current date and time
-        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
 
       - name: Print Release url
         run: |
