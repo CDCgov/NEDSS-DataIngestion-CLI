@@ -32,15 +32,16 @@ jobs:
 
       - name: Copy binary image to destination folder
         run: |
-          mkdir -p dataingestion-cli-binary-images
+          ls
+          mkdir -p dataingestion-cli-binary-images/${{ matrix.os }}
           pwd
-          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }} dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}
-          ls -ltr dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
+          ls dataingestion-cli-binary-images
 
       - name: Archive binary image asset
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI-${{ matrix.os }}
+          name: NEDSS-DataIngestion-CLI
           path: build/native/nativeCompile/
 
       - name: Upload the image generated to the repository (branch - native-built-cli-images)
