@@ -25,6 +25,12 @@ jobs:
       - name: CLI Native Image build using gradle
         run: ./gradlew nativeCompile
 
+      - name: Copy binary image to destination folder
+        run: |
+          mkdir -p dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }} dataingestion-cli-binary-images/
+          ls -ltr dataingestion-cli-binary-images
+
       - name: Archive binary image asset
         uses: actions/upload-artifact@v3
         with:
