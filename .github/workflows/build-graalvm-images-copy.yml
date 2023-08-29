@@ -60,23 +60,22 @@ jobs:
         run: |
           ls
           pwd
-#          chmod a=r -R /Users/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
           chmod 777 -R /Users/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
-          chmod 777 -R ./build/native/nativeCompile
+          chmod 777 -R build/native/nativeCompile
 
-      - if: matrix.os == 'windows-latest'
-#      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          asset_path: build/native/nativeCompile/
-          asset_name: NEDSS-DataIngestion-CLI.exe
-          asset_content_type: application/octet-stream
-          upload_url: ${{ needs.create_release.outputs.upload_url }}
-
-      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
-#      - name: Upload Release Asset
+#      - if: matrix.os == 'windows-latest'
+##      - name: Upload Release Asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          asset_path: build/native/nativeCompile/
+#          asset_name: NEDSS-DataIngestion-CLI.exe
+#          asset_content_type: application/octet-stream
+#          upload_url: ${{ needs.create_release.outputs.upload_url }}
+#
+#      - if: ((matrix.os == 'ubuntu-latest') || (matrix.os == 'macos-latest'))
+      - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
