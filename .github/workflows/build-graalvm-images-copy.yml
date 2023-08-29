@@ -10,24 +10,24 @@ on:
     tags:
       - 'v*'
 jobs:
-  create_release:
-    name: Create release
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-      - name: Get current date and time
-        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
-          release_name: Release v${{ env.DATE_TIME }}
-          draft: false
-          prerelease: false
+#  create_release:
+#    name: Create release
+#    runs-on: ubuntu-latest
+#    outputs:
+#      upload_url: ${{ steps.create_release.outputs.upload_url }}
+#    steps:
+#      - name: Get current date and time
+#        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+#      - name: Create release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
+#          release_name: Release v${{ env.DATE_TIME }}
+#          draft: false
+#          prerelease: false
 
   build:
     name: Data Ingestion CLI build on ${{ matrix.os }}
@@ -60,7 +60,7 @@ jobs:
         run: |
           ls
           pwd
-          chmod 777 -R build/native/nativeCompile
+          chmod 777 -R build/native/nativeCompile/
           chmod 777 -R /home/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
 #          /home/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
 #  /home/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
@@ -81,8 +81,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_path: build/native/nativeCompile/
-          asset_name: NEDSS-DataIngestion-CLI
+          asset_path: build/native/nativeCompile/NEDSS-DataIngestion-CLI*
+          asset_name: NEDSS-DataIngestion-CLI*
           asset_content_type: application/octet-stream
           upload_url: ${{ needs.create_release.outputs.upload_url }}
 
