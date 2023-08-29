@@ -3,8 +3,13 @@ name: CLI GraalVM Native Image builds
 on:
   push:
     branches: ["CNDIT-538-dataingestion-cli"]
+    tags:
+      - '*'
   pull_request:
     branches: ["CNDIT-538-dataingestion-cli"]
+    tags:
+      - '*'
+
 jobs:
   build:
     name: Data Ingestion CLI build on ${{ matrix.os }}

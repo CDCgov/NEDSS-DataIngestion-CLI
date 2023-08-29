@@ -3,8 +3,12 @@ name: CLI GraalVM Native Image builds
 on:
   push:
     branches: ["CNDIT-538-dataingestion-cli"]
+    tags:
+      - '*'
   pull_request:
     branches: ["CNDIT-538-dataingestion-cli"]
+    tags:
+      - '*'
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -41,16 +45,6 @@ jobs:
 
       - name: CLI Native Image build using gradle
         run: ./gradlew nativeCompile
-
-      - name: Get tag name from ref
-        shell: bash
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
-        id: get_tag
-      - name: Create tag in public repository
-        run: |
-          cd ${{github.workspace}}
-          git tag ${{ steps.get_tag.outputs.tag }}
-          git push --tags --porcelain
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
