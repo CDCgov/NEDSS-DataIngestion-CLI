@@ -76,7 +76,7 @@ jobs:
       - name: Archive binary image asset for ${{ matrix.os }}
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI-*
+          name: NEDSS-DataIngestion-CLI*
           path: build/native/nativeCompile
 
 #      - if: matrix.os == 'windows-latest'
