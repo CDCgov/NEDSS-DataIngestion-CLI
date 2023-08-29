@@ -43,8 +43,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}-$DATE_TIME
-          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-$DATE_TIME
+          tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
+          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ env.DATE_TIME }}
           draft: false
           prerelease: false
 
