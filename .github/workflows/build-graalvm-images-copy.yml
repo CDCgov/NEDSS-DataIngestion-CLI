@@ -7,7 +7,7 @@ on:
     branches: ["CNDIT-538-dataingestion-cli"]
 jobs:
   create-release:
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create-release.outputs.upload_url }}
     steps:
@@ -41,6 +41,16 @@ jobs:
 
       - name: CLI Native Image build using gradle
         run: ./gradlew nativeCompile
+
+      - name: Get tag name from ref
+        shell: bash
+        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+        id: get_tag
+          - name: Create tag in public repository
+            run: |
+              cd ${{github.workspace}}
+              git tag ${{ steps.get_tag.outputs.tag }}
+              git push --tags --porcelain
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
