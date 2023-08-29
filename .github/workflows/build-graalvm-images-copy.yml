@@ -10,12 +10,30 @@ on:
     tags:
       - 'v*'
 jobs:
+  create_release:
+    name: Create release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
+          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ env.DATE_TIME }}
+          draft: false
+          prerelease: false
+
   build:
-    name: Data Ingestion CLI build on macos-latest
-    runs-on: macos-latest
-#    strategy:
-#      matrix:
-#        os: [macos-latest, windows-latest, ubuntu-latest]
+    name: Data Ingestion CLI build on ${{ matrix.os }}
+    needs: create_release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
@@ -28,30 +46,14 @@ jobs:
 #      - name: CLI Native Image build using gradle
 #        run: ./gradlew nativeCompile
 
-#      - uses: actions/checkout@v3
-      - name: GitHub Tag Name example
-        run: |
-          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
-
       - name: Get current date and time
         run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
-
-      - name: Create Release
-        id: create-release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
-          release_name: Release ${{ github.ref_name }}-macos-latest-${{ env.DATE_TIME }}
-          draft: false
-          prerelease: false
 
       - name: Print Release url
         run: |
           echo "${{ steps.create_release.outputs.upload_url }}"
           echo "${{ github.event.release.upload_url }}"
+          echo "${{ needs.create_release.outputs.upload_url }}"
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
@@ -60,10 +62,10 @@ jobs:
         with:
           asset_path: build/native/nativeCompile/
           asset_name: NEDSS-DataIngestion-CLI*
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
 
-      - name: Archive binary image asset
-        uses: actions/upload-artifact@v3
-        with:
-          name: NEDSS-DataIngestion-CLI
-          path: build/native/nativeCompile/
+#      - name: Archive binary image asset
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: NEDSS-DataIngestion-CLI
+#          path: build/native/nativeCompile/
