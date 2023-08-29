@@ -40,7 +40,7 @@ jobs:
       - name: Copy binary image to destination folder
         run: |
           mkdir -p dataingestion-cli-binary-images
-          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-${{ matrix.os }} dataingestion-cli-binary-images/
+          cp ${{ github.workspace }}/build/native/nativeCompile/. dataingestion-cli-binary-images/
           ls -ltr dataingestion-cli-binary-images
 
       - name: Upload the image generated to the repository (branch - native-built-cli-images)
