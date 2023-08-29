@@ -60,7 +60,6 @@ jobs:
         run: |
           ls
           pwd
-          chmod 777 -R ./work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
           chmod 777 -R build/native/nativeCompile
 
 #      - if: matrix.os == 'windows-latest'
