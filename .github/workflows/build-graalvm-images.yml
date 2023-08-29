@@ -1,4 +1,4 @@
-name: CLI GraalVM Native Image builds
+name: CLI GraalVM Native Image Builds
 #on: [push, pull_request]
 on:
   push:
@@ -38,12 +38,6 @@ jobs:
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
 
-      - name: Archive binary image asset
-        uses: actions/upload-artifact@v3
-        with:
-          name: NEDSS-DataIngestion-CLI
-          path: build/native/nativeCompile/
-
       - name: Get current date
         id: date
         run:
@@ -60,3 +54,9 @@ jobs:
           git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ steps.date.outputs.datetime }}"
           git branch --set-upstream-to=origin/main native-built-cli-images
           git push
+
+      - name: Archive binary image asset
+        uses: actions/upload-artifact@v3
+        with:
+          name: NEDSS-DataIngestion-CLI
+          path: build/native/nativeCompile/

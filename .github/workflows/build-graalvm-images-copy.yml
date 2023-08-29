@@ -1,4 +1,4 @@
-name: CLI GraalVM Native Image builds
+name: CLI GraalVM Native Image Builds - Copy
 #on: [push, pull_request]
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}-${{ steps.date.outputs.datetime }}
+          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ steps.datetime.outputs.datetime }}
           draft: false
           prerelease: false
 
@@ -58,3 +58,9 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/native/nativeCompile/
           asset_name: NEDSS-DataIngestion-CLI*
+
+      - name: Archive binary image asset
+        uses: actions/upload-artifact@v3
+        with:
+          name: NEDSS-DataIngestion-CLI
+          path: build/native/nativeCompile/
