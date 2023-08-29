@@ -38,6 +38,9 @@ jobs:
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
 
+      - name: Get current date and time
+        run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
       - name: Upload the image generated to the repository (branch - native-built-cli-images)
         run: |
           git fetch
@@ -46,8 +49,7 @@ jobs:
           git config user.name "Github Actions"
           git config user.email "actions@users.noreply.github.com"
           git add .
-          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-$(date +'%Y-%m-%d')"
-#          git branch --set-upstream-to=origin/main native-built-cli-images
+          git commit -m "Upload GraalVM binary image for ${{ matrix.os }}-${{ env.DATE }}"
           git push
 
       - name: Archive binary image asset
