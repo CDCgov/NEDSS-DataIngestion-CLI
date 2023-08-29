@@ -7,7 +7,7 @@ on:
     branches: ["CNDIT-538-dataingestion-cli"]
 jobs:
   create-release:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create-release.outputs.upload_url }}
     steps:
