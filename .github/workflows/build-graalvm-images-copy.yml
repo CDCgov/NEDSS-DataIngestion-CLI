@@ -25,7 +25,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}-${{ env.DATE_TIME }}
-          release_name: Release ${{ github.ref_name }}-${{ matrix.os }}-${{ env.DATE_TIME }}
+          release_name: Release v${{ env.DATE_TIME }}
           draft: false
           prerelease: false
 
@@ -34,7 +34,7 @@ jobs:
     needs: create_release
     permissions:
       contents: read
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [macos-latest, windows-latest, ubuntu-latest]
@@ -60,6 +60,9 @@ jobs:
         run: |
           ls
           pwd
+#          chmod a=r -R /Users/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
+          chmod 777 -R /Users/runner/work/NEDSS-DataIngestion-CLI/NEDSS-DataIngestion-CLI
+          chmod 777 -R ./build/native/nativeCompile
 
       - if: matrix.os == 'windows-latest'
 #      - name: Upload Release Asset
@@ -67,7 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_path: ./build/native/nativeCompile
+          asset_path: build/native/nativeCompile/
           asset_name: NEDSS-DataIngestion-CLI.exe
           asset_content_type: application/octet-stream
           upload_url: ${{ needs.create_release.outputs.upload_url }}
@@ -78,7 +81,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_path: ./build/native/nativeCompile
+          asset_path: build/native/nativeCompile/
           asset_name: NEDSS-DataIngestion-CLI
           asset_content_type: application/octet-stream
           upload_url: ${{ needs.create_release.outputs.upload_url }}
