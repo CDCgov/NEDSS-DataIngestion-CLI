@@ -45,14 +45,14 @@ jobs:
           zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
           ls
 
-      - name: Zip CLI on Ubuntu
+      - name: Zip CLI on Mac OS
         if: ${{ matrix.os }} == 'macos-latest'
         run: |
           ls
           zip -r NEDSS-DataIngestion-CLI.zip dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI
           ls
 
-      - name: Zip CLI on Ubuntu
+      - name: Zip CLI on Windows
         if: ${{ matrix.os }} == 'windows-latest'
         run: |
           ls

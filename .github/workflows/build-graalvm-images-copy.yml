@@ -59,7 +59,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_path: build/native/nativeCompile
+          asset_path: ./build/native/nativeCompile
           asset_name: NEDSS-DataIngestion-CLI*
           asset_content_type: application/octet-stream
           upload_url: ${{ needs.create_release.outputs.upload_url }}
@@ -68,4 +68,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: NEDSS-DataIngestion-CLI
-          path: build/native/nativeCompile/
+          path: ./build/native/nativeCompile/
