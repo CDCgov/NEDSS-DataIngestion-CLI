@@ -38,14 +38,14 @@ jobs:
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI* dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
 
-      - name: Zip CLI
+      - name: Get current date and time
+        run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Zip the CLI Folder
         run: |
           ls
           zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-${{ matrix.os }}--${{ env.DATE }}.zip dataingestion-cli-binary-images
           ls
-
-      - name: Get current date and time
-        run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
       - name: Upload the image generated to the repository (branch - native-built-cli-images)
         run: |
