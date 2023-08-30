@@ -31,7 +31,7 @@ The DataIngestion CLI is packaged using GraalVM, and no additional dependencies 
 3. Download the zip package depending on the operating system of your computer. For example, if you're using **Windows Operating System**, then click on ``NEDSS-DataIngestion-CLI-windows.exe.zip``.
 4. The download will start automatically. Once the download is finished, unzip it to the location you want.
 
-#### Notes: If you're using MacOS, for the first time, you need to control + click on the application to allowlist it. The apoplication will open in a different terminal window and exit automatically. After this, you can use the cli normally from next time. 
+#### Notes: If you're using MacOS, for the first time, you need to control + click on the application to allowlist it. The application will open in a different terminal window and exit automatically. After this, you can use the cli normally from next time. 
 
 ## Getting Started <a name="getting-started"></a>
 
