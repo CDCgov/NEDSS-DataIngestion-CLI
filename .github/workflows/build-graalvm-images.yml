@@ -1,14 +1,10 @@
-name: CLI GraalVM Native Image Builds
+name: Data Ingestion CLI GraalVM Native Image Build Pipeline
 #on: [push, pull_request]
 on:
   push:
     branches: ["CNDIT-538-dataingestion-cli"]
-    tags:
-      - '*'
   pull_request:
     branches: ["CNDIT-538-dataingestion-cli"]
-    tags:
-      - '*'
 
 jobs:
   build:
@@ -38,99 +34,58 @@ jobs:
           aws-region: us-east-1
 
       - if: matrix.os == 'macos-latest'
-        name: Copy macos binary image to destination folder
+        name: Copy and compress macos binary image to destination folder
         run: |
-          ls
           mkdir -p dataingestion-cli-binary-images
-          pwd
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-macos dataingestion-cli-binary-images/
-          ls dataingestion-cli-binary-images/
           zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip dataingestion-cli-binary-images
-          ls dataingestion-cli-binary-images/
 
-      - name: Upload macos image to S3
-        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip s3://graalvm-images-store-dataingestion-cli/macos-image/
+      - if: matrix.os == 'ubuntu-latest'
+        name: Copy and compress linux binary image to destination folder
+        run: |
+          mkdir -p dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux dataingestion-cli-binary-images/
+          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip dataingestion-cli-binary-images
 
-#      - name: Upload linux image to S3
-#        run: aws s3 cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux s3://graalvm-images-store-dataingestion-cli/linux-image/
-#
-#      - name: Upload windows image to S3
-#        run: aws s3 cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-windows.exe s3://graalvm-images-store-dataingestion-cli/windows-image/
+      - if: matrix.os == 'windows-latest'
+        name: Copy and compress windows binary image to destination folder
+        run: |
+          mkdir -p dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-windows.exe dataingestion-cli-binary-images/
+          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-windows.zip
 
-#      - if: matrix.os == 'ubuntu-latest'
-#        name: Copy linux binary image to destination folder
-#        run: |
-#          ls
-#          mkdir -p dataingestion-cli-binary-images
-#          pwd
-#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux dataingestion-cli-binary-images/
-#          ls dataingestion-cli-binary-images
-#      #          ls dataingestion-cli-binary-images/${{ matrix.os }}
-#
-#      - if: matrix.os == 'macos-latest'
-#        name: Copy macos binary image to destination folder
-#        run: |
-#          ls
-#          mkdir -p dataingestion-cli-binary-images
-#          pwd
-#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-macos dataingestion-cli-binary-images/
-#          ls dataingestion-cli-binary-images
-#      #          ls dataingestion-cli-binary-images/${{ matrix.os }}
-#
-#      - if: matrix.os == 'windows-latest'
-#        name: Copy windows binary image to destination folder
-#        run: |
-#          ls
-#          mkdir -p dataingestion-cli-binary-images
-#          pwd
-#          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-windows.exe dataingestion-cli-binary-images/
-#          ls dataingestion-cli-binary-images
-#      #          ls dataingestion-cli-binary-images/${{ matrix.os }}
-#      #
-#      #      - name: Get current date and time
-#      #        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
-#      #
-#
-#      - if: matrix.os == 'macos-latest'
-#        name: Compress zip file for macos
-#        run: |
-#          ls
-#          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip dataingestion-cli-binary-images
-#          ls dataingestion-cli-binary-images/
-#
-#      - if: matrix.os == 'ubuntu-latest'
-#        name: Compress zip file for linux
-#        run: |
-#          ls
-#          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip dataingestion-cli-binary-images
-#          ls dataingestion-cli-binary-images/
-#
-#      - if: matrix.os == 'windows-latest'
-#        name: Compress zip file for windows
-#        run: |
-#          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-windows.zip
-#          ls
-#
-#      - if: matrix.os == 'macos-latest'
-#        name: Archive binary image asset for macos
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: NEDSS-DataIngestion-CLI-macos.zip
-#          path: dataingestion-cli-binary-images/
-#
-#      - if: matrix.os == 'ubuntu-latest'
-#        name: Archive binary image asset for linux
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: NEDSS-DataIngestion-CLI-linux.zip
-#          path: dataingestion-cli-binary-images/
-#
-#      - if: matrix.os == 'windows-latest'
-#        name: Archive binary image asset for windows
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: NEDSS-DataIngestion-CLI-windows.exe.zip
-#          path: dataingestion-cli-binary-images/
+      - if: matrix.os == 'macos-latest'
+        name: Upload macos image to S3
+        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip s3://graalvm-images-store-dataingestion-cli/macos-image
+
+      - if: matrix.os == 'ubuntu-latest'
+        name: Upload linux image to S3
+        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip s3://graalvm-images-store-dataingestion-cli/linux-image
+
+      - if: matrix.os == 'windows-latest'
+        name: Upload windows image to S3
+        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-windows.zip s3://graalvm-images-store-dataingestion-cli/windows-image
+
+      - if: matrix.os == 'macos-latest'
+        name: Archive binary image asset for macos
+        uses: actions/upload-artifact@v3
+        with:
+          name: NEDSS-DataIngestion-CLI-macos.zip
+          path: dataingestion-cli-binary-images/
+
+      - if: matrix.os == 'ubuntu-latest'
+        name: Archive binary image asset for linux
+        uses: actions/upload-artifact@v3
+        with:
+          name: NEDSS-DataIngestion-CLI-linux.zip
+          path: dataingestion-cli-binary-images/
+
+      - if: matrix.os == 'windows-latest'
+        name: Archive binary image asset for windows
+        uses: actions/upload-artifact@v3
+        with:
+          name: NEDSS-DataIngestion-CLI-windows.zip
+          path: dataingestion-cli-binary-images/
 
 #      - name: Upload the image generated to the repository (branch - native-built-cli-images)
 #        run: |

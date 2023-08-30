@@ -52,12 +52,12 @@ The `register` command allows you to onboard a client by providing their usernam
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli register --client-username --client-secret --admin-user --admin-password
+./NEDSS-DataIngestion-CLI-{{ macos || linux || windows }} register --client-username --client-secret --admin-user --admin-password
 ```
 
 Windows:
 ```bash
-nbs-di-cli register --client-username --client-secret --admin-user --admin-password
+NEDSS-DataIngestion-CLI-{{ macos || linux || windows }} register --client-username --client-secret --admin-user --admin-password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
@@ -82,13 +82,13 @@ Usage:
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli token --admin-user --admin-password
+./NEDSS-DataIngestion-CLI-{{ macos || linux || windows }} token --admin-user --admin-password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli token --admin-user --admin-password
+NEDSS-DataIngestion-CLI-{{ macos || linux || windows }} token --admin-user --admin-password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
@@ -108,13 +108,13 @@ Usage:
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli injecthl7 --hl7-file --admin-user --admin-password
+./NEDSS-DataIngestion-CLI-{{ macos || linux || windows }} injecthl7 --hl7-file --admin-user --admin-password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli injecthl7 --hl7-file --admin-user --admin-password
+NEDSS-DataIngestion-CLI-{{ macos || linux || windows }} injecthl7 --hl7-file --admin-user --admin-password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
