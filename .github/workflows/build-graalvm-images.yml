@@ -37,14 +37,25 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
           aws-region: us-east-1
 
+      - if: matrix.os == 'macos-latest'
+        name: Copy macos binary image to destination folder
+        run: |
+          ls
+          mkdir -p dataingestion-cli-binary-images
+          pwd
+          cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-macos dataingestion-cli-binary-images/
+          ls dataingestion-cli-binary-images/
+          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip dataingestion-cli-binary-images
+          ls dataingestion-cli-binary-images/
+
       - name: Upload macos image to S3
-        run: aws s3 cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-macos s3://graalvm-images-store-dataingestion-cli/macos-image/
+        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip s3://graalvm-images-store-dataingestion-cli/macos-image/
 
-      - name: Upload linux image to S3
-        run: aws s3 cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux s3://graalvm-images-store-dataingestion-cli/linux-image/
-
-      - name: Upload windows image to S3
-        run: aws s3 cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-windows.exe s3://graalvm-images-store-dataingestion-cli/windows-image/
+#      - name: Upload linux image to S3
+#        run: aws s3 cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux s3://graalvm-images-store-dataingestion-cli/linux-image/
+#
+#      - name: Upload windows image to S3
+#        run: aws s3 cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-windows.exe s3://graalvm-images-store-dataingestion-cli/windows-image/
 
 #      - if: matrix.os == 'ubuntu-latest'
 #        name: Copy linux binary image to destination folder

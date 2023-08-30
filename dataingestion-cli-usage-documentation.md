@@ -26,13 +26,18 @@ The DataIngestion CLI is a command-line tool that allows users to interact with 
 
 The DataIngestion CLI is packaged using GraalVM, and no additional dependencies or prerequisites are required for installation. To install the CLI, follow these steps:
 
-1. Download the `nbs-di-cli` application from the folder `/builtImages/linux-unix` or `/builtImages/windows` depending on the machine operating system that you use.
+1. Go to the Actions page of this Github Repo - https://github.com/CDCgov/NEDSS-DataIngestion-CLI/actions and click on the latest workflow.
+2. In the artifacts section, you'll see three zip files, each one for one operating system *(Windows, Linux and MacOS)*
+3. Download the zip package depending on the operating system of your computer. For example, if you're using **Windows Operating System**, then click on ``NEDSS-DataIngestion-CLI-windows.exe.zip``.
+4. The download will start automatically. Once the download is finished, unzip it to the location you want.
+
+#### Notes: If you're using MacOS, for the first time, you need to control + click on the application to allowlist it. The apoplication will open in a different terminal window and exit automatically. After this, you can use the cli normally from next time. 
 
 ## Getting Started <a name="getting-started"></a>
 
 Before using the DataIngestion CLI, ensure you have the necessary credentials and permissions to access the DataIngestion Service. The CLI requires an admin username and password to connect to the service successfully.
 
-To get started, open a terminal or command prompt and navigate to the directory where you extracted the `nbs-di-cli` application.
+To get started, open a terminal or command prompt and navigate to the directory where you extracted the `NEDSS-DataIngestion-CLI-{operating_system}` application.
 
 ## Command Reference <a name="command-reference"></a>
 
