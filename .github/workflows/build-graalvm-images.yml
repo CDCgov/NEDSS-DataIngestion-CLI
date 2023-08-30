@@ -38,7 +38,6 @@ jobs:
           pwd
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-linux dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
-#          ls dataingestion-cli-binary-images/${{ matrix.os }}
 
       - if: matrix.os == 'macos-latest'
         name: Copy macos binary image to destination folder
@@ -48,7 +47,6 @@ jobs:
           pwd
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-macos dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
-#          ls dataingestion-cli-binary-images/${{ matrix.os }}
 
       - if: matrix.os == 'windows-latest'
         name: Copy windows binary image to destination folder
@@ -58,8 +56,7 @@ jobs:
           pwd
           cp ${{ github.workspace }}/build/native/nativeCompile/NEDSS-DataIngestion-CLI-windows.exe dataingestion-cli-binary-images/
           ls dataingestion-cli-binary-images
-#          ls dataingestion-cli-binary-images/${{ matrix.os }}
-#
+
 #      - name: Get current date and time
 #        run: echo "DATE_TIME=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
 #
@@ -67,43 +64,40 @@ jobs:
       - if: matrix.os == 'macos-latest'
         name: Compress zip file for macos
         run: |
-          ls
-          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip dataingestion-cli-binary-images
-          ls dataingestion-cli-binary-images/
+          zip -r NEDSS-DataIngestion-CLI-macos.zip dataingestion-cli-binary-images
+          ls 
 
       - if: matrix.os == 'ubuntu-latest'
         name: Compress zip file for linux
         run: |
-          ls
-          zip -r dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip dataingestion-cli-binary-images
-          ls dataingestion-cli-binary-images/
+          zip -r NEDSS-DataIngestion-CLI-linux.zip dataingestion-cli-binary-images
 
       - if: matrix.os == 'windows-latest'
         name: Compress zip file for windows
         run: |
-          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-windows.zip
+          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination NEDSS-DataIngestion-CLI-windows.zip
           ls
 
       - if: matrix.os == 'macos-latest'
         name: Archive binary image asset for macos
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI-macos.zip
-          path: dataingestion-cli-binary-images/
+          name: NEDSS-DataIngestion-CLI-macos
+          path: /
 
       - if: matrix.os == 'ubuntu-latest'
         name: Archive binary image asset for linux
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI-linux.zip
-          path: dataingestion-cli-binary-images/
+          name: NEDSS-DataIngestion-CLI-linux
+          path: /
 
       - if: matrix.os == 'windows-latest'
         name: Archive binary image asset for windows
         uses: actions/upload-artifact@v3
         with:
-          name: NEDSS-DataIngestion-CLI-windows.exe.zip
-          path: dataingestion-cli-binary-images/
+          name: NEDSS-DataIngestion-CLI-windows.exe
+          path: /
 
 #      - name: Upload the image generated to the repository (branch - native-built-cli-images)
 #        run: |
