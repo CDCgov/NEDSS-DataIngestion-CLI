@@ -56,15 +56,15 @@ jobs:
 
       - if: matrix.os == 'macos-latest'
         name: Upload macos image to S3
-        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip s3://graalvm-images-store-dataingestion-cli/macos-image/
+        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-macos.zip s3://graalvm-images-store-dataingestion-cli/macos-image
 
       - if: matrix.os == 'ubuntu-latest'
         name: Upload linux image to S3
-        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip s3://graalvm-images-store-dataingestion-cli/linux-image/
+        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-linux.zip s3://graalvm-images-store-dataingestion-cli/linux-image
 
       - if: matrix.os == 'windows-latest'
         name: Upload windows image to S3
-        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-windows.zip s3://graalvm-images-store-dataingestion-cli/windows-image/
+        run: aws s3 cp dataingestion-cli-binary-images/NEDSS-DataIngestion-CLI-windows.zip s3://graalvm-images-store-dataingestion-cli/windows-image
 
       - if: matrix.os == 'macos-latest'
         name: Archive binary image asset for macos
