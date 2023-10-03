@@ -40,7 +40,7 @@ public class RegisterUser implements Runnable {
                 authModel.setAdminPassword(adminPassword);
                 authModel.setServiceEndpoint(serviceEndpoint);
 
-                String apiResponse = authUtil.getResponseFromDIService(authModel);
+                String apiResponse = authUtil.getResponseFromDIService(authModel, "register");
                 if(apiResponse != null) {
                     if(apiResponse.contains("CREATED")) {
                         System.out.println("User onboarded successfully.");

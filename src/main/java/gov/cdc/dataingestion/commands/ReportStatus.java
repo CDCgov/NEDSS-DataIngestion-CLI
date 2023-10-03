@@ -7,8 +7,10 @@ import picocli.CommandLine;
 
 import java.util.Properties;
 
-@CommandLine.Command(name = "token", mixinStandardHelpOptions = true, description = "Generates a JWT token.")
-public class TokenGenerator implements Runnable {
+@CommandLine.Command(name = "status", mixinStandardHelpOptions = true, description = "This functionality will print out the status of the report for the provided UUID.")
+public class ReportStatus implements Runnable{
+    @CommandLine.Option(names = {"--report-id"}, description = "UUID provided by Data Ingestion Service during report ingestion.", interactive = true, echo = true, required = true)
+    String reportUuid;
 
     @CommandLine.Option(names = {"--admin-user"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)
     String adminUser;
@@ -22,15 +24,17 @@ public class TokenGenerator implements Runnable {
 
     @Override
     public void run() {
-        if(adminUser != null && adminPassword != null) {
+        if(adminUser != null && adminPassword != null && reportUuid != null) {
             if(!adminUser.isEmpty() && adminPassword.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
+                String serviceEndpoint = properties.getProperty("service.reportsEndpoint");
 
                 authModel.setAdminUser(adminUser);
                 authModel.setAdminPassword(adminPassword);
-                authModel.setServiceEndpoint(properties.getProperty("service.tokenEndpoint"));
+                authModel.setServiceEndpoint("http://localhost:8080/report-status/" + reportUuid);
+//                authModel.setServiceEndpoint(serviceEndpoint + "/" + reportUuid);
 
-                String apiResponse = authUtil.getResponseFromDIService(authModel, "token");
+                String apiResponse = authUtil.getResponseFromDIService(authModel, "status");
                 System.out.println(apiResponse);
             }
             else {
@@ -38,7 +42,7 @@ public class TokenGenerator implements Runnable {
             }
         }
         else {
-            System.err.println("Admin username or password is null.");
+            System.err.println("One or more inputs are null.");
         }
     }
 }

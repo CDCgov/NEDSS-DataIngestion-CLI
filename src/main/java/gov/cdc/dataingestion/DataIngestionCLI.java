@@ -2,12 +2,13 @@ package gov.cdc.dataingestion;
 
 import gov.cdc.dataingestion.commands.InjectHL7;
 import gov.cdc.dataingestion.commands.RegisterUser;
+import gov.cdc.dataingestion.commands.ReportStatus;
 import gov.cdc.dataingestion.commands.TokenGenerator;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 @Command(name = "DataIngestionCLI",
-        subcommands = { RegisterUser.class, TokenGenerator.class, InjectHL7.class },
+        subcommands = { RegisterUser.class, TokenGenerator.class, InjectHL7.class, ReportStatus.class },
         mixinStandardHelpOptions = true, version = "1.0",
         description = "Command Line Interface to connect to NBS DI Service.")
 class DataIngestionCLI {

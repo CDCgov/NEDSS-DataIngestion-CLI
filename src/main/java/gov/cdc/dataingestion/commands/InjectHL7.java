@@ -51,7 +51,7 @@ public class InjectHL7 implements Runnable {
                 authModel.setServiceEndpoint(properties.getProperty("service.reportsEndpoint"));
                 authModel.setRequestBody(requestBody.toString());
 
-                String apiResponse = authUtil.getResponseFromDIService(authModel);
+                String apiResponse = authUtil.getResponseFromDIService(authModel, "injecthl7");
                 System.out.println(apiResponse);
             }
             else {
@@ -61,6 +61,5 @@ public class InjectHL7 implements Runnable {
         else {
             System.err.println("One or more inputs are null.");
         }
-
     }
 }
