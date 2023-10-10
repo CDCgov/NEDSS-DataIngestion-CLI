@@ -89,24 +89,24 @@ class InjectHL7Test {
         assertThrows(RuntimeException.class, injectHL7::run);
     }
 
-//    @Test
-//    void testRunAdminUnauthorized() throws IOException {
-//        String adminUser = "notAdmin";
-//        char[] adminPassword = "notAdminPassword".toCharArray();
-//        String apiResponse = "Unauthorized. Admin username/password is incorrect.";
-//
-//        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-//        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq(any(String.class)))).thenReturn(apiResponse);
-//        File tempHL7File = getFile();
-//
-//        injectHL7.adminUser = adminUser;
-//        injectHL7.adminPassword = adminPassword;
-//        injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
-//        injectHL7.run();
-//
-//        verify(authUtilMock).getResponseFromDIService(injectHL7.authModel, any());
-//        assertEquals(apiResponse, outStream.toString().trim());
-//    }
+    @Test
+    void testRunAdminUnauthorized() throws IOException {
+        String adminUser = "notAdmin";
+        char[] adminPassword = "notAdminPassword".toCharArray();
+        String apiResponse = "Unauthorized. Admin username/password is incorrect.";
+
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("injecthl7"))).thenReturn(apiResponse);
+        File tempHL7File = getFile();
+
+        injectHL7.adminUser = adminUser;
+        injectHL7.adminPassword = adminPassword;
+        injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
+        injectHL7.run();
+
+        verify(authUtilMock).getResponseFromDIService(injectHL7.authModel, "injecthl7");
+        assertEquals(apiResponse, outStream.toString().trim());
+    }
 
     @Test
     void testRunEmptyAdminUsernameOrPassword() {

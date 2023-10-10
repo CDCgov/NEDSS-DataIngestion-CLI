@@ -23,16 +23,16 @@ class DataIngestionCLITest {
         System.setOut(new PrintStream(outStream));
     }
 
-//    @Test
-//    void testMainExitCodeOkArguments() {
-//        String[] args = { "register",  "--client-username=client", "--client-secret=secret", "--admin-user=admin", "--admin-password=password" };
-//
-//        int exitCode = new CommandLine(new DataIngestionCLI()).execute(args);
-//        String expectedOutput = "Unauthorized. Admin username/password is incorrect.";
-//
-//        assertEquals(0, exitCode);
-//        assertEquals(expectedOutput, outStream.toString().trim());
-//    }
+    @Test
+    void testMainExitCodeOkArguments() {
+        String[] args = { "register",  "--client-username=client", "--client-secret=secret", "--admin-user=admin", "--admin-password=password" };
+
+        int exitCode = new CommandLine(new DataIngestionCLI()).execute(args);
+        String expectedOutput = "Unauthorized. Admin username/password is incorrect.";
+
+        assertEquals(0, exitCode);
+        assertEquals(expectedOutput, outStream.toString().trim());
+    }
 
     @Test
     void testMainExitCodeMissingArguments() {

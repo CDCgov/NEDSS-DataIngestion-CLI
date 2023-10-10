@@ -9,7 +9,7 @@ import java.util.Properties;
 
 @CommandLine.Command(name = "status", mixinStandardHelpOptions = true, description = "This functionality will print out the status of the report for the provided UUID.")
 public class ReportStatus implements Runnable{
-    @CommandLine.Option(names = {"--report-id"}, description = "UUID provided by Data Ingestion Service during report ingestion.", interactive = true, echo = true, required = true)
+    @CommandLine.Option(names = {"--report-id"}, description = "UUID provided by Data Ingestion Service during report ingestion", interactive = true, echo = true, required = true)
     String reportUuid;
 
     @CommandLine.Option(names = {"--admin-user"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)
@@ -31,8 +31,7 @@ public class ReportStatus implements Runnable{
 
                 authModel.setAdminUser(adminUser);
                 authModel.setAdminPassword(adminPassword);
-                authModel.setServiceEndpoint("http://localhost:8080/report-status/" + reportUuid);
-//                authModel.setServiceEndpoint(serviceEndpoint + "/" + reportUuid);
+                authModel.setServiceEndpoint(serviceEndpoint + "/" + reportUuid);
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "status");
                 System.out.println(apiResponse);

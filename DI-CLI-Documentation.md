@@ -15,6 +15,8 @@
     - [token](#token-command)
 
     - [injecthl7](#injecthl7-command)
+   
+    - [status](#status-command)
 
 5. [Troubleshooting](#troubleshooting)
 
@@ -122,6 +124,34 @@ Arguments:
 
 * *--admin-password*: The admin password to connect to the DataIngestion Service (required).
 
+
+### status Command <a name="status-command"></a>
+
+The status command allows developers to use the /report-status/{id} endpoint of the DataIngestion Service.
+
+Usage:
+
+Mac OS/Linux:
+
+```bash
+./nbs-di-cli status --report-id --admin-user --admin-password
+```
+
+Windows:
+
+```bash
+nbs-di-cli status --report-id --admin-user --admin-password
+```
+
+You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
+
+Arguments:
+
+* *--report-id*: The UUID provided when the report was injected into the DataIngestion service (required).
+
+* *--admin-user*: The admin username to connect to the DataIngestion Service (required).
+
+* *--admin-password*: The admin password to connect to the DataIngestion Service (required).
 
 ### Troubleshooting <a name="troubleshooting"></a>
 

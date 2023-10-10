@@ -15,29 +15,29 @@ import java.io.PrintStream;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-class TokenGeneratorTest {
+class ReportStatusTest {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
     @Mock
     private AuthUtil authUtilMock;
     @Mock
     private PropUtil propUtilMock;
-    private TokenGenerator tokenGenerator;
+    private ReportStatus reportStatus;
     Properties mockProperties = mock(Properties.class);
-
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         System.setOut(new PrintStream(outStream));
         System.setErr(new PrintStream(errStream));
-        tokenGenerator = new TokenGenerator();
-        tokenGenerator.propUtil = propUtilMock;
-        tokenGenerator.authUtil = authUtilMock;
-        tokenGenerator.authModel = new AuthModel();
-        when(mockProperties.getProperty("service.tokenEndpoint")).thenReturn("testTokenEndpoint");
+        reportStatus = new ReportStatus();
+        reportStatus.authUtil = authUtilMock;
+        reportStatus.propUtil = propUtilMock;
+        when(mockProperties.getProperty("service.reportStatusEndpoint")).thenReturn("testReportStatusEndpoint");
     }
 
     @AfterEach
@@ -47,48 +47,44 @@ class TokenGeneratorTest {
     }
 
     @Test
-    void testRunSuccess() {
-        String adminUser = "admin";
-        char[] adminPassword = "adminPassword".toCharArray();
-        String apiResponse = "Dummy_Token";
+    void testRunSuccessfulStatus() {
+        reportStatus.adminUser = "admin";
+        reportStatus.adminPassword = "adminPassword".toCharArray();
+        reportStatus.reportUuid = "12345";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn("Success");
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
-        tokenGenerator.run();
+        reportStatus.run();
 
-        verify(authUtilMock).getResponseFromDIService(tokenGenerator.authModel, "token");
-        assertEquals(apiResponse, outStream.toString().trim());
+        verify(authUtilMock).getResponseFromDIService(reportStatus.authModel, "status");
+        assertEquals("Success", outStream.toString().trim());
     }
 
     @Test
     void testRunAdminUnauthorized() {
-        String adminUser = "notAdmin";
-        char[] adminPassword = "notAdminPassword".toCharArray();
+        reportStatus.adminUser = "notAdmin";
+        reportStatus.adminPassword = "notAdminPassword".toCharArray();
+        reportStatus.reportUuid = "12345";
         String apiResponse = "Unauthorized. Admin username/password is incorrect.";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn(apiResponse);
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
-        tokenGenerator.run();
+        reportStatus.run();
 
-        verify(authUtilMock).getResponseFromDIService(tokenGenerator.authModel, "token");
+        verify(authUtilMock).getResponseFromDIService(reportStatus.authModel, "status");
         assertEquals(apiResponse, outStream.toString().trim());
     }
 
     @Test
     void testRunEmptyAdminUsernameOrPassword() {
-        String adminUser = "";
-        char[] adminPassword = "adminPassword".toCharArray();
+        reportStatus.adminUser = "";
+        reportStatus.adminPassword = "adminPassword".toCharArray();
+        reportStatus.reportUuid = "12345";
         String expectedOutput = "Admin username or password is empty.";
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
-        tokenGenerator.run();
+        reportStatus.run();
 
         verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
         assertEquals(expectedOutput, errStream.toString().trim());
@@ -96,13 +92,12 @@ class TokenGeneratorTest {
 
     @Test
     void testRunNullAdminUsernameOrPassword() {
-        String adminUser = "admin";
-        char[] adminPassword = null;
-        String expectedOutput = "Admin username or password is null.";
+        reportStatus.adminUser = "admin";
+        reportStatus.adminPassword = null;
+        reportStatus.reportUuid = "12345";
+        String expectedOutput = "One or more inputs are null.";
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
-        tokenGenerator.run();
+        reportStatus.run();
 
         verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
         assertEquals(expectedOutput, errStream.toString().trim());

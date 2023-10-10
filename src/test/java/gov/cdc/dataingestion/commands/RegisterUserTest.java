@@ -46,102 +46,102 @@ class RegisterUserTest {
         Mockito.reset(propUtilMock);
     }
 
-//    @Test
-//    void testRunSuccessfulRegistration() {
-//        registerUser.username = "testUser";
-//        registerUser.password = "testPassword".toCharArray();
-//        registerUser.adminUser = "adminUser";
-//        registerUser.adminPassword = "adminPassword".toCharArray();
-//
-//        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-//        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq(anyString()))).thenReturn("CREATED");
-//
-//        registerUser.run();
-//
-//        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
-//        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq(anyString()));
-//
-//        String expectedOutput = "User onboarded successfully.";
-//        assertEquals("adminUser", authModelCaptor.getValue().getAdminUser());
-//        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
-//        assertEquals(expectedOutput, outStream.toString().trim());
-//    }
+    @Test
+    void testRunSuccessfulRegistration() {
+        registerUser.username = "testUser";
+        registerUser.password = "testPassword".toCharArray();
+        registerUser.adminUser = "adminUser";
+        registerUser.adminPassword = "adminPassword".toCharArray();
 
-//    @Test
-//    void testRunUsernameAlreadyExists() {
-//        registerUser.username = "testUser";
-//        registerUser.password = "testPassword".toCharArray();
-//        registerUser.adminUser = "adminUser";
-//        registerUser.adminPassword = "adminPassword".toCharArray();
-//
-//        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-//        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq(anyString()))).thenReturn("NOT_ACCEPTABLE");
-//
-//        registerUser.run();
-//
-//        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
-//        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq(anyString()));
-//
-//        String expectedOutput = "Username already exists. Please choose a unique client username.";
-//        assertEquals("adminUser", authModelCaptor.getValue().getAdminUser());
-//        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
-//        assertEquals(expectedOutput, outStream.toString().trim());
-//    }
-//
-//    @Test
-//    void testRunAdminUnauthorized() {
-//        registerUser.username = "testUser";
-//        registerUser.password = "testPassword".toCharArray();
-//        registerUser.adminUser = "notAdminUser";
-//        registerUser.adminPassword = "notAdminPassword".toCharArray();
-//
-//        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-//        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn("Unauthorized. Admin username/password is incorrect.");
-//
-//        registerUser.run();
-//
-//        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
-//        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq(anyString()));
-//
-//        String expectedOutput = "Unauthorized. Admin username/password is incorrect.";
-//        assertEquals("notAdminUser", authModelCaptor.getValue().getAdminUser());
-//        assertArrayEquals("notAdminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
-//        assertEquals(expectedOutput, outStream.toString().trim());
-//    }
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn("CREATED");
 
-//    @Test
-//    void testRunNullResponse() {
-//        registerUser.username = "testUser";
-//        registerUser.password = "testPassword".toCharArray();
-//        registerUser.adminUser = "notAdminUser";
-//        registerUser.adminPassword = "notAdminPassword".toCharArray();
-//
-//        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-//        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq(anyString()))).thenReturn(null);
-//
-//        registerUser.run();
-//
-//        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
-//        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq(anyString()));
-//
-//        String expectedOutput = "Something went wrong with API. Response came back as null.";
-//        assertEquals("notAdminUser", authModelCaptor.getValue().getAdminUser());
-//        assertArrayEquals("notAdminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
-//        assertEquals(expectedOutput, errStream.toString().trim());
-//    }
+        registerUser.run();
 
-//    @Test
-//    void testRunException() {
-//        registerUser.username = "testUser";
-//        registerUser.password = "testPassword".toCharArray();
-//        registerUser.adminUser = "notAdminUser";
-//        registerUser.adminPassword = "notAdminPassword".toCharArray();
-//
-//        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-//        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq(anyString()))).thenThrow(new RuntimeException("An exception occurred."));
-//
-//        assertThrows(RuntimeException.class, registerUser::run);
-//    }
+        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
+        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq("register"));
+
+        String expectedOutput = "User onboarded successfully.";
+        assertEquals("adminUser", authModelCaptor.getValue().getAdminUser());
+        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
+        assertEquals(expectedOutput, outStream.toString().trim());
+    }
+
+    @Test
+    void testRunUsernameAlreadyExists() {
+        registerUser.username = "testUser";
+        registerUser.password = "testPassword".toCharArray();
+        registerUser.adminUser = "adminUser";
+        registerUser.adminPassword = "adminPassword".toCharArray();
+
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn("NOT_ACCEPTABLE");
+
+        registerUser.run();
+
+        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
+        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq("register"));
+
+        String expectedOutput = "Username already exists. Please choose a unique client username.";
+        assertEquals("adminUser", authModelCaptor.getValue().getAdminUser());
+        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
+        assertEquals(expectedOutput, outStream.toString().trim());
+    }
+
+    @Test
+    void testRunAdminUnauthorized() {
+        registerUser.username = "testUser";
+        registerUser.password = "testPassword".toCharArray();
+        registerUser.adminUser = "notAdminUser";
+        registerUser.adminPassword = "notAdminPassword".toCharArray();
+
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn("Unauthorized. Admin username/password is incorrect.");
+
+        registerUser.run();
+
+        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
+        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq("register"));
+
+        String expectedOutput = "Unauthorized. Admin username/password is incorrect.";
+        assertEquals("notAdminUser", authModelCaptor.getValue().getAdminUser());
+        assertArrayEquals("notAdminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
+        assertEquals(expectedOutput, outStream.toString().trim());
+    }
+
+    @Test
+    void testRunNullResponse() {
+        registerUser.username = "testUser";
+        registerUser.password = "testPassword".toCharArray();
+        registerUser.adminUser = "notAdminUser";
+        registerUser.adminPassword = "notAdminPassword".toCharArray();
+
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn(null);
+
+        registerUser.run();
+
+        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
+        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), eq("register"));
+
+        String expectedOutput = "Something went wrong with API. Response came back as null.";
+        assertEquals("notAdminUser", authModelCaptor.getValue().getAdminUser());
+        assertArrayEquals("notAdminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
+        assertEquals(expectedOutput, errStream.toString().trim());
+    }
+
+    @Test
+    void testRunException() {
+        registerUser.username = "testUser";
+        registerUser.password = "testPassword".toCharArray();
+        registerUser.adminUser = "notAdminUser";
+        registerUser.adminPassword = "notAdminPassword".toCharArray();
+
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenThrow(new RuntimeException("An exception occurred."));
+
+        assertThrows(RuntimeException.class, registerUser::run);
+    }
 
     @Test
     void testRunAllEmptyInputs() {
