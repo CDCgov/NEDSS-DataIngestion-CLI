@@ -64,44 +64,44 @@ class AuthUtilTest {
     void tearDown() {
     }
 
-//    @Test
-//    void testGetResponseFromDIServiceSuccessful() throws Exception {
-//        authModelMock.setRequestBody("Dummy HL7 Input");
-//        authModelMock.setServiceEndpoint(serviceEndpoint);
-//
-//        when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
-//        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
-//        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
-//        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
-//        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_UUID"));
-//
-//        authUtil.getResponseFromDIService(authModelMock, anyString());
-//    }
+    @Test
+    void testGetResponseFromDIServiceSuccessful() throws Exception {
+        authModelMock.setRequestBody("Dummy HL7 Input");
+        authModelMock.setServiceEndpoint(serviceEndpoint);
 
-//    @Test
-//    void testGetResponseFromDIServiceUnsuccessful() throws Exception {
-//        authModelMock.setRequestBody("Dummy HL7 Input");
-//        authModelMock.setServiceEndpoint(serviceEndpoint + "dummy_endpoint");
-//
-//        when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
-//        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
-//        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
-//        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
-//        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_UUID"));
-//
-//        authUtil.getResponseFromDIService(authModelMock, any());
-//    }
+        when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
+        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
+        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
+        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_UUID"));
 
-//    @Test
-//    void testGetResponseFromDIServiceException() throws Exception {
-//        authModelMock.setRequestBody("Dummy HL7 Input");
-//        authModelMock.setServiceEndpoint(serviceEndpoint + "dummy_endpoint");
-//
-//        when(httpClientMock.execute(eq(httpPostMock))).thenThrow(new IOException("Connection refused."));
-//
-//        String actualResponse = authUtil.getResponseFromDIService(authModelMock, anyString());
-//        assertEquals("Something went wrong on the server side. Please check the logs.", actualResponse);
-//    }
+        authUtil.getResponseFromDIService(authModelMock, "status");
+    }
+
+    @Test
+    void testGetResponseFromDIServiceUnsuccessful() throws Exception {
+        authModelMock.setRequestBody("Dummy HL7 Input");
+        authModelMock.setServiceEndpoint(serviceEndpoint + "dummy_endpoint");
+
+        when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
+        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
+        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
+        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_UUID"));
+
+        authUtil.getResponseFromDIService(authModelMock, "injecthl7");
+    }
+
+    @Test
+    void testGetResponseFromDIServiceException() throws Exception {
+        authModelMock.setRequestBody("Dummy HL7 Input");
+        authModelMock.setServiceEndpoint(serviceEndpoint + "dummy_endpoint");
+
+        when(httpClientMock.execute(eq(httpPostMock))).thenThrow(new IOException("Connection refused."));
+
+        String actualResponse = authUtil.getResponseFromDIService(authModelMock, "status");
+        assertEquals("Something went wrong on the server side. Please check the logs.", actualResponse);
+    }
 
     private InputStream toInputStream(String value) {
         return new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8));

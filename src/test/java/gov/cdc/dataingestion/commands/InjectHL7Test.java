@@ -119,7 +119,7 @@ class InjectHL7Test {
         injectHL7.hl7FilePath = hl7FilePath;
         injectHL7.run();
 
-        verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), any());
+        verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), eq("injecthl7"));
         assertEquals(expectedOutput, errStream.toString().trim());
     }
 
