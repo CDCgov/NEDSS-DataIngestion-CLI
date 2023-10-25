@@ -46,6 +46,9 @@ dependencies {
     implementation 'info.picocli:picocli:4.7.4'
     annotationProcessor 'info.picocli:picocli-codegen:4.7.4'
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'ca.uhn.hapi:hapi-base:2.3'
+    implementation 'ca.uhn.hapi:hapi-structures-v251:2.3'
+    implementation 'ca.uhn.hapi:hapi-structures-v231:2.3'
 }
 
 compileJava {
