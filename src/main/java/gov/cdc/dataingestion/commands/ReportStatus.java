@@ -12,11 +12,11 @@ public class ReportStatus implements Runnable{
     @CommandLine.Option(names = {"--report-id"}, description = "UUID provided by Data Ingestion Service during report ingestion", interactive = true, echo = true, required = true)
     String reportUuid;
 
-    @CommandLine.Option(names = {"--admin-user"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)
-    String adminUser;
+    @CommandLine.Option(names = {"--username"}, description = "Username to connect to DI service", interactive = true, echo = true, required = true)
+    String username;
 
-    @CommandLine.Option(names = {"--admin-password"}, description = "Admin Password to connect to DI service", interactive = true, required = true)
-    char[] adminPassword;
+    @CommandLine.Option(names = {"--password"}, description = "Password to connect to DI service", interactive = true, required = true)
+    char[] password;
 
     AuthModel authModel = new AuthModel();
     AuthUtil authUtil = new AuthUtil();
@@ -24,20 +24,20 @@ public class ReportStatus implements Runnable{
 
     @Override
     public void run() {
-        if(adminUser != null && adminPassword != null && reportUuid != null) {
-            if(!adminUser.isEmpty() && adminPassword.length > 0) {
+        if(username != null && password != null && reportUuid != null) {
+            if(!username.isEmpty() && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.reportsEndpoint");
+                String serviceEndpoint = properties.getProperty("service.local.reportStatusEndpoint");
 
-                authModel.setAdminUser(adminUser);
-                authModel.setAdminPassword(adminPassword);
+                authModel.setUsername(username);
+                authModel.setPassword(password);
                 authModel.setServiceEndpoint(serviceEndpoint + "/" + reportUuid);
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "status");
                 System.out.println(apiResponse);
             }
             else {
-                System.err.println("Admin username or password is empty.");
+                System.err.println("Username or password is empty.");
             }
         }
         else {

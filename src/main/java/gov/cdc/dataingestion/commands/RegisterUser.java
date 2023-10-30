@@ -33,12 +33,16 @@ public class RegisterUser implements Runnable {
         if(username != null && password != null && adminUser != null && adminPassword != null) {
             if(!username.isEmpty() && password.length > 0 && !adminUser.isEmpty() && adminPassword.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.registrationEndpoint") + "?username="
-                        + username + "&password=" + new String(password);
+                String serviceEndpoint = properties.getProperty("service.local.registrationEndpoint");
+
+                StringBuilder requestBody = new StringBuilder();
+                requestBody.append(username);
+                requestBody.append(new String(password));
 
                 authModel.setAdminUser(adminUser);
                 authModel.setAdminPassword(adminPassword);
                 authModel.setServiceEndpoint(serviceEndpoint);
+                authModel.setRequestBody(requestBody.toString());
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "register");
                 if(apiResponse != null) {

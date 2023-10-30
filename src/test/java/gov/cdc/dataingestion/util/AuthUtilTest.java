@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 *
 * THIS CLASS HAS BEEN CREATED TO TEST THE AUTH UTIL IF CASES AND ALSO TO BRING THE CODE COVERAGE
 * TO THE STANDARD BAR OF 90%. THIS CLASS REQUIRES ENVIRONMENT VARIABLES TO RUN THE UNIT TESTS. TO
-* RUN THESE UNIT TESTS PASS ADMIN_USERNAME AND ADMIN_PASSWORD THROUGH THE ENVIRONMENT VARIABLES.
+* RUN THESE UNIT TESTS PASS USERNAME AND PASSWORD THROUGH THE ENVIRONMENT VARIABLES.
 */
 
 class AuthUtilTest {
@@ -56,8 +56,8 @@ class AuthUtilTest {
         propUtilMock = new PropUtil();
         Properties propertiesMock = propUtilMock.loadPropertiesFile();
         serviceEndpoint = propertiesMock.getProperty("service.reportsEndpoint");
-        authModelMock.setAdminUser(System.getenv("ADMIN_USERNAME"));
-        authModelMock.setAdminPassword(System.getenv("ADMIN_PASSWORD").toCharArray());
+        authModelMock.setUsername(System.getenv("USERNAME"));
+        authModelMock.setPassword(System.getenv("PASSWORD").toCharArray());
     }
 
     @AfterEach

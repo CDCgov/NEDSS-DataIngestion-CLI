@@ -17,11 +17,11 @@ public class InjectHL7 implements Runnable {
     @CommandLine.Option(names = {"--hl7-file"}, description = "HL7 file name with fully qualified path", interactive = true, echo = true, required = true)
     String hl7FilePath;
 
-    @CommandLine.Option(names = {"--admin-user"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)
-    String adminUser;
+    @CommandLine.Option(names = {"--username"}, description = "Username to connect to DI service", interactive = true, echo = true, required = true)
+    String username;
 
-    @CommandLine.Option(names = {"--admin-password"}, description = "Admin Password to connect to DI service", interactive = true, required = true)
-    char[] adminPassword;
+    @CommandLine.Option(names = {"--password"}, description = "Password to connect to DI service", interactive = true, required = true)
+    char[] password;
 
     AuthModel authModel = new AuthModel();
     AuthUtil authUtil = new AuthUtil();
@@ -30,8 +30,8 @@ public class InjectHL7 implements Runnable {
 
     @Override
     public void run() {
-        if(adminUser != null && adminPassword != null && hl7FilePath != null) {
-            if(!adminUser.isEmpty() && adminPassword.length > 0) {
+        if(username != null && password != null && hl7FilePath != null) {
+            if(!username.isEmpty() && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
                 StringBuilder requestBody = new StringBuilder();
 
@@ -46,16 +46,16 @@ public class InjectHL7 implements Runnable {
                     throw new RuntimeException(e);
                 }
 
-                authModel.setAdminUser(adminUser);
-                authModel.setAdminPassword(adminPassword);
-                authModel.setServiceEndpoint(properties.getProperty("service.reportsEndpoint"));
+                authModel.setUsername(username);
+                authModel.setPassword(password);
+                authModel.setServiceEndpoint(properties.getProperty("service.local.reportsEndpoint"));
                 authModel.setRequestBody(requestBody.toString());
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "injecthl7");
                 System.out.println(apiResponse);
             }
             else {
-                System.err.println("Admin username or password is empty.");
+                System.err.println("Username or password is empty.");
             }
         }
         else {

@@ -52,8 +52,8 @@ class InjectHL7Test {
 
     @Test
     void testRunSuccessfulInjection() throws IOException {
-        String adminUser = "adminUser";
-        char[] adminPassword = "adminPassword".toCharArray();
+        String username = "testUser";
+        char[] password = "testUserPassword".toCharArray();
         String apiResponse = "Dummy_UUID";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
@@ -61,8 +61,8 @@ class InjectHL7Test {
         File tempHL7File = getFile();
 
         injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
-        injectHL7.adminUser = adminUser;
-        injectHL7.adminPassword = adminPassword;
+        injectHL7.username = username;
+        injectHL7.password = password;
 
         injectHL7.run();
 
@@ -70,8 +70,8 @@ class InjectHL7Test {
         verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
 
         String expectedOutput = "Dummy_UUID";
-        assertEquals("adminUser", authModelCaptor.getValue().getAdminUser());
-        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
+        assertEquals("testUser", authModelCaptor.getValue().getUsername());
+        assertArrayEquals("testUserPassword".toCharArray(), authModelCaptor.getValue().getPassword());
         assertEquals(expectedOutput, outStream.toString().trim());
 
         assertTrue(tempHL7File.delete());
@@ -79,28 +79,28 @@ class InjectHL7Test {
 
     @Test
     void testRunInvalidPath() {
-        String adminUser = "adminUser";
-        char[] adminPassword = "adminPassword".toCharArray();
+        String username = "testUser";
+        char[] password = "testUserPassword".toCharArray();
 
         injectHL7.hl7FilePath = "invalid-path/to/hl7-input.hl7";
-        injectHL7.adminUser = adminUser;
-        injectHL7.adminPassword = adminPassword;
+        injectHL7.username = username;
+        injectHL7.password = password;
 
         assertThrows(RuntimeException.class, injectHL7::run);
     }
 
     @Test
     void testRunAdminUnauthorized() throws IOException {
-        String adminUser = "notAdmin";
-        char[] adminPassword = "notAdminPassword".toCharArray();
-        String apiResponse = "Unauthorized. Admin username/password is incorrect.";
+        String username = "notTestUser";
+        char[] password = "notTestUserPassword".toCharArray();
+        String apiResponse = "Unauthorized. Username/password is incorrect.";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("injecthl7"))).thenReturn(apiResponse);
         File tempHL7File = getFile();
 
-        injectHL7.adminUser = adminUser;
-        injectHL7.adminPassword = adminPassword;
+        injectHL7.username = username;
+        injectHL7.password = password;
         injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
         injectHL7.run();
 
@@ -110,12 +110,12 @@ class InjectHL7Test {
 
     @Test
     void testRunEmptyAdminUsernameOrPassword() {
-        String adminUser = "";
-        char[] adminPassword = "adminPassword".toCharArray();
-        String expectedOutput = "Admin username or password is empty.";
+        String username = "";
+        char[] password = "testUserPassword".toCharArray();
+        String expectedOutput = "Username or password is empty.";
 
-        injectHL7.adminUser = adminUser;
-        injectHL7.adminPassword = adminPassword;
+        injectHL7.username = username;
+        injectHL7.password = password;
         injectHL7.hl7FilePath = hl7FilePath;
         injectHL7.run();
 
@@ -125,12 +125,12 @@ class InjectHL7Test {
 
     @Test
     void testRunNullAdminUsernameOrPassword() {
-        String adminUser = "admin";
-        char[] adminPassword = null;
+        String username = "testUser";
+        char[] password = null;
         String expectedOutput = "One or more inputs are null.";
 
-        injectHL7.adminUser = adminUser;
-        injectHL7.adminPassword = adminPassword;
+        injectHL7.username = username;
+        injectHL7.password = password;
         injectHL7.hl7FilePath = hl7FilePath;
         injectHL7.run();
 
@@ -141,8 +141,8 @@ class InjectHL7Test {
     @Test
     void testRunAllEmptyInputs() {
         injectHL7.hl7FilePath = null;
-        injectHL7.adminUser = null;
-        injectHL7.adminPassword = null;
+        injectHL7.username = null;
+        injectHL7.password = null;
 
         injectHL7.run();
 

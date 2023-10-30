@@ -55,8 +55,8 @@ class TokenGeneratorTest {
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
+        tokenGenerator.username = adminUser;
+        tokenGenerator.password = adminPassword;
         tokenGenerator.run();
 
         verify(authUtilMock).getResponseFromDIService(tokenGenerator.authModel, "token");
@@ -72,8 +72,8 @@ class TokenGeneratorTest {
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
+        tokenGenerator.username = adminUser;
+        tokenGenerator.password = adminPassword;
         tokenGenerator.run();
 
         verify(authUtilMock).getResponseFromDIService(tokenGenerator.authModel, "token");
@@ -84,10 +84,10 @@ class TokenGeneratorTest {
     void testRunEmptyAdminUsernameOrPassword() {
         String adminUser = "";
         char[] adminPassword = "adminPassword".toCharArray();
-        String expectedOutput = "Admin username or password is empty.";
+        String expectedOutput = "Username or password is empty.";
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
+        tokenGenerator.username = adminUser;
+        tokenGenerator.password = adminPassword;
         tokenGenerator.run();
 
         verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
@@ -98,10 +98,10 @@ class TokenGeneratorTest {
     void testRunNullAdminUsernameOrPassword() {
         String adminUser = "admin";
         char[] adminPassword = null;
-        String expectedOutput = "Admin username or password is null.";
+        String expectedOutput = "Username or password is null.";
 
-        tokenGenerator.adminUser = adminUser;
-        tokenGenerator.adminPassword = adminPassword;
+        tokenGenerator.username = adminUser;
+        tokenGenerator.password = adminPassword;
         tokenGenerator.run();
 
         verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
