@@ -27,7 +27,7 @@ public class ReportStatus implements Runnable{
         if(username != null && password != null && reportUuid != null) {
             if(!username.isEmpty() && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.local.reportStatusEndpoint");
+                String serviceEndpoint = properties.getProperty("service.reportStatusEndpoint");
 
                 authModel.setUsername(username);
                 authModel.setPassword(password);

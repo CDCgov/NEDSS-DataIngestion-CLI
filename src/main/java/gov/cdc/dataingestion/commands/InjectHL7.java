@@ -48,7 +48,7 @@ public class InjectHL7 implements Runnable {
 
                 authModel.setUsername(username);
                 authModel.setPassword(password);
-                authModel.setServiceEndpoint(properties.getProperty("service.local.reportsEndpoint"));
+                authModel.setServiceEndpoint(properties.getProperty("service.reportsEndpoint"));
                 authModel.setRequestBody(requestBody.toString());
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "injecthl7");

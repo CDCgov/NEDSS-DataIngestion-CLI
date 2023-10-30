@@ -33,7 +33,7 @@ public class RegisterUser implements Runnable {
         if(username != null && password != null && adminUser != null && adminPassword != null) {
             if(!username.isEmpty() && password.length > 0 && !adminUser.isEmpty() && adminPassword.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.local.registrationEndpoint");
+                String serviceEndpoint = properties.getProperty("service.registrationEndpoint");
 
                 StringBuilder requestBody = new StringBuilder();
                 requestBody.append(username);

@@ -26,9 +26,9 @@ public class TokenGenerator implements Runnable {
             if(!username.isEmpty() && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
 
-                authModel.setAdminUser(username);
-                authModel.setAdminPassword(password);
-                authModel.setServiceEndpoint(properties.getProperty("service.local.tokenEndpoint"));
+                authModel.setUsername(username);
+                authModel.setPassword(password);
+                authModel.setServiceEndpoint(properties.getProperty("service.tokenEndpoint"));
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "token");
                 System.out.println(apiResponse);
