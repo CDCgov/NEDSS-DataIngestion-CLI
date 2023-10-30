@@ -48,8 +48,8 @@ class ReportStatusTest {
 
     @Test
     void testRunSuccessfulStatus() {
-        reportStatus.username = "user";
-        reportStatus.password = "userPassword".toCharArray();
+        reportStatus.username = "testUser";
+        reportStatus.password = "testUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
@@ -63,8 +63,8 @@ class ReportStatusTest {
 
     @Test
     void testRunUserUnauthorized() {
-        reportStatus.username = "notUser";
-        reportStatus.password = "notUserPassword".toCharArray();
+        reportStatus.username = "notTestUser";
+        reportStatus.password = "notTestUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
@@ -80,7 +80,7 @@ class ReportStatusTest {
     @Test
     void testRunEmptyUsernameOrPassword() {
         reportStatus.username = "";
-        reportStatus.password = "userPassword".toCharArray();
+        reportStatus.password = "testUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
         String expectedOutput = "Username or password is empty.";
 

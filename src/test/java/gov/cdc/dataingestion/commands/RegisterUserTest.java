@@ -49,7 +49,7 @@ class RegisterUserTest {
     @Test
     void testRunSuccessfulRegistration() {
         registerUser.username = "testUser";
-        registerUser.password = "testPassword".toCharArray();
+        registerUser.password = "testUserPassword".toCharArray();
         registerUser.adminUser = "adminUser";
         registerUser.adminPassword = "adminPassword".toCharArray();
 
@@ -70,7 +70,7 @@ class RegisterUserTest {
     @Test
     void testRunUsernameAlreadyExists() {
         registerUser.username = "testUser";
-        registerUser.password = "testPassword".toCharArray();
+        registerUser.password = "testUserPassword".toCharArray();
         registerUser.adminUser = "adminUser";
         registerUser.adminPassword = "adminPassword".toCharArray();
 
@@ -91,7 +91,7 @@ class RegisterUserTest {
     @Test
     void testRunAdminUnauthorized() {
         registerUser.username = "testUser";
-        registerUser.password = "testPassword".toCharArray();
+        registerUser.password = "testUserPassword".toCharArray();
         registerUser.adminUser = "notAdminUser";
         registerUser.adminPassword = "notAdminPassword".toCharArray();
 
@@ -112,7 +112,7 @@ class RegisterUserTest {
     @Test
     void testRunNullResponse() {
         registerUser.username = "testUser";
-        registerUser.password = "testPassword".toCharArray();
+        registerUser.password = "testUserPassword".toCharArray();
         registerUser.adminUser = "notAdminUser";
         registerUser.adminPassword = "notAdminPassword".toCharArray();
 
@@ -133,7 +133,7 @@ class RegisterUserTest {
     @Test
     void testRunException() {
         registerUser.username = "testUser";
-        registerUser.password = "testPassword".toCharArray();
+        registerUser.password = "testUserPassword".toCharArray();
         registerUser.adminUser = "notAdminUser";
         registerUser.adminPassword = "notAdminPassword".toCharArray();
 
@@ -188,7 +188,7 @@ class RegisterUserTest {
     @Test
     void testRunSomeNullInputs() {
         registerUser.username = null;
-        registerUser.password = "testPassword".toCharArray();
+        registerUser.password = "testUserPassword".toCharArray();
         registerUser.adminUser = "adminUser";
         registerUser.adminPassword = null;
 

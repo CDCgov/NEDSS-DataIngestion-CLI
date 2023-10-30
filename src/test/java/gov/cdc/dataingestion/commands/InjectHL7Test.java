@@ -90,7 +90,7 @@ class InjectHL7Test {
     }
 
     @Test
-    void testRunAdminUnauthorized() throws IOException {
+    void testRunUserUnauthorized() throws IOException {
         String username = "notTestUser";
         char[] password = "notTestUserPassword".toCharArray();
         String apiResponse = "Unauthorized. Username/password is incorrect.";
@@ -109,7 +109,7 @@ class InjectHL7Test {
     }
 
     @Test
-    void testRunEmptyAdminUsernameOrPassword() {
+    void testRunEmptyUsernameOrPassword() {
         String username = "";
         char[] password = "testUserPassword".toCharArray();
         String expectedOutput = "Username or password is empty.";
@@ -124,7 +124,7 @@ class InjectHL7Test {
     }
 
     @Test
-    void testRunNullAdminUsernameOrPassword() {
+    void testRunNullUsernameOrPassword() {
         String username = "testUser";
         char[] password = null;
         String expectedOutput = "One or more inputs are null.";
