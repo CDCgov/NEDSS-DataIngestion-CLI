@@ -63,13 +63,12 @@ public class AuthUtil {
             else {
                 statusCode = response.getStatusLine().getStatusCode();
             }
-
             if (statusCode == 200) {
                 InputStream content = response.getEntity().getContent();
                 String result = convertInputStreamToString(content);
                 httpsClient.close();
                 return result;
-            } else if (response.getStatusLine().getStatusCode() == 401) {
+            } else if (statusCode == 401) {
                 httpsClient.close();
                 return "Unauthorized. Username/password is incorrect.";
             } else {
