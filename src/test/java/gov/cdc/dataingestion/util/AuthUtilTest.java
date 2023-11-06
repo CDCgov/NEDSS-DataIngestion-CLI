@@ -4,6 +4,7 @@ import gov.cdc.dataingestion.model.AuthModel;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.jupiter.api.AfterEach;
@@ -46,6 +47,8 @@ class AuthUtilTest {
     private AuthModel authModelMock;
     private PropUtil propUtilMock;
     private String serviceEndpoint;
+    private String adminUserName = "test";
+    private String adminPassword = "password";
 
 
     @BeforeEach
@@ -56,8 +59,8 @@ class AuthUtilTest {
         propUtilMock = new PropUtil();
         Properties propertiesMock = propUtilMock.loadPropertiesFile();
         serviceEndpoint = propertiesMock.getProperty("service.reportsEndpoint");
-        authModelMock.setAdminUser(System.getenv("ADMIN_USERNAME"));
-        authModelMock.setAdminPassword(System.getenv("ADMIN_PASSWORD").toCharArray());
+        authModelMock.setAdminUser(adminUserName);
+        authModelMock.setAdminPassword(adminPassword.toCharArray());
     }
 
     @AfterEach
@@ -97,7 +100,7 @@ class AuthUtilTest {
         authModelMock.setRequestBody("Dummy HL7 Input");
         authModelMock.setServiceEndpoint(serviceEndpoint + "dummy_endpoint");
 
-        when(httpClientMock.execute(eq(httpPostMock))).thenThrow(new IOException("Connection refused."));
+        when(httpClientMock.execute(any(HttpGet.class))).thenThrow(new IOException("Connection refused."));
 
         String actualResponse = authUtil.getResponseFromDIService(authModelMock, "status");
         assertEquals("Something went wrong on the server side. Please check the logs.", actualResponse);

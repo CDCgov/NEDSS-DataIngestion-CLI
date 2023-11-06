@@ -11,9 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-@CommandLine.Command(name = "injecthl7", mixinStandardHelpOptions = true, description = "This functionality will let developers use the /api/reports endpoint of DI Service.")
-public class InjectHL7 implements Runnable {
-
+@CommandLine.Command(name = "validation", mixinStandardHelpOptions = true, description = "This functionality will validate the provided HL7 message.")
+public class Hl7Validation implements Runnable{
     @CommandLine.Option(names = {"--hl7-file"}, description = "HL7 file name with fully qualified path", interactive = true, echo = true, required = true)
     String hl7FilePath;
 
@@ -27,14 +26,12 @@ public class InjectHL7 implements Runnable {
     AuthUtil authUtil = new AuthUtil();
     PropUtil propUtil = new PropUtil();
 
-
     @Override
     public void run() {
         if(adminUser != null && adminPassword != null && hl7FilePath != null) {
             if(!adminUser.isEmpty() && adminPassword.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
                 StringBuilder requestBody = new StringBuilder();
-
                 try(BufferedReader reader = new BufferedReader(new FileReader(hl7FilePath))) {
                     String line;
                     while((line = reader.readLine()) != null) {
@@ -46,12 +43,15 @@ public class InjectHL7 implements Runnable {
                     throw new RuntimeException(e);
                 }
 
+
                 authModel.setAdminUser(adminUser);
                 authModel.setAdminPassword(adminPassword);
-                authModel.setServiceEndpoint(properties.getProperty("service.apiUrl") + properties.getProperty("service.reportsEndpoint"));
+                // Change this to the actual endpoint
+                authModel.setServiceEndpoint(properties.getProperty("service.apiUrl") + properties.getProperty("service.hl7Validation"));
                 authModel.setRequestBody(requestBody.toString());
 
-                String apiResponse = authUtil.getResponseFromDIService(authModel, "injecthl7");
+
+                String apiResponse = authUtil.getResponseFromDIService(authModel, "hl7validation");
                 System.out.println(apiResponse);
             }
             else {

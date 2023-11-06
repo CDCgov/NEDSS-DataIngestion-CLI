@@ -32,10 +32,14 @@ public class AuthUtil {
                 response = httpsClient.execute(getRequest);
             }
             else {
+
                 HttpPost postRequest = new HttpPost(authModel.getServiceEndpoint());
                 Header authHeader = new BasicScheme(StandardCharsets.UTF_8).authenticate(credentials, postRequest, null);
                 postRequest.addHeader("accept", "*/*");
-                postRequest.addHeader("msgType", "HL7");
+                if (!name.equals("hl7validation")) {
+                    postRequest.addHeader("msgType", "HL7");
+                    postRequest.addHeader("validationActive", "true");
+                }
                 postRequest.addHeader("Content-Type", "text/plain");
                 postRequest.addHeader(authHeader);
 

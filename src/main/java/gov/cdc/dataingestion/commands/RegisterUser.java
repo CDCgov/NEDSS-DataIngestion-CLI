@@ -33,7 +33,7 @@ public class RegisterUser implements Runnable {
         if(username != null && password != null && adminUser != null && adminPassword != null) {
             if(!username.isEmpty() && password.length > 0 && !adminUser.isEmpty() && adminPassword.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.registrationEndpoint") + "?username="
+                String serviceEndpoint = properties.getProperty("service.apiUrl") + properties.getProperty("service.registrationEndpoint") + "?username="
                         + username + "&password=" + new String(password);
 
                 authModel.setAdminUser(adminUser);
