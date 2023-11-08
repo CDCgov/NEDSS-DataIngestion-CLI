@@ -17,6 +17,7 @@
     - [injecthl7](#injecthl7-command)
    
     - [status](#status-command)
+    - [hl7validation](#hl7-validation)
 
 5. [Troubleshooting](#troubleshooting)
 
@@ -148,6 +149,34 @@ You will be prompted wit interactive input where you'll be providing all the req
 Arguments:
 
 * *--report-id*: The UUID provided when the report was injected into the DataIngestion service (required).
+
+* *--admin-user*: The admin username to connect to the DataIngestion Service (required).
+
+* *--admin-password*: The admin password to connect to the DataIngestion Service (required).
+
+### hl7 validation Command <a name="hl7-validation"></a>
+
+Validation command allows developers to use the /api/reports/hl7-validator endpoint of the DataIngestion Service to validate any HL7 messages.
+
+Usage:
+
+Mac OS/Linux:
+
+```bash
+./nbs-di-cli validation --hl7-file --admin-user --admin-password
+```
+
+Windows:
+
+```bash
+nbs-di-cli validation --hl7-file --admin-user --admin-password
+```
+
+You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
+
+Arguments:
+
+* *--validation --hl7-file*:  The full path of the HL7 file(required).
 
 * *--admin-user*: The admin username to connect to the DataIngestion Service (required).
 
