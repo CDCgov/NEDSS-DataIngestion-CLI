@@ -66,8 +66,17 @@ public class AuthUtil {
                 httpsClient.close();
                 return "Unauthorized. Admin username/password is incorrect.";
             } else {
+                String result;
+                if (name.equals("hl7validation")) {
+                    InputStream content = response.getEntity().getContent();
+                    result = convertInputStreamToString(content);
+                } else {
+                    return "Something went wrong on the server side. Please check the logs.";
+                }
                 httpsClient.close();
-                return "Something went wrong on the server side. Please check the logs.";
+                return result;
+
+
             }
         } catch (Exception e) {
                 return "Exception occurred: " + e.getMessage();
