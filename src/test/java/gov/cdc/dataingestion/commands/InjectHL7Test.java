@@ -127,7 +127,7 @@ class InjectHL7Test {
     void testRunNullUsernameOrPassword() {
         String username = "testUser";
         char[] password = null;
-        String expectedOutput = "One or more inputs are null.";
+        String expectedOutput = "Username or password or HL7 file path is null.";
 
         injectHL7.username = username;
         injectHL7.password = password;
@@ -146,7 +146,7 @@ class InjectHL7Test {
 
         injectHL7.run();
 
-        String expectedOutput = "One or more inputs are null.";
+        String expectedOutput = "Username or password or HL7 file path is null.";
         assertEquals(expectedOutput, errStream.toString().trim());
         verifyNoInteractions(authUtilMock);
     }

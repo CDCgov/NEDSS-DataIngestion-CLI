@@ -42,6 +42,7 @@ public class AuthUtil {
                 Header authHeader = new BasicScheme(StandardCharsets.UTF_8).authenticate(credentials, postRequest, null);
                 postRequest.addHeader("accept", "*/*");
                 postRequest.addHeader("msgType", "HL7");
+                postRequest.addHeader("validationActive", "true");
                 if(name.equals("register")) {
                     postRequest.addHeader("Content-Type", "application/json");
                 }
@@ -73,7 +74,7 @@ public class AuthUtil {
                 return "Unauthorized. Username/password is incorrect.";
             } else {
                 httpsClient.close();
-                return "Something went wrong on the server side. Please check the logs.";
+                return "Something went wrong on the server side. Please retry after sometime.";
             }
         } catch (Exception e) {
                 return "Exception occurred: " + e.getMessage();

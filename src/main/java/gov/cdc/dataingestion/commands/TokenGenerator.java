@@ -26,7 +26,7 @@ public class TokenGenerator implements Runnable {
             if(!username.isEmpty() && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
 
-                authModel.setUsername(username);
+                authModel.setUsername(username.trim());
                 authModel.setPassword(password);
                 authModel.setServiceEndpoint(properties.getProperty("service.tokenEndpoint"));
 

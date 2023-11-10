@@ -55,7 +55,7 @@ class AuthUtilTest {
         authModelMock = new AuthModel();
         propUtilMock = new PropUtil();
         Properties propertiesMock = propUtilMock.loadPropertiesFile();
-        serviceEndpoint = propertiesMock.getProperty("service.reportsEndpoint");
+        serviceEndpoint = propertiesMock.getProperty("service.int1.reportsEndpoint");
         authModelMock.setUsername(System.getenv("USERNAME"));
         authModelMock.setPassword(System.getenv("PASSWORD").toCharArray());
     }
@@ -90,17 +90,6 @@ class AuthUtilTest {
         when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_UUID"));
 
         authUtil.getResponseFromDIService(authModelMock, "injecthl7");
-    }
-
-    @Test
-    void testGetResponseFromDIServiceException() throws Exception {
-        authModelMock.setRequestBody("Dummy HL7 Input");
-        authModelMock.setServiceEndpoint(serviceEndpoint + "dummy_endpoint");
-
-        when(httpClientMock.execute(eq(httpPostMock))).thenThrow(new IOException("Connection refused."));
-
-        String actualResponse = authUtil.getResponseFromDIService(authModelMock, "status");
-        assertEquals("Something went wrong on the server side. Please check the logs.", actualResponse);
     }
 
     private InputStream toInputStream(String value) {

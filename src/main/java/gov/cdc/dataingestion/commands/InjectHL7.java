@@ -41,12 +41,13 @@ public class InjectHL7 implements Runnable {
                         requestBody.append(line);
                     }
                 } catch (FileNotFoundException e) {
+                    System.err.println("HL7 file not found at the given location.");
                     throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
-                authModel.setUsername(username);
+                authModel.setUsername(username.trim());
                 authModel.setPassword(password);
                 authModel.setServiceEndpoint(properties.getProperty("service.reportsEndpoint"));
                 authModel.setRequestBody(requestBody.toString());
@@ -59,7 +60,7 @@ public class InjectHL7 implements Runnable {
             }
         }
         else {
-            System.err.println("One or more inputs are null.");
+            System.err.println("Username or password or HL7 file path is null.");
         }
     }
 }

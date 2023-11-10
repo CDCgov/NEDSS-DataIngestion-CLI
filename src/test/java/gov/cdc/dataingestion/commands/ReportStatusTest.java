@@ -95,7 +95,7 @@ class ReportStatusTest {
         reportStatus.username = "user";
         reportStatus.password = null;
         reportStatus.reportUuid = "12345";
-        String expectedOutput = "One or more inputs are null.";
+        String expectedOutput = "Username or password or report UUID is null.";
 
         reportStatus.run();
 

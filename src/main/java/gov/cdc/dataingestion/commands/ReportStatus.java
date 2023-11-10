@@ -29,7 +29,7 @@ public class ReportStatus implements Runnable{
                 Properties properties = propUtil.loadPropertiesFile();
                 String serviceEndpoint = properties.getProperty("service.reportStatusEndpoint");
 
-                authModel.setUsername(username);
+                authModel.setUsername(username.trim());
                 authModel.setPassword(password);
                 authModel.setServiceEndpoint(serviceEndpoint + "/" + reportUuid);
 
@@ -41,7 +41,7 @@ public class ReportStatus implements Runnable{
             }
         }
         else {
-            System.err.println("One or more inputs are null.");
+            System.err.println("Username or password or report UUID is null.");
         }
     }
 }
