@@ -7,14 +7,14 @@ import picocli.CommandLine;
 
 import java.util.Properties;
 
-@CommandLine.Command(name = "token", mixinStandardHelpOptions = true, description = "Generates a JWT token.")
+@CommandLine.Command(name = "token", mixinStandardHelpOptions = true, description = "Generates a JWT token to connect to DI Service.")
 public class TokenGenerator implements Runnable {
 
-    @CommandLine.Option(names = {"--admin-user"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)
-    String adminUser;
+    @CommandLine.Option(names = {"--username"}, description = "Username to connect to DI service", interactive = true, echo = true, required = true)
+    String username;
 
-    @CommandLine.Option(names = {"--admin-password"}, description = "Admin Password to connect to DI service", interactive = true, required = true)
-    char[] adminPassword;
+    @CommandLine.Option(names = {"--password"}, description = "Password to connect to DI service", interactive = true, required = true)
+    char[] password;
 
     AuthModel authModel = new AuthModel();
     AuthUtil authUtil = new AuthUtil();
@@ -22,23 +22,22 @@ public class TokenGenerator implements Runnable {
 
     @Override
     public void run() {
-        if(adminUser != null && adminPassword != null) {
-            if(!adminUser.isEmpty() && adminPassword.length > 0) {
+        if(username != null && password != null) {
+            if(!username.isEmpty() && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-
-                authModel.setAdminUser(adminUser);
-                authModel.setAdminPassword(adminPassword);
-                authModel.setServiceEndpoint(properties.getProperty("service.apiUrl") + properties.getProperty("service.tokenEndpoint"));
+                authModel.setUsername(username.trim());
+                authModel.setPassword(password);
+                authModel.setServiceEndpoint(properties.getProperty("service.tokenEndpoint"));
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "token");
                 System.out.println(apiResponse);
             }
             else {
-                System.err.println("Admin username or password is empty.");
+                System.err.println("Username or password is empty.");
             }
         }
         else {
-            System.err.println("Admin username or password is null.");
+            System.err.println("Username or password is null.");
         }
     }
 }

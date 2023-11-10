@@ -18,10 +18,20 @@ import java.nio.charset.StandardCharsets;
 
 public class AuthModel {
 
+    private String username;
+    private char[] password;
     private String adminUser;
     private char[] adminPassword;
     private String serviceEndpoint;
     private String requestBody;
+
+    public String getUsername() { return username; }
+
+    public void setUsername(String username) { this.username = username; }
+
+    public char[] getPassword() { return password; }
+
+    public void setPassword(char[] password) { this.password = password; }
 
     public String getAdminUser() {
         return adminUser;

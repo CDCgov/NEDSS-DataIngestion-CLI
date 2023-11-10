@@ -33,24 +33,17 @@ public class RegisterUser implements Runnable {
         if(username != null && password != null && adminUser != null && adminPassword != null) {
             if(!username.isEmpty() && password.length > 0 && !adminUser.isEmpty() && adminPassword.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.apiUrl") + properties.getProperty("service.registrationEndpoint") + "?username="
-                        + username + "&password=" + new String(password);
+                String serviceEndpoint = properties.getProperty("service.registrationEndpoint");
+                String jsonRequestBody = "{\"username\": \"" + username.trim() + "\", \"password\": \"" + new String(password) + "\"}";
 
-                authModel.setAdminUser(adminUser);
+                authModel.setAdminUser(adminUser.trim());
                 authModel.setAdminPassword(adminPassword);
                 authModel.setServiceEndpoint(serviceEndpoint);
+                authModel.setRequestBody(jsonRequestBody);
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "register");
                 if(apiResponse != null) {
-                    if(apiResponse.contains("CREATED")) {
-                        System.out.println("User onboarded successfully.");
-                    }
-                    else if(apiResponse.contains("NOT_ACCEPTABLE")) {
-                        System.out.println("Username already exists. Please choose a unique client username.");
-                    }
-                    else {
-                        System.out.println(apiResponse);
-                    }
+                    System.out.println(apiResponse);
                 }
                 else {
                     System.err.println("Something went wrong with API. Response came back as null.");
@@ -64,6 +57,5 @@ public class RegisterUser implements Runnable {
         else {
             System.err.println("One or more inputs are null.");
         }
-
     }
 }

@@ -60,8 +60,8 @@ class Hl7ValidationTest {
         File tempHL7File = getFile();
 
         target.hl7FilePath = tempHL7File.getAbsolutePath();
-        target.adminUser = adminUser;
-        target.adminPassword = adminPassword;
+        target.username = adminUser;
+        target.password = adminPassword;
 
         target.run();
 
@@ -69,8 +69,8 @@ class Hl7ValidationTest {
         verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
 
         String expectedOutput = "Dummy_UUID";
-        assertEquals("adminUser", authModelCaptor.getValue().getAdminUser());
-        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getAdminPassword());
+        assertEquals("adminUser", authModelCaptor.getValue().getUsername());
+        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getPassword());
         assertEquals(expectedOutput, outStream.toString().trim());
 
         assertTrue(tempHL7File.delete());
@@ -82,8 +82,8 @@ class Hl7ValidationTest {
         char[] adminPassword = "adminPassword".toCharArray();
 
         target.hl7FilePath = "invalid-path/to/hl7-input.hl7";
-        target.adminUser = adminUser;
-        target.adminPassword = adminPassword;
+        target.username = adminUser;
+        target.password = adminPassword;
 
         assertThrows(RuntimeException.class, target::run);
     }
@@ -98,8 +98,8 @@ class Hl7ValidationTest {
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("hl7validation"))).thenReturn(apiResponse);
         File tempHL7File = getFile();
 
-        target.adminUser = adminUser;
-        target.adminPassword = adminPassword;
+        target.username = adminUser;
+        target.password = adminPassword;
         target.hl7FilePath = tempHL7File.getAbsolutePath();
         target.run();
 
@@ -111,10 +111,10 @@ class Hl7ValidationTest {
     void testRunEmptyAdminUsernameOrPassword() {
         String adminUser = "";
         char[] adminPassword = "adminPassword".toCharArray();
-        String expectedOutput = "Admin username or password is empty.";
+        String expectedOutput = "Username or password is empty.";
 
-        target.adminUser = adminUser;
-        target.adminPassword = adminPassword;
+        target.username = adminUser;
+        target.password = adminPassword;
         target.hl7FilePath = hl7FilePath;
         target.run();
 
@@ -126,10 +126,10 @@ class Hl7ValidationTest {
     void testRunNullAdminUsernameOrPassword() {
         String adminUser = "admin";
         char[] adminPassword = null;
-        String expectedOutput = "One or more inputs are null.";
+        String expectedOutput = "Username or password or HL7 file path is null.";
 
-        target.adminUser = adminUser;
-        target.adminPassword = adminPassword;
+        target.username = adminUser;
+        target.password = adminPassword;
         target.hl7FilePath = hl7FilePath;
         target.run();
 
@@ -140,12 +140,12 @@ class Hl7ValidationTest {
     @Test
     void testRunAllEmptyInputs() {
         target.hl7FilePath = null;
-        target.adminUser = null;
-        target.adminPassword = null;
+        target.username = null;
+        target.password = null;
 
         target.run();
 
-        String expectedOutput = "One or more inputs are null.";
+        String expectedOutput = "Username or password or HL7 file path is null.";
         assertEquals(expectedOutput, errStream.toString().trim());
         verifyNoInteractions(authUtilMock);
     }

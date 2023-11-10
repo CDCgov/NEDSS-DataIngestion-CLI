@@ -48,8 +48,8 @@ class ReportStatusTest {
 
     @Test
     void testRunSuccessfulStatus() {
-        reportStatus.adminUser = "admin";
-        reportStatus.adminPassword = "adminPassword".toCharArray();
+        reportStatus.username = "testUser";
+        reportStatus.password = "testUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
@@ -62,11 +62,11 @@ class ReportStatusTest {
     }
 
     @Test
-    void testRunAdminUnauthorized() {
-        reportStatus.adminUser = "notAdmin";
-        reportStatus.adminPassword = "notAdminPassword".toCharArray();
+    void testRunUserUnauthorized() {
+        reportStatus.username = "notTestUser";
+        reportStatus.password = "notTestUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
-        String apiResponse = "Unauthorized. Admin username/password is incorrect.";
+        String apiResponse = "Unauthorized. Username/password is incorrect.";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn(apiResponse);
@@ -78,11 +78,11 @@ class ReportStatusTest {
     }
 
     @Test
-    void testRunEmptyAdminUsernameOrPassword() {
-        reportStatus.adminUser = "";
-        reportStatus.adminPassword = "adminPassword".toCharArray();
+    void testRunEmptyUsernameOrPassword() {
+        reportStatus.username = "";
+        reportStatus.password = "testUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
-        String expectedOutput = "Admin username or password is empty.";
+        String expectedOutput = "Username or password is empty.";
 
         reportStatus.run();
 
@@ -91,11 +91,11 @@ class ReportStatusTest {
     }
 
     @Test
-    void testRunNullAdminUsernameOrPassword() {
-        reportStatus.adminUser = "admin";
-        reportStatus.adminPassword = null;
+    void testRunNullUsernameOrPassword() {
+        reportStatus.username = "user";
+        reportStatus.password = null;
         reportStatus.reportUuid = "12345";
-        String expectedOutput = "One or more inputs are null.";
+        String expectedOutput = "Username or password or report UUID is null.";
 
         reportStatus.run();
 

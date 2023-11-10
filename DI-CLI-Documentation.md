@@ -50,12 +50,12 @@ The `register` command allows you to onboard a client by providing their usernam
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli register --client-username --client-secret --admin-user --admin-password
+./nbs-di-cli register --client-username --client-secret --username --password
 ```
 
 Windows:
 ```bash
-nbs-di-cli register --client-username --client-secret --admin-user --admin-password
+nbs-di-cli register --client-username --client-secret --username --password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
@@ -66,9 +66,9 @@ Arguments:
 
 * *--client-secret*: The secret provided by the client (required).
 
-* *--admin-user*: The admin username to connect to the DataIngestion Service (required).
+* *--username*: The admin username to connect to the DataIngestion Service (required).
 
-* *--admin-password*: The admin password to connect to the DataIngestion Service (required).
+* *--password*: The admin password to connect to the DataIngestion Service (required).
 
 
 ### token Command <a name="token-command"></a>
@@ -80,22 +80,22 @@ Usage:
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli token --admin-user --admin-password
+./nbs-di-cli token --username --password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli token --admin-user --admin-password
+nbs-di-cli token --username --password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
-* *--admin-user*: The admin username to connect to the DataIngestion Service (required).
+* *--username*: The admin username to connect to the DataIngestion Service (required).
 
-* *--admin-password*: The admin password to connect to the DataIngestion Service (required).
+* *--password*: The admin password to connect to the DataIngestion Service (required).
 
 ### injecthl7 Command <a name="injecthl7-command"></a>
 
@@ -106,13 +106,13 @@ Usage:
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli injecthl7 --hl7-file --admin-user --admin-password
+./nbs-di-cli injecthl7 --hl7-file --username --password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli injecthl7 --hl7-file --admin-user --admin-password
+nbs-di-cli injecthl7 --hl7-file --username --password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
@@ -121,9 +121,9 @@ Arguments:
 
 * *--hl7-file*: The full path of the HL7 file (required).
 
-* *--admin-user*: The admin username to connect to the DataIngestion Service (required).
+* *--username*: The admin username to connect to the DataIngestion Service (required).
 
-* *--admin-password*: The admin password to connect to the DataIngestion Service (required).
+* *--password*: The admin password to connect to the DataIngestion Service (required).
 
 
 ### status Command <a name="status-command"></a>
@@ -135,13 +135,13 @@ Usage:
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli status --report-id --admin-user --admin-password
+./nbs-di-cli status --report-id --username --password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli status --report-id --admin-user --admin-password
+nbs-di-cli status --report-id --username --password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
@@ -150,9 +150,9 @@ Arguments:
 
 * *--report-id*: The UUID provided when the report was injected into the DataIngestion service (required).
 
-* *--admin-user*: The admin username to connect to the DataIngestion Service (required).
+* *--username*: The admin username to connect to the DataIngestion Service (required).
 
-* *--admin-password*: The admin password to connect to the DataIngestion Service (required).
+* *--password*: The admin password to connect to the DataIngestion Service (required).
 
 ### hl7 validation Command <a name="hl7-validation"></a>
 
@@ -163,13 +163,13 @@ Usage:
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli validation --hl7-file --admin-user --admin-password
+./nbs-di-cli validation --hl7-file --username --password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli validation --hl7-file --admin-user --admin-password
+nbs-di-cli validation --hl7-file --username --password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
@@ -178,9 +178,9 @@ Arguments:
 
 * *--validation --hl7-file*:  The full path of the HL7 file(required).
 
-* *--admin-user*: The admin username to connect to the DataIngestion Service (required).
+* *--username*: The admin username to connect to the DataIngestion Service (required).
 
-* *--admin-password*: The admin password to connect to the DataIngestion Service (required).
+* *--password*: The admin password to connect to the DataIngestion Service (required).
 
 ### Troubleshooting <a name="troubleshooting"></a>
 
