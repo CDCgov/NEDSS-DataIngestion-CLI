@@ -156,27 +156,27 @@ Arguments:
 
 ### hl7 validation Command <a name="hl7-validation"></a>
 
-Validation command allows developers to use the /api/reports/hl7-validator endpoint of the DataIngestion Service to validate any HL7 messages.
+HL7 Validate command allows developers to use the /api/reports/hl7-validator endpoint of the DataIngestion Service to validate any HL7 messages.
 
 Usage:
 
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli validation --hl7-file --username --password
+./nbs-di-cli validatehl7 --hl7-file --username --password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli validation --hl7-file --username --password
+nbs-di-cli validatehl7 --hl7-file --username --password
 ```
 
 You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
-* *--validation --hl7-file*:  The full path of the HL7 file(required).
+* *--validatehl7 --hl7-file*:  The full path of the HL7 file(required).
 
 * *--username*: The admin username to connect to the DataIngestion Service (required).
 

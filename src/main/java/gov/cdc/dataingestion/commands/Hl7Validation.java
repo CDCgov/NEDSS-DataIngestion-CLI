@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-@CommandLine.Command(name = "validation", mixinStandardHelpOptions = true, description = "This functionality will validate the provided HL7 message.")
+@CommandLine.Command(name = "validatehl7", mixinStandardHelpOptions = true, description = "This functionality will validate the provided HL7 message.")
 public class Hl7Validation implements Runnable{
     @CommandLine.Option(names = {"--hl7-file"}, description = "HL7 file name with fully qualified path", interactive = true, echo = true, required = true)
     String hl7FilePath;
