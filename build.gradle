@@ -1,14 +1,34 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    ext {
+        testFailures = 0
+    }
+    dependencies {
+        classpath("com.dipien:semantic-version-gradle-plugin:2.0.0")
+    }
+}
+
 plugins {
     id 'java'
-
     id 'application'
+    id 'jacoco'
 
     // Apply GraalVM Native Image plugin
     id 'org.graalvm.buildtools.native' version '0.9.23'
+
+    //Sonarqube Scan
+    id 'org.sonarqube' version '4.4.1.3373'
 }
 
-group 'gov.cdc.dataingestion'
-version '1.0-SNAPSHOT'
+
+group = 'gov.cdc.dataingestion'
+version = '1.0.1-SNAPSHOT'  // The plugin will assign the root project version to all its subprojects.
+apply plugin: "com.dipien.semantic-version"
 
 application {
     mainClass = 'gov.cdc.dataingestion.DataIngestionCLI'
@@ -34,7 +54,7 @@ graalvmNative {
         buildArgs.add("-H:+ReportUnsupportedElementsAtRuntime")
         buildArgs.add("--initialize-at-build-time=java.lang.String")
         buildArgs.add("--initialize-at-build-time=java.util.**")
-        buildArgs.add("-H:ReflectionConfigurationFiles=${projectDir}/src/main/resources/reflection-config.json")
+        buildArgs.add("-H:ReflectionConfigurationFiles=${project.projectDir}/src/main/resources/reflection-config.json")
     }
 }
 
@@ -49,9 +69,55 @@ dependencies {
 }
 
 compileJava {
-    options.compilerArgs += ["-Aproject=${project.group}/${project.name}","-Aother.resource.patterns=.*"]
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}".toString(),"-Aother.resource.patterns=.*"]
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+tasks.withType(Test) {
+    systemProperty "USERNAME", project.findProperty("USERNAME")
+    systemProperty "PASSWORD", project.findProperty("PASSWORD")
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://packages.confluent.io/maven"
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    tasks.named('test') {
+        finalizedBy tasks.named('jacocoTestReport', JacocoReport)
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.projectKey", "CDCgov_NEDSS-DataIngestion-CLI"
+        property "sonar.organization", "cdcgov"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.rootDir}/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+    }
 }
