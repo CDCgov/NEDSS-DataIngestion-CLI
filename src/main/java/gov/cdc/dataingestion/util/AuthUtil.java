@@ -30,7 +30,7 @@ public class AuthUtil {
             CloseableHttpClient httpsClient = HttpClients.createDefault();
             CloseableHttpResponse response = null;
             int statusCode = 0;
-            if(name.equals("status")) {
+            if(name.equals("status") || name.equals("dltmsgs")) {
                 HttpGet getRequest = new HttpGet(authModel.getServiceEndpoint());
                 Header authHeader = new BasicScheme(StandardCharsets.UTF_8).authenticate(credentials, getRequest, null);
                 getRequest.addHeader("accept", "*/*");
