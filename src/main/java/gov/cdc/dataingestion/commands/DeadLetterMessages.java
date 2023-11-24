@@ -67,7 +67,6 @@ public class DeadLetterMessages implements Runnable {
 
                 JSONObject newJsonObject = new JSONObject();
                 newJsonObject.put("ERROR_MSG_ID", origObject.get("errorMessageId"));
-                newJsonObject.put("ERROR_MSG_SOURCE", origObject.get("errorMessageSource"));
                 newJsonObject.put("ERROR_STACK_TRACE", origObject.get("errorStackTraceShort"));
                 newJsonObject.put("CREATED_ON", origObject.get("createdOn"));
 
