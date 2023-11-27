@@ -72,7 +72,7 @@ public class DeadLetterMessages implements Runnable {
 
                 newJsonArray.put(newJsonObject);
             }
-            System.out.println(newJsonArray.toString());
+            System.out.println(newJsonArray.toString());//NOSONAR
         }
     }
 }
