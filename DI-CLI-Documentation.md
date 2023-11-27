@@ -18,6 +18,7 @@
    
     - [status](#status-command)
     - [hl7validation](#hl7-validation)
+    - [dltmessages](#dlt-messages)
 
 5. [Troubleshooting](#troubleshooting)
 
@@ -58,7 +59,7 @@ Windows:
 nbs-di-cli register --client-username --client-secret --username --password
 ```
 
-You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
+You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
@@ -89,7 +90,7 @@ Windows:
 nbs-di-cli token --username --password
 ```
 
-You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
+You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
@@ -115,7 +116,7 @@ Windows:
 nbs-di-cli injecthl7 --hl7-file --username --password
 ```
 
-You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
+You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
@@ -144,7 +145,7 @@ Windows:
 nbs-di-cli status --report-id --username --password
 ```
 
-You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
+You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
@@ -172,11 +173,39 @@ Windows:
 nbs-di-cli validatehl7 --hl7-file --username --password
 ```
 
-You will be prompted wit interactive input where you'll be providing all the required details to the CLI.
+You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
 * *--validatehl7 --hl7-file*:  The full path of the HL7 file(required).
+
+* *--username*: The admin username to connect to the DataIngestion Service (required).
+
+* *--password*: The admin password to connect to the DataIngestion Service (required).
+
+### Get dlt messages Command <a name="dlt-messages"></a>
+
+Get DLT Messages command allows developers to use the api/reports-dlt/get-error-messages endpoint of the DataIngestion Service to view the DLT messages.
+
+Usage:
+
+Mac OS/Linux:
+
+```bash
+./nbs-di-cli dltmessages --msgsize --username --password
+```
+
+Windows:
+
+```bash
+nbs-di-cli dltmessages --msgsize --username --password
+```
+
+You will be prompted with interactive input where you'll be providing all the required details to the CLI.
+
+Arguments:
+
+* *--msgsize   Number of messages to be displayed on the screen(optional). Default is 10.
 
 * *--username*: The admin username to connect to the DataIngestion Service (required).
 
