@@ -16,3 +16,4 @@ pluginManagement {
 }
 
 rootProject.name = 'NEDSS-DataIngestion-CLI'
+System.setProperty("sonar.gradle.skipCompile", "true")

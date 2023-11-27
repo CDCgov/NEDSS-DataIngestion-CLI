@@ -56,8 +56,8 @@ class AuthUtilTest {
         propUtilMock = new PropUtil();
         Properties propertiesMock = propUtilMock.loadPropertiesFile();
         serviceEndpoint = propertiesMock.getProperty("service.int1.reportsEndpoint");
-        authModelMock.setUsername(System.getenv("USERNAME"));
-        authModelMock.setPassword(System.getenv("PASSWORD").toCharArray());
+        authModelMock.setUsername(System.getProperty("USERNAME"));
+        authModelMock.setPassword(System.getProperty("PASSWORD").toCharArray());
     }
 
     @AfterEach
