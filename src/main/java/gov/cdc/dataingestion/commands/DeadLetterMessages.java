@@ -38,16 +38,16 @@ public class DeadLetterMessages implements Runnable {
                 displayDLTMessages(apiResponse, msgsize);
 
             } else {
-                System.err.println("Username or password is empty.");
+                System.err.println("Username or password is empty.");//NOSONAR
             }
         } else {
-            System.err.println("Username or password is null.");
+            System.err.println("Username or password is null.");//NOSONAR
         }
     }
 
     private void displayDLTMessages(String dltMsgs, String msgSize) {
         if (dltMsgs != null && !dltMsgs.trim().startsWith("[")) {
-            System.out.println(dltMsgs);
+            System.out.println(dltMsgs);//NOSONAR
         } else {
             int nonOfMsgDisplay = 0;
             if (msgSize != null && !msgSize.isEmpty()) {
@@ -58,7 +58,7 @@ public class DeadLetterMessages implements Runnable {
             if (nonOfMsgDisplay > availableMsgSize) {
                 nonOfMsgDisplay = availableMsgSize;
             }
-            List errorSubList = jsonArray.toList().subList(0, nonOfMsgDisplay);
+            List<Object> errorSubList = jsonArray.toList().subList(0, nonOfMsgDisplay);
             JSONArray subListJsonArray = new JSONArray(errorSubList);
 
             JSONArray newJsonArray = new JSONArray();
