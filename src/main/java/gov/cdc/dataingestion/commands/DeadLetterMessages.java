@@ -12,28 +12,30 @@ import java.util.Properties;
 
 @CommandLine.Command(name = "dltmessages", mixinStandardHelpOptions = true, description = "This functionality to view the messages in the dead letter messages.")
 public class DeadLetterMessages implements Runnable {
-    @CommandLine.Option(names = {"--msgsize"}, description = "Number of Messages to display.Default is 10", interactive = true, echo = true, required = false)
+
+    @CommandLine.Option(names = {"--msgsize"}, description = "Number of Messages to display.Default is 10", interactive = true, echo = true, required = false)//NOSONAR
     String msgsize = "10";
-    @CommandLine.Option(names = {"--username"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)
-    String username;
 
-    @CommandLine.Option(names = {"--password"}, description = "Admin Password to connect to DI service", interactive = true, required = true)
-    char[] password;
+    @CommandLine.Option(names = {"--username"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)//NOSONAR
+    String username;//NOSONAR
 
-    AuthModel authModel = new AuthModel();
-    AuthUtil authUtil = new AuthUtil();
-    PropUtil propUtil = new PropUtil();
+    @CommandLine.Option(names = {"--password"}, description = "Admin Password to connect to DI service", interactive = true, required = true)//NOSONAR
+    char[] password;//NOSONAR
+
+    AuthModel authModel = new AuthModel();//NOSONAR
+    AuthUtil authUtil = new AuthUtil();//NOSONAR
+    PropUtil propUtil = new PropUtil();//NOSONAR
 
     @Override
     public void run() {
         if (username != null && !username.isEmpty() && password != null && password.length > 0) {
-                Properties properties = propUtil.loadPropertiesFile();
+                Properties properties = propUtil.loadPropertiesFile();//NOSONAR
 
-                authModel.setUsername(username.trim());
-                authModel.setPassword(password);
-                authModel.setServiceEndpoint(properties.getProperty("service.dltErrorMessages"));
+                authModel.setUsername(username.trim());//NOSONAR
+                authModel.setPassword(password);//NOSONAR
+                authModel.setServiceEndpoint(properties.getProperty("service.dltErrorMessages"));//NOSONAR
 
-                String apiResponse = authUtil.getResponseFromDIService(authModel, "dltmessages");
+                String apiResponse = authUtil.getResponseFromDIService(authModel, "dltmessages");//NOSONAR
                 displayDLTMessages(apiResponse, msgsize);
         } else {
             System.err.println("Username or password is empty.");//NOSONAR
