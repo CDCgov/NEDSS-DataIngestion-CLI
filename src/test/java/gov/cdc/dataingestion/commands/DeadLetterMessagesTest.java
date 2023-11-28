@@ -73,30 +73,6 @@ class DeadLetterMessagesTest {
         assertArrayEquals("testPassword".toCharArray(), authModelCaptor.getValue().getPassword());
         assertEquals(expectedOutput, outStream.toString().trim());
     }
-
-//    @Test
-//    void testRunSuccessForZeroMessageSizeInput() throws IOException {
-//        String user = "testUser";
-//        char[] password = "testPassword".toCharArray();
-//        String apiResponse = "[{\"errorMessageId\":\"E8F2D31D-520F-492F-97A1-8A2557DC129A\",\"errorMessageSource\":\"elr_raw\",\"message\":null,\"errorStackTrace\":null,\"errorStackTraceShort\":\"DiHL7Exception: Invalid Message Found unknown segment: SFT at SFT\",\"dltOccurrence\":1,\"dltStatus\":\"ERROR\",\"createdOn\":\"2023-11-22T03:51:18.380+00:00\",\"updatedOn\":null,\"createdBy\":\"elr_raw_dlt\",\"updatedBy\":\"elr_raw_dlt\"}]";
-//
-//        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
-//        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
-//
-//        target.username = user;
-//        target.password = password;
-//        target.msgsize = "0";
-//
-//        target.run();
-//
-//        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
-//        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
-//        String expectedOutput = "[]";
-//
-//        assertEquals("testUser", authModelCaptor.getValue().getUsername());
-//        assertArrayEquals("testPassword".toCharArray(), authModelCaptor.getValue().getPassword());
-//        assertEquals(expectedOutput, outStream.toString().trim());
-//    }
     @Test
     void testRunSuccessForEmptyMessage() throws IOException {
         String user = "testUser";
