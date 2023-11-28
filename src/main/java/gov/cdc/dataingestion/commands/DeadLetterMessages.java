@@ -26,8 +26,7 @@ public class DeadLetterMessages implements Runnable {
 
     @Override
     public void run() {
-        if (username != null && password != null) {
-            if (!username.isEmpty() && password.length > 0) {
+        if (username != null && !username.isEmpty() && password != null && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
 
                 authModel.setUsername(username.trim());
@@ -36,12 +35,8 @@ public class DeadLetterMessages implements Runnable {
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "dltmessages");
                 displayDLTMessages(apiResponse, msgsize);
-
-            } else {
-                System.err.println("Username or password is empty.");//NOSONAR
-            }
         } else {
-            System.err.println("Username or password is null.");//NOSONAR
+            System.err.println("Username or password is empty.");//NOSONAR
         }
     }
 

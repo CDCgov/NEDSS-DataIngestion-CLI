@@ -134,8 +134,7 @@ class DeadLetterMessagesTest {
     void testRunNullUsernameOrPassword() {
         String username = "testuser";
         char[] password = null;
-        String expectedOutput = "Username or password is null.";
-
+        String expectedOutput = "Username or password is empty.";
         target.username = username;
         target.password = password;
 
@@ -149,10 +148,8 @@ class DeadLetterMessagesTest {
     void testRunAllEmptyInputs() {
         target.username = null;
         target.password = null;
-
         target.run();
-
-        String expectedOutput = "Username or password is null.";
+        String expectedOutput = "Username or password is empty.";
         assertEquals(expectedOutput, errStream.toString().trim());
         verifyNoInteractions(authUtilMock);
     }
