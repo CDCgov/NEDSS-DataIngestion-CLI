@@ -97,7 +97,29 @@ class DeadLetterMessagesTest {
         assertArrayEquals("testPassword".toCharArray(), authModelCaptor.getValue().getPassword());
         assertEquals(expectedOutput, outStream.toString().trim());
     }
+    @Test
+    void testRunSuccessForEmptyMessage() throws IOException {
+        String user = "testUser";
+        char[] password = "testPassword".toCharArray();
+        String apiResponse = "";
 
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
+
+        target.username = user;
+        target.password = password;
+        target.msgsize = "";
+
+        target.run();
+
+        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
+        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
+        String expectedOutput = "";
+
+        assertEquals("testUser", authModelCaptor.getValue().getUsername());
+        assertArrayEquals("testPassword".toCharArray(), authModelCaptor.getValue().getPassword());
+        assertEquals(expectedOutput, outStream.toString().trim());
+    }
     @Test
     void testRunUserUnauthorized() throws IOException {
         String username = "notUser";
@@ -117,7 +139,7 @@ class DeadLetterMessagesTest {
 
     @Test
     void testRunEmptyUsernameOrPassword() {
-        String user = "";
+        String user = null;
         char[] password = "testpassword".toCharArray();
         String expectedOutput = "Username or password is empty.";
 

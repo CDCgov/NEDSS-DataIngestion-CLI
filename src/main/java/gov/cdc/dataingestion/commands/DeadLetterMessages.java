@@ -45,7 +45,7 @@ public class DeadLetterMessages implements Runnable {
             System.out.println(dltMsgs);//NOSONAR
         } else {
             int nonOfMsgDisplay = 0;
-            if (msgSize != null && !msgSize.isEmpty()) {
+            if (!msgSize.isEmpty()) {
                 nonOfMsgDisplay = Integer.parseInt(msgSize);
             }
             JSONArray jsonArray = new JSONArray(dltMsgs);
