@@ -27,6 +27,7 @@ public class DeadLetterMessages implements Runnable {
     PropUtil propUtil = new PropUtil();//NOSONAR
 
     @Override
+    @SuppressWarnings("java:S106")
     public void run() {
         if (username != null && !username.isEmpty() && password != null && password.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();//NOSONAR
