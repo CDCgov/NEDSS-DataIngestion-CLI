@@ -23,6 +23,7 @@ public class ReportStatus implements Runnable{
     PropUtil propUtil = new PropUtil();
 
     @Override
+    @SuppressWarnings("java:S106")
     public void run() {
         if(username != null && password != null && reportUuid != null) {
             if(!username.isEmpty() && password.length > 0) {

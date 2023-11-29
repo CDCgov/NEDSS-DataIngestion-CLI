@@ -29,6 +29,7 @@ public class InjectHL7 implements Runnable {
 
 
     @Override
+    @SuppressWarnings("java:S106")
     public void run() {
         if(username != null && password != null && hl7FilePath != null) {
             if(!username.isEmpty() && password.length > 0) {

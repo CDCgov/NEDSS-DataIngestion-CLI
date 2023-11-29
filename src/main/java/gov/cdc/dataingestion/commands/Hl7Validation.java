@@ -27,6 +27,7 @@ public class Hl7Validation implements Runnable{
     PropUtil propUtil = new PropUtil();
 
     @Override
+    @SuppressWarnings("java:S106")
     public void run() {
         if(username != null && password != null && hl7FilePath != null) {
             if(!username.isEmpty() && password.length > 0) {
