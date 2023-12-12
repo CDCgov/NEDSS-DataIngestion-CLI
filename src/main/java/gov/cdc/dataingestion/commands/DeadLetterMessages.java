@@ -22,9 +22,9 @@ public class DeadLetterMessages implements Runnable {
     @CommandLine.Option(names = {"--password"}, description = "Admin Password to connect to DI service", interactive = true, required = true)//NOSONAR
     char[] password;
 
-    AuthModel authModel = new AuthModel();
-    AuthUtil authUtil = new AuthUtil();
-    PropUtil propUtil = new PropUtil();
+    AuthModel authModel = new AuthModel();//NOSONAR
+    AuthUtil authUtil = new AuthUtil();//NOSONAR
+    PropUtil propUtil = new PropUtil();//NOSONAR
 
     @Override
     @SuppressWarnings("java:S106")
@@ -45,7 +45,7 @@ public class DeadLetterMessages implements Runnable {
 
     private void displayDLTMessages(String dltMsgs, String msgSize) {
         if (dltMsgs != null && !dltMsgs.trim().startsWith("[")) {
-            System.out.println(dltMsgs);
+            System.out.println(dltMsgs);//NOSONAR
         } else {
             int nonOfMsgDisplay = 0;
             if (!msgSize.isEmpty()) {
