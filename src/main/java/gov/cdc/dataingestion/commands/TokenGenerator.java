@@ -3,9 +3,11 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
 import gov.cdc.dataingestion.util.PropUtil;
+import gov.cdc.dataingestion.util.TokenUtil;
 import picocli.CommandLine;
 
 import java.util.Properties;
+import java.util.prefs.Preferences;
 
 @CommandLine.Command(name = "token", mixinStandardHelpOptions = true, description = "Generates a JWT token to connect to DI Service.")
 public class TokenGenerator implements Runnable {
@@ -19,6 +21,7 @@ public class TokenGenerator implements Runnable {
     AuthModel authModel = new AuthModel();
     AuthUtil authUtil = new AuthUtil();
     PropUtil propUtil = new PropUtil();
+    TokenUtil tokenUtil = new TokenUtil();
 
     @Override
     public void run() {
@@ -27,10 +30,17 @@ public class TokenGenerator implements Runnable {
                 Properties properties = propUtil.loadPropertiesFile();
                 authModel.setUsername(username.trim());
                 authModel.setPassword(password);
-                authModel.setServiceEndpoint(properties.getProperty("service.tokenEndpoint"));
+                authModel.setServiceEndpoint(properties.getProperty("service.local.tokenEndpoint"));
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "token");
-                System.out.println(apiResponse);
+
+                if(apiResponse.contains("Error") || apiResponse.contains("Unauthorized") || apiResponse.contains("Exception")) {
+                    System.out.println(apiResponse);
+                }
+                else {
+                    tokenUtil.storeToken(apiResponse);
+                    System.out.println("Token generated.");
+                }
             }
             else {
                 System.err.println("Username or password is empty.");

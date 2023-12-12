@@ -11,7 +11,7 @@ import picocli.CommandLine.Command;
 class DataIngestionCLI {
 
     public static void main(String[] args) {
-        int exitCode = new CommandLine(new DataIngestionCLI()).execute(args);
-        System.exit(exitCode);
+            int exitCode = new CommandLine(new DataIngestionCLI()).execute(args);
+            System.exit(exitCode);
     }
 }
