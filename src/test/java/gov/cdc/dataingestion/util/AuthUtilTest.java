@@ -10,18 +10,14 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /*
@@ -39,6 +35,8 @@ class AuthUtilTest {
     @Mock
     private HttpPost httpPostMock;
 
+    @Mock
+    private HttpGet httpGetMock;
     @Mock
     private CloseableHttpResponse httpResponseMock;
 
@@ -93,5 +91,44 @@ class AuthUtilTest {
     }
     private InputStream toInputStream(String value) {
         return new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8));
+    }
+    @Test
+    void testGetResponseForDltMessagesSuccessful() throws Exception {
+        authModelMock.setServiceEndpoint(serviceEndpoint);
+
+        when(httpClientMock.execute(eq(httpGetMock))).thenReturn(httpResponseMock);
+        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
+        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
+        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_DLTMSG"));
+
+        authUtil.getResponseFromDIService(authModelMock, "dltmessages");
+
+    }
+    @Test
+    void testGetResponseForRegisterSuccessful() throws Exception {
+        authModelMock.setServiceEndpoint(serviceEndpoint);
+
+        when(httpClientMock.execute(eq(httpGetMock))).thenReturn(httpResponseMock);
+        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
+        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
+        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_USER"));
+
+        authUtil.getResponseFromDIService(authModelMock, "register");
+
+    }
+    @Test
+    void testGetResponseForHL7ValidationSuccessful() throws Exception {
+        authModelMock.setServiceEndpoint(serviceEndpoint);
+
+        when(httpClientMock.execute(eq(httpGetMock))).thenReturn(httpResponseMock);
+        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
+        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
+        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_UUID"));
+
+        authUtil.getResponseFromDIService(authModelMock, "hl7validation");
+
     }
 }
