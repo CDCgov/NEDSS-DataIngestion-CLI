@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-@CommandLine.Command(name = "injecthl7", mixinStandardHelpOptions = true, description = "This functionality will let developers use the /api/reports endpoint of DI Service.")
+@CommandLine.Command(name = "injecthl7", mixinStandardHelpOptions = true, description = "This functionality will let users inject HL7 messages into DI Service.")
 public class InjectHL7 implements Runnable {
 
     @CommandLine.Option(names = {"--hl7-file"}, description = "HL7 file name with fully qualified path", interactive = true, echo = true, required = true)
