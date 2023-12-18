@@ -51,8 +51,6 @@ class Hl7ValidationTest {
 
     @Test
     void testRunSuccessfulInjection() throws IOException {
-        String adminUser = "adminUser";
-        char[] adminPassword = "adminPassword".toCharArray();
         String apiResponse = "Dummy_UUID";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
@@ -60,8 +58,6 @@ class Hl7ValidationTest {
         File tempHL7File = getFile();
 
         target.hl7FilePath = tempHL7File.getAbsolutePath();
-        target.username = adminUser;
-        target.password = adminPassword;
 
         target.run();
 
@@ -69,8 +65,6 @@ class Hl7ValidationTest {
         verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
 
         String expectedOutput = "Dummy_UUID";
-        assertEquals("adminUser", authModelCaptor.getValue().getUsername());
-        assertArrayEquals("adminPassword".toCharArray(), authModelCaptor.getValue().getPassword());
         assertEquals(expectedOutput, outStream.toString().trim());
 
         assertTrue(tempHL7File.delete());
@@ -78,28 +72,19 @@ class Hl7ValidationTest {
 
     @Test
     void testRunInvalidPath() {
-        String adminUser = "adminUser";
-        char[] adminPassword = "adminPassword".toCharArray();
-
         target.hl7FilePath = "invalid-path/to/hl7-input.hl7";
-        target.username = adminUser;
-        target.password = adminPassword;
 
         assertThrows(RuntimeException.class, target::run);
     }
 
     @Test
     void testRunAdminUnauthorized() throws IOException {
-        String adminUser = "notAdmin";
-        char[] adminPassword = "notAdminPassword".toCharArray();
         String apiResponse = "Unauthorized. Admin username/password is incorrect.";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("hl7validation"))).thenReturn(apiResponse);
         File tempHL7File = getFile();
 
-        target.username = adminUser;
-        target.password = adminPassword;
         target.hl7FilePath = tempHL7File.getAbsolutePath();
         target.run();
 
@@ -108,44 +93,12 @@ class Hl7ValidationTest {
     }
 
     @Test
-    void testRunEmptyAdminUsernameOrPassword() {
-        String adminUser = "";
-        char[] adminPassword = "adminPassword".toCharArray();
-        String expectedOutput = "Username or password is empty.";
-
-        target.username = adminUser;
-        target.password = adminPassword;
-        target.hl7FilePath = hl7FilePath;
-        target.run();
-
-        verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), eq("validation"));
-        assertEquals(expectedOutput, errStream.toString().trim());
-    }
-
-    @Test
-    void testRunNullAdminUsernameOrPassword() {
-        String adminUser = "admin";
-        char[] adminPassword = null;
-        String expectedOutput = "Username or password or HL7 file path is null.";
-
-        target.username = adminUser;
-        target.password = adminPassword;
-        target.hl7FilePath = hl7FilePath;
-        target.run();
-
-        verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
-        assertEquals(expectedOutput, errStream.toString().trim());
-    }
-
-    @Test
     void testRunAllEmptyInputs() {
         target.hl7FilePath = null;
-        target.username = null;
-        target.password = null;
 
         target.run();
 
-        String expectedOutput = "Username or password or HL7 file path is null.";
+        String expectedOutput = "HL7 file path is null.";
         assertEquals(expectedOutput, errStream.toString().trim());
         verifyNoInteractions(authUtilMock);
     }

@@ -16,12 +16,6 @@ public class DeadLetterMessages implements Runnable {
     @CommandLine.Option(names = {"--msgsize"}, description = "Number of Messages to display.Default is 10", interactive = true, echo = true, required = false)//NOSONAR
     String msgsize = "10";
 
-    @CommandLine.Option(names = {"--username"}, description = "Admin Username to connect to DI service", interactive = true, echo = true, required = true)//NOSONAR
-    String username;
-
-    @CommandLine.Option(names = {"--password"}, description = "Admin Password to connect to DI service", interactive = true, required = true)//NOSONAR
-    char[] password;
-
     AuthModel authModel = new AuthModel();//NOSONAR
     AuthUtil authUtil = new AuthUtil();//NOSONAR
     PropUtil propUtil = new PropUtil();//NOSONAR
@@ -29,18 +23,11 @@ public class DeadLetterMessages implements Runnable {
     @Override
     @SuppressWarnings("java:S106")
     public void run() {
-        if (username != null && !username.isEmpty() && password != null && password.length > 0) {
-                Properties properties = propUtil.loadPropertiesFile();
+        Properties properties = propUtil.loadPropertiesFile();
+        authModel.setServiceEndpoint(properties.getProperty("service.local.dltErrorMessages"));
 
-                authModel.setUsername(username.trim());
-                authModel.setPassword(password);
-                authModel.setServiceEndpoint(properties.getProperty("service.local.dltErrorMessages"));
-
-                String apiResponse = authUtil.getResponseFromDIService(authModel, "dltmessages");
-                displayDLTMessages(apiResponse, msgsize);
-        } else {
-            System.err.println("Username or password is empty.");//NOSONAR
-        }
+        String apiResponse = authUtil.getResponseFromDIService(authModel, "dltmessages");
+        displayDLTMessages(apiResponse, msgsize);
     }
 
     private void displayDLTMessages(String dltMsgs, String msgSize) {

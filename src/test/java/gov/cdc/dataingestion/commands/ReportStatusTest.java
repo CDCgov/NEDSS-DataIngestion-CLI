@@ -48,8 +48,6 @@ class ReportStatusTest {
 
     @Test
     void testRunSuccessfulStatus() {
-        reportStatus.username = "testUser";
-        reportStatus.password = "testUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
@@ -63,8 +61,6 @@ class ReportStatusTest {
 
     @Test
     void testRunUserUnauthorized() {
-        reportStatus.username = "notTestUser";
-        reportStatus.password = "notTestUserPassword".toCharArray();
         reportStatus.reportUuid = "12345";
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
@@ -75,31 +71,5 @@ class ReportStatusTest {
 
         verify(authUtilMock).getResponseFromDIService(reportStatus.authModel, "status");
         assertEquals(apiResponse, outStream.toString().trim());
-    }
-
-    @Test
-    void testRunEmptyUsernameOrPassword() {
-        reportStatus.username = "";
-        reportStatus.password = "testUserPassword".toCharArray();
-        reportStatus.reportUuid = "12345";
-        String expectedOutput = "Username or password is empty.";
-
-        reportStatus.run();
-
-        verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
-        assertEquals(expectedOutput, errStream.toString().trim());
-    }
-
-    @Test
-    void testRunNullUsernameOrPassword() {
-        reportStatus.username = "user";
-        reportStatus.password = null;
-        reportStatus.reportUuid = "12345";
-        String expectedOutput = "Username or password or report UUID is null.";
-
-        reportStatus.run();
-
-        verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
-        assertEquals(expectedOutput, errStream.toString().trim());
     }
 }

@@ -50,7 +50,7 @@ class TokenGeneratorTest {
     void testRunSuccess() {
         String username = "testUser";
         char[] password = "testUserPassword".toCharArray();
-        String apiResponse = "Dummy_Token";
+        String apiResponse = "Token generated.";
 
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);

@@ -12,35 +12,49 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class AuthUtil {
+    TokenUtil tokenUtil = new TokenUtil();
 
     public String getResponseFromDIService(AuthModel authModel, String name) {
         try {
-            UsernamePasswordCredentials credentials;
+            UsernamePasswordCredentials credentials = null;
             if(name.equals("register")) {
                 credentials = new UsernamePasswordCredentials(authModel.getAdminUser(), new String(authModel.getAdminPassword()));
             }
             else {
-                credentials = new UsernamePasswordCredentials(authModel.getUsername(), new String(authModel.getPassword()));
+                if(authModel.getUsername() != null) {
+                    credentials = new UsernamePasswordCredentials(authModel.getUsername(), new String(authModel.getPassword()));
+                }
+
             }
 
             CloseableHttpClient httpsClient = HttpClients.createDefault();
             CloseableHttpResponse response = null;
+
+            String apiToken = tokenUtil.retrieveToken();
             int statusCode = 0;
             if(name.equals("status") || name.equals("dltmessages")) {
                 HttpGet getRequest = new HttpGet(authModel.getServiceEndpoint());
-                Header authHeader = new BasicScheme(StandardCharsets.UTF_8).authenticate(credentials, getRequest, null);
+                getRequest.addHeader("authorization", "Bearer " + apiToken);
                 getRequest.addHeader("accept", "*/*");
-                getRequest.addHeader(authHeader);
                 response = httpsClient.execute(getRequest);
             }
             else {
 
                 HttpPost postRequest = new HttpPost(authModel.getServiceEndpoint());
-                Header authHeader = new BasicScheme(StandardCharsets.UTF_8).authenticate(credentials, postRequest, null);
+                if(credentials != null) {
+                    Header authHeader = new BasicScheme(StandardCharsets.UTF_8).authenticate(credentials, postRequest, null);
+                    postRequest.addHeader(authHeader);
+                }
+                else {
+                    postRequest.addHeader("authorization", "Bearer " + apiToken);
+                }
                 postRequest.addHeader("accept", "*/*");
 
                 if (name.equals("injecthl7")) {
@@ -53,7 +67,6 @@ public class AuthUtil {
                 else {
                     postRequest.addHeader("Content-Type", "text/plain");
                 }
-                postRequest.addHeader(authHeader);
 
                 if(authModel.getRequestBody() != null && !authModel.getRequestBody().isEmpty() && !authModel.getRequestBody().equals("")) {
                     HttpEntity body = new StringEntity(authModel.getRequestBody());
@@ -88,7 +101,8 @@ public class AuthUtil {
                 return result;
             }
         } catch (Exception e) {
-                return "Exception occurred: " + e.getMessage();
+            e.printStackTrace();
+            return "Exception occurred: " + e.getMessage();
         }
     }
 

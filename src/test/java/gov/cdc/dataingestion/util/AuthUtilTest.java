@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 *
 * THIS CLASS HAS BEEN CREATED TO TEST THE AUTH UTIL IF CASES AND ALSO TO BRING THE CODE COVERAGE
 * TO THE STANDARD BAR OF 90%. THIS CLASS REQUIRES ENVIRONMENT VARIABLES TO RUN THE UNIT TESTS. TO
-* RUN THESE UNIT TESTS PASS USERNAME AND PASSWORD THROUGH THE ENVIRONMENT VARIABLES.
+* RUN THESE UNIT TESTS IN LOCAL, PASS USERNAME AND PASSWORD THROUGH THE ENVIRONMENT VARIABLES.
 */
 
 class AuthUtilTest {
@@ -45,7 +45,9 @@ class AuthUtilTest {
 
     private AuthModel authModelMock;
     private PropUtil propUtilMock;
-    private String serviceEndpoint;
+    private String serviceReportsEndpoint;
+    private String serviceDltEndpoint;
+    private String serviceValidationEndpoint;
     private AutoCloseable closeable;
     @BeforeEach
     void setUp() {
@@ -54,7 +56,9 @@ class AuthUtilTest {
         authModelMock = new AuthModel();
         propUtilMock = new PropUtil();
         Properties propertiesMock = propUtilMock.loadPropertiesFile();
-        serviceEndpoint = propertiesMock.getProperty("service.int1.reportsEndpoint");
+        serviceReportsEndpoint = propertiesMock.getProperty("service.int1.reportsEndpoint");
+        serviceDltEndpoint = propertiesMock.getProperty("service.int1.dltErrorMessages");
+        serviceValidationEndpoint = propertiesMock.getProperty("service.int1.hl7Validation");
         authModelMock.setUsername(System.getProperty("USERNAME"));
         authModelMock.setPassword(System.getProperty("PASSWORD").toCharArray());
     }
@@ -67,7 +71,7 @@ class AuthUtilTest {
     @Test
     void testGetResponseFromDIServiceSuccessful() throws Exception {
         authModelMock.setRequestBody("Dummy HL7 Input");
-        authModelMock.setServiceEndpoint(serviceEndpoint);
+        authModelMock.setServiceEndpoint(serviceReportsEndpoint);
 
         when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
@@ -81,7 +85,7 @@ class AuthUtilTest {
     @Test
     void testGetResponseFromDIServiceUnsuccessful() throws Exception {
         authModelMock.setRequestBody("Dummy HL7 Input");
-        authModelMock.setServiceEndpoint(serviceEndpoint + "dummy_endpoint");
+        authModelMock.setServiceEndpoint(serviceReportsEndpoint + "dummy_endpoint");
 
         when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
@@ -94,9 +98,10 @@ class AuthUtilTest {
     private InputStream toInputStream(String value) {
         return new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8));
     }
+
     @Test
     void testGetResponseForDltMessagesSuccessful() throws Exception {
-        authModelMock.setServiceEndpoint(serviceEndpoint);
+        authModelMock.setServiceEndpoint(serviceDltEndpoint);
         when(httpClientMock.execute(httpGetMock)).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
         when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
@@ -106,6 +111,7 @@ class AuthUtilTest {
         String response=authUtil.getResponseFromDIService(authModelMock, "dltmessages");
         assertNotNull(response);
     }
+
     @Test
     void testGetResponseForRegisterSuccessful() throws Exception {
         String username="testuser";
@@ -113,7 +119,7 @@ class AuthUtilTest {
         String jsonRequestBody = "{\"username\": \"" + username + "\", \"password\": \"" + new String(password) + "\"}";
 
         authModelMock.setRequestBody(jsonRequestBody);
-        authModelMock.setServiceEndpoint(serviceEndpoint);
+        authModelMock.setServiceEndpoint(serviceReportsEndpoint);
 
         when(httpClientMock.execute(httpGetMock)).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
@@ -125,10 +131,11 @@ class AuthUtilTest {
         assertNotNull(response);
 
     }
+
     @Test
     void testGetResponseForHL7ValidationSuccessful() throws Exception {
         authModelMock.setRequestBody("Dummy HL7 Input");
-        authModelMock.setServiceEndpoint(serviceEndpoint);
+        authModelMock.setServiceEndpoint(serviceValidationEndpoint);
         when(httpClientMock.execute(httpGetMock)).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
         when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
