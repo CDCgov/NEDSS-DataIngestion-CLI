@@ -9,7 +9,7 @@ public class TokenUtil {
     private static final String NODE_NAME = "gov.cdc.dataingestion.util";
     private static final String TOKEN_KEY = "apiJwt";
     private static final String ALGORITHM = "AES";
-    private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
+    private static final String TRANSFORMATION = "AES/GCM/NoPadding";
     public static String JWT_RANDOM_SALT = "DICLI_RandomSalt";
 
     private Preferences preferences;
