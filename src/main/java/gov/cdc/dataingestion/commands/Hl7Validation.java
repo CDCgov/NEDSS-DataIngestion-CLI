@@ -38,8 +38,6 @@ public class Hl7Validation implements Runnable{
                     while((line = reader.readLine()) != null) {
                         requestBody.append(line);
                     }
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
