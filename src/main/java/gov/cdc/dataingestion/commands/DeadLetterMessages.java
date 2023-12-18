@@ -24,7 +24,7 @@ public class DeadLetterMessages implements Runnable {
     @SuppressWarnings("java:S106")
     public void run() {
         Properties properties = propUtil.loadPropertiesFile();
-        authModel.setServiceEndpoint(properties.getProperty("service.local.dltErrorMessages"));
+        authModel.setServiceEndpoint(properties.getProperty("service.dltErrorMessages"));
 
         String apiResponse = authUtil.getResponseFromDIService(authModel, "dltmessages");
         displayDLTMessages(apiResponse, msgsize);
