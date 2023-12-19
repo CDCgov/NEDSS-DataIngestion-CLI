@@ -34,7 +34,7 @@ public class TokenUtil {
     private String encryptToken(String token) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            byte[] iv = "iv".getBytes();
+            byte[] iv = cipher.getIV();
             SecretKey secretKey = new SecretKeySpec(JWT_RANDOM_SALT.getBytes(), ALGORITHM);
             GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec);
@@ -53,7 +53,7 @@ public class TokenUtil {
     private String decryptToken(String encryptedToken) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            byte[] iv = "iv".getBytes();
+            byte[] iv = cipher.getIV();
             SecretKey secretKey = new SecretKeySpec(JWT_RANDOM_SALT.getBytes(), ALGORITHM);
             GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, parameterSpec);
