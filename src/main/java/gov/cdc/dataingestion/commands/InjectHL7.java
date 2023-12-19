@@ -41,7 +41,8 @@ public class InjectHL7 implements Runnable {
                     throw new RuntimeException(e);
                 }
 
-                authModel.setServiceEndpoint(properties.getProperty("service.reportsEndpoint"));
+                // Serving data from INT1 environment as the production doesn't have data yet
+                authModel.setServiceEndpoint(properties.getProperty("service.int1.reportsEndpoint"));
                 authModel.setRequestBody(requestBody.toString());
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "injecthl7");

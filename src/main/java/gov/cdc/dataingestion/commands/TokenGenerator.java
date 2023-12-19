@@ -7,7 +7,6 @@ import gov.cdc.dataingestion.util.TokenUtil;
 import picocli.CommandLine;
 
 import java.util.Properties;
-import java.util.prefs.Preferences;
 
 @CommandLine.Command(name = "token", mixinStandardHelpOptions = true, description = "Generates a JWT token to connect to DI Service.")
 public class TokenGenerator implements Runnable {
@@ -18,10 +17,12 @@ public class TokenGenerator implements Runnable {
     @CommandLine.Option(names = {"--password"}, description = "Password to connect to DI service", interactive = true, required = true)
     char[] password;
 
+    private String randomSaltForJwtEncryption = "DICLI_RandomSalt";
+
     AuthModel authModel = new AuthModel();
     AuthUtil authUtil = new AuthUtil();
     PropUtil propUtil = new PropUtil();
-    TokenUtil tokenUtil = new TokenUtil();
+    TokenUtil tokenUtil = new TokenUtil(randomSaltForJwtEncryption);
 
     @Override
     @SuppressWarnings("java:S106")
@@ -31,7 +32,8 @@ public class TokenGenerator implements Runnable {
                 Properties properties = propUtil.loadPropertiesFile();
                 authModel.setUsername(username.trim());
                 authModel.setPassword(password);
-                authModel.setServiceEndpoint(properties.getProperty("service.local.tokenEndpoint"));
+                // Serving data from INT1 environment as the production doesn't have data yet
+                authModel.setServiceEndpoint(properties.getProperty("service.int1.tokenEndpoint"));
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "token");
 

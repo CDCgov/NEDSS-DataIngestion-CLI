@@ -34,7 +34,8 @@ public class RegisterUser implements Runnable {
         if(username != null && password != null && adminUser != null && adminPassword != null) {
             if(!username.isEmpty() && password.length > 0 && !adminUser.isEmpty() && adminPassword.length > 0) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.registrationEndpoint");
+                // Serving data from INT1 environment as the production doesn't have data yet
+                String serviceEndpoint = properties.getProperty("service.int1.registrationEndpoint");
                 String jsonRequestBody = "{\"username\": \"" + username.trim() + "\", \"password\": \"" + new String(password) + "\"}";
 
                 authModel.setAdminUser(adminUser.trim());

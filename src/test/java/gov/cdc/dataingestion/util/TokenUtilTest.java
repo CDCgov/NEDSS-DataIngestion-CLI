@@ -11,20 +11,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class TokenUtilTest {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
-    private TokenUtil tokenUtil;
 
     @BeforeEach
     void setUp() {
         System.setOut(new PrintStream(outStream));
         System.setErr(new PrintStream(errStream));
-        tokenUtil = new TokenUtil();
+
     }
 
     @Test
     void testStoreAndRetrieveToken() {
         String originalToken = "testToken";
         String validRandomSalt = "random_Salt_Test";
-        TokenUtil.JWT_RANDOM_SALT = validRandomSalt;
+        TokenUtil tokenUtil = new TokenUtil(validRandomSalt);
 
         tokenUtil.storeToken(originalToken);
 
@@ -36,7 +35,7 @@ class TokenUtilTest {
     void testStoreTokenWithInvalidEncryption() {
         String originalToken = "testToken";
         String invalidRandomSalt = "someRandomSaltForStoreToken";
-        TokenUtil.JWT_RANDOM_SALT = invalidRandomSalt;
+        TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
         String expectedOutput = "Exception Occurred: Invalid AES key length: 27 bytes\n" +
                 "Encryption failed for JWT.";
 
@@ -48,7 +47,7 @@ class TokenUtilTest {
     @Test
     void testRetrieveTokenWithInvalidEncryption() {
         String invalidRandomSalt = "someRandomSaltForRetrieveToken";
-        TokenUtil.JWT_RANDOM_SALT = invalidRandomSalt;
+        TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
         String expectedOutput = "Exception Occurred: Invalid AES key length: 30 bytes";
 
         tokenUtil.retrieveToken();

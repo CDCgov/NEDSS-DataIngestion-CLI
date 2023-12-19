@@ -17,7 +17,6 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.never;
 
 class InjectHL7Test {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();

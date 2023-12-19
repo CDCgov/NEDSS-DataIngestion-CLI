@@ -3,7 +3,6 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
 import gov.cdc.dataingestion.util.PropUtil;
-import gov.cdc.dataingestion.util.TokenUtil;
 import picocli.CommandLine;
 
 import java.util.Properties;
@@ -16,14 +15,14 @@ public class ReportStatus implements Runnable{
     AuthModel authModel = new AuthModel();
     AuthUtil authUtil = new AuthUtil();
     PropUtil propUtil = new PropUtil();
-    TokenUtil tokenUtil = new TokenUtil();
 
     @Override
     @SuppressWarnings("java:S106")
     public void run() {
-        if(reportUuid != null || reportUuid.isEmpty()) {
+        if(reportUuid != null) {
                 Properties properties = propUtil.loadPropertiesFile();
-                String serviceEndpoint = properties.getProperty("service.reportStatusEndpoint");
+                // Serving data from INT1 environment as the production doesn't have data yet
+                String serviceEndpoint = properties.getProperty("service.int1.reportStatusEndpoint");
 
                 authModel.setServiceEndpoint(serviceEndpoint + "/" + reportUuid);
 

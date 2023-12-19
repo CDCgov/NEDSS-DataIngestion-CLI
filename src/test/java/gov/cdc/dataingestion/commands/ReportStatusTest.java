@@ -60,6 +60,18 @@ class ReportStatusTest {
     }
 
     @Test
+    void testRunNullReportId() {
+        reportStatus.reportUuid = null;
+
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn("Success");
+
+        reportStatus.run();
+
+        assertEquals("Report UUID is null.", errStream.toString().trim());
+    }
+
+    @Test
     void testRunUserUnauthorized() {
         reportStatus.reportUuid = "12345";
         String apiResponse = "Unauthorized. Username/password is incorrect.";

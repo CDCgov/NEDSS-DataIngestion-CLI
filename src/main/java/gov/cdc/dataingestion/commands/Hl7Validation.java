@@ -34,8 +34,8 @@ public class Hl7Validation implements Runnable{
                     throw new RuntimeException(e);
                 }
 
-                // Change this to the actual endpoint
-                authModel.setServiceEndpoint(properties.getProperty("service.hl7Validation"));
+                // Serving data from INT1 environment as the production doesn't have data yet
+                authModel.setServiceEndpoint(properties.getProperty("service.int1.hl7Validation"));
                 authModel.setRequestBody(requestBody.toString());
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "hl7validation");

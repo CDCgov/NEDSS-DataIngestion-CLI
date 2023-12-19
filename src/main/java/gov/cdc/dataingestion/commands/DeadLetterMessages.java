@@ -24,7 +24,8 @@ public class DeadLetterMessages implements Runnable {
     @SuppressWarnings("java:S106")
     public void run() {
         Properties properties = propUtil.loadPropertiesFile();
-        authModel.setServiceEndpoint(properties.getProperty("service.dltErrorMessages"));
+        // Serving data from INT1 environment as the production doesn't have data yet
+        authModel.setServiceEndpoint(properties.getProperty("service.int1.dltErrorMessages"));
 
         String apiResponse = authUtil.getResponseFromDIService(authModel, "dltmessages");
         displayDLTMessages(apiResponse, msgsize);

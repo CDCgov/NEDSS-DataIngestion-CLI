@@ -48,6 +48,7 @@ class AuthUtilTest {
     private String serviceReportsEndpoint;
     private String serviceDltEndpoint;
     private String serviceValidationEndpoint;
+    private String serviceTokenEndpoint;
     private AutoCloseable closeable;
     @BeforeEach
     void setUp() {
@@ -59,8 +60,7 @@ class AuthUtilTest {
         serviceReportsEndpoint = propertiesMock.getProperty("service.int1.reportsEndpoint");
         serviceDltEndpoint = propertiesMock.getProperty("service.int1.dltErrorMessages");
         serviceValidationEndpoint = propertiesMock.getProperty("service.int1.hl7Validation");
-        authModelMock.setUsername(System.getProperty("USERNAME"));
-        authModelMock.setPassword(System.getProperty("PASSWORD").toCharArray());
+        serviceTokenEndpoint = propertiesMock.getProperty("service.int1.tokenEndpoint");
     }
 
     @AfterEach
@@ -143,6 +143,21 @@ class AuthUtilTest {
         when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_UUID"));
 
         String response=authUtil.getResponseFromDIService(authModelMock, "hl7validation");
+        assertNotNull(response);
+    }
+
+    @Test
+    void testGetResponseForTokenSuccessful() throws Exception {
+        authModelMock.setUsername(System.getProperty("USERNAME"));
+        authModelMock.setPassword(System.getProperty("PASSWORD").toCharArray());
+        authModelMock.setServiceEndpoint(serviceTokenEndpoint);
+        when(httpClientMock.execute(httpGetMock)).thenReturn(httpResponseMock);
+        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
+        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
+        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_Token"));
+
+        String response=authUtil.getResponseFromDIService(authModelMock, "token");
         assertNotNull(response);
     }
 }
