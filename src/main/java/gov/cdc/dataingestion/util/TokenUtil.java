@@ -1,6 +1,7 @@
 package gov.cdc.dataingestion.util;
 
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
@@ -34,12 +35,14 @@ public class TokenUtil {
     private String encryptToken(String token) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            byte[] iv = cipher.getIV();
             SecretKey secretKey = new SecretKeySpec(JWT_RANDOM_SALT.getBytes(), ALGORITHM);
-            GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            byte[] iv = cipher.getIV();;
             byte[] encryptedBytes = cipher.doFinal(token.getBytes());
-            return Base64.getEncoder().encodeToString(encryptedBytes);
+            byte[] combined = new byte[iv.length + encryptedBytes.length];
+            System.arraycopy(iv, 0, combined, 0, iv.length);
+            System.arraycopy(encryptedBytes, 0, combined,  iv.length, encryptedBytes.length);
+            return Base64.getEncoder().encodeToString(combined);
         } catch (Exception e) {
             System.err.println("Exception Occurred: " + e.getMessage());
             return null;
@@ -53,11 +56,13 @@ public class TokenUtil {
     private String decryptToken(String encryptedToken) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            byte[] iv = cipher.getIV();
             SecretKey secretKey = new SecretKeySpec(JWT_RANDOM_SALT.getBytes(), ALGORITHM);
+            byte[] combined = Base64.getDecoder().decode(encryptedToken);
+            byte[] iv = new byte[12];
+            System.arraycopy(combined, 0, iv, 0, 12);
             GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, parameterSpec);
-            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedToken));
+            byte[] decryptedBytes = cipher.doFinal(combined, 12, combined.length - 12);
             return new String(decryptedBytes);
         } catch (Exception e) {
             System.err.println("Exception Occurred: " + e.getMessage());

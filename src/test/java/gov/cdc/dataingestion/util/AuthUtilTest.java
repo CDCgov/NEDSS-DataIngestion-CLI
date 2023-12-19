@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
@@ -159,5 +161,15 @@ class AuthUtilTest {
 
         String response=authUtil.getResponseFromDIService(authModelMock, "token");
         assertNotNull(response);
+    }
+
+    @Test
+    void testConvertInputStreamToString() throws IOException {
+        String sampleResponse = "Dummy response from API";
+        InputStream inputStream = new ByteArrayInputStream(sampleResponse.getBytes());
+
+        String result = authUtil.convertInputStreamToString(inputStream);
+
+        assertEquals(sampleResponse, result);
     }
 }

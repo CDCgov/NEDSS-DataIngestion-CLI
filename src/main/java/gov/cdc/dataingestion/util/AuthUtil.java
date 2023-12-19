@@ -107,7 +107,7 @@ public class AuthUtil {
         }
     }
 
-    private String convertInputStreamToString(InputStream content) throws IOException {
+    String convertInputStreamToString(InputStream content) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(content));
         StringBuilder stringBuilder = new StringBuilder();
         String line;
