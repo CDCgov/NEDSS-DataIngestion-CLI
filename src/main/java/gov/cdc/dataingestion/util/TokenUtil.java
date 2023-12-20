@@ -32,7 +32,7 @@ public class TokenUtil {
         else {
             // Updating this to logger for now but has to be cleaned up to use Mixin from parent class
             // System.err.println("Encryption failed for JWT.");
-            logger.log(Level.WARNING, "Encryption failed for JWT.");
+            logger.log(Level.SEVERE, "Encryption failed for JWT.");
 
         }
     }
