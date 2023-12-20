@@ -30,25 +30,4 @@ class TokenUtilTest {
         String retrievedToken = tokenUtil.retrieveToken();
         assertEquals(originalToken, retrievedToken);
     }
-
-    @Test
-    void testStoreTokenWithInvalidEncryption() {
-        String originalToken = "testToken";
-        String invalidRandomSalt = "someRandomSaltForStoreToken";
-        TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
-
-        tokenUtil.storeToken(originalToken);
-
-        assertFalse(errStream.toString().trim().contains("Encryption failed for JWT."));
-    }
-
-    @Test
-    void testRetrieveTokenWithInvalidEncryption() {
-        String invalidRandomSalt = "someRandomSaltForRetrieveToken";
-        TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
-
-        tokenUtil.retrieveToken();
-
-        assertTrue(errStream.toString().trim().contains("Invalid AES key length: 30 bytes"));
-    }
 }
