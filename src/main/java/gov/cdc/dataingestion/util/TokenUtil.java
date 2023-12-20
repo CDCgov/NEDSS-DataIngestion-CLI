@@ -28,7 +28,7 @@ public class TokenUtil {
             preferences.put(TOKEN_KEY, encryptedToken);
         }
         else {
-            System.err.println("Encryption failed for JWT.");
+            System.out.println("Encryption failed for JWT.");
         }
     }
 
@@ -44,7 +44,7 @@ public class TokenUtil {
             System.arraycopy(encryptedBytes, 0, combined,  iv.length, encryptedBytes.length);
             return Base64.getEncoder().encodeToString(combined);
         } catch (Exception e) {
-            System.err.println("Exception Occurred: " + e.getMessage());
+            System.out.println("Exception Occurred: " + e.getMessage());
             return null;
         }
     }
@@ -65,7 +65,7 @@ public class TokenUtil {
             byte[] decryptedBytes = cipher.doFinal(combined, 12, combined.length - 12);
             return new String(decryptedBytes);
         } catch (Exception e) {
-            System.err.println("Exception Occurred: " + e.getMessage());
+            System.out.println("Exception Occurred: " + e.getMessage());
             return null;
         }
     }

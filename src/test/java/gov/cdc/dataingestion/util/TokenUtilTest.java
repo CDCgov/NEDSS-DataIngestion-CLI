@@ -10,13 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TokenUtilTest {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
 
     @BeforeEach
     void setUp() {
         System.setOut(new PrintStream(outStream));
-        System.setErr(new PrintStream(errStream));
-
     }
 
     @Test
@@ -41,7 +38,7 @@ class TokenUtilTest {
 
         tokenUtil.storeToken(originalToken);
 
-        assertEquals(expectedOutput, errStream.toString().trim());
+        assertEquals(expectedOutput, outStream.toString().trim());
     }
 
     @Test
@@ -52,6 +49,6 @@ class TokenUtilTest {
 
         tokenUtil.retrieveToken();
 
-        assertEquals(expectedOutput, errStream.toString().trim());
+        assertEquals(expectedOutput, outStream.toString().trim());
     }
 }
