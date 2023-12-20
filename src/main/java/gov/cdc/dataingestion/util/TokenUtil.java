@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
+
 public class TokenUtil {
     private static final Logger logger = Logger.getLogger(TokenUtil.class.getName());
     private static final String NODE_NAME = "gov.cdc.dataingestion.util";
