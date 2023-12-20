@@ -22,6 +22,7 @@ public class TokenUtil {
         this.jwtRandomSalt = randomSalt;
     }
 
+    @SuppressWarnings("java:S106")
     public void storeToken(String token) {
         String encryptedToken = encryptToken(token);
         if(encryptedToken != null) {
@@ -32,6 +33,7 @@ public class TokenUtil {
         }
     }
 
+    @SuppressWarnings("java:S106")
     private String encryptToken(String token) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
@@ -53,6 +55,7 @@ public class TokenUtil {
         return decryptToken(preferences.get(TOKEN_KEY,  null));
     }
 
+    @SuppressWarnings("java:S106")
     private String decryptToken(String encryptedToken) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
