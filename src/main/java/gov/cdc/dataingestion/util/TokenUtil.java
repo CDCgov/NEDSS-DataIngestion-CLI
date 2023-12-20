@@ -13,13 +13,13 @@ public class TokenUtil {
     private static final String TOKEN_KEY = "apiJwt";
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES/GCM/NoPadding";
-    private String JWT_RANDOM_SALT;
+    private String jwtRandomSalt;
 
     private Preferences preferences;
 
     public TokenUtil(String randomSalt) {
         this.preferences = Preferences.userRoot().node(NODE_NAME);
-        this.JWT_RANDOM_SALT = randomSalt;
+        this.jwtRandomSalt = randomSalt;
     }
 
     public void storeToken(String token) {
@@ -35,9 +35,9 @@ public class TokenUtil {
     private String encryptToken(String token) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            SecretKey secretKey = new SecretKeySpec(JWT_RANDOM_SALT.getBytes(), ALGORITHM);
+            SecretKey secretKey = new SecretKeySpec(jwtRandomSalt.getBytes(), ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            byte[] iv = cipher.getIV();;
+            byte[] iv = cipher.getIV();
             byte[] encryptedBytes = cipher.doFinal(token.getBytes());
             byte[] combined = new byte[iv.length + encryptedBytes.length];
             System.arraycopy(iv, 0, combined, 0, iv.length);
@@ -56,7 +56,7 @@ public class TokenUtil {
     private String decryptToken(String encryptedToken) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            SecretKey secretKey = new SecretKeySpec(JWT_RANDOM_SALT.getBytes(), ALGORITHM);
+            SecretKey secretKey = new SecretKeySpec(jwtRandomSalt.getBytes(), ALGORITHM);
             byte[] combined = Base64.getDecoder().decode(encryptedToken);
             byte[] iv = new byte[12];
             System.arraycopy(combined, 0, iv, 0, 12);
