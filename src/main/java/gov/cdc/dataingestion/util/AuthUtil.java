@@ -50,6 +50,7 @@ public class AuthUtil {
             }
             return getResultFromResponse(name, httpsClient, response, statusCode);
         } catch (Exception e) {
+            e.printStackTrace();
             return "Exception occurred: " + e.getMessage();
         }
     }

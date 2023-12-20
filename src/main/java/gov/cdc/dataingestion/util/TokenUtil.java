@@ -5,13 +5,10 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 
 public class TokenUtil {
-    private static final Logger logger = Logger.getLogger(TokenUtil.class.getName());
     private static final String NODE_NAME = "gov.cdc.dataingestion.util";
     private static final String TOKEN_KEY = "apiJwt";
     private static final String ALGORITHM = "AES";
@@ -31,10 +28,7 @@ public class TokenUtil {
             preferences.put(TOKEN_KEY, encryptedToken);
         }
         else {
-            // Updating this to logger for now but has to be cleaned up to use Mixin from parent class
-            // System.err.println("Encryption failed for JWT.");
-            logger.log(Level.SEVERE, "Encryption failed for JWT.");
-
+            System.err.println("Encryption failed for JWT.");
         }
     }
 
@@ -50,9 +44,7 @@ public class TokenUtil {
             System.arraycopy(encryptedBytes, 0, combined,  iv.length, encryptedBytes.length);
             return Base64.getEncoder().encodeToString(combined);
         } catch (Exception e) {
-            // Updating this to logger for now but has to be cleaned up to use Mixin from parent class
-            // System.err.println("Exception Occurred: " + e.getMessage());
-            logger.log(Level.WARNING, "Exception Occurred: " + e.getMessage());
+            System.err.println("Exception Occurred: " + e.getMessage());
             return null;
         }
     }
@@ -73,9 +65,7 @@ public class TokenUtil {
             byte[] decryptedBytes = cipher.doFinal(combined, 12, combined.length - 12);
             return new String(decryptedBytes);
         } catch (Exception e) {
-            // Updating this to logger for now but has to be cleaned up to use Mixin from parent class
-            // System.err.println("Exception Occurred: " + e.getMessage());
-            logger.log(Level.WARNING, "Exception Occurred: " + e.getMessage());
+            System.err.println("Exception Occurred: " + e.getMessage());
             return null;
         }
     }
