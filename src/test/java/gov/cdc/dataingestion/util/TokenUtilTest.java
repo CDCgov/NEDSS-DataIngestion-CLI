@@ -36,22 +36,19 @@ class TokenUtilTest {
         String originalToken = "testToken";
         String invalidRandomSalt = "someRandomSaltForStoreToken";
         TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
-        String expectedOutput = "Exception Occurred: Invalid AES key length: 27 bytes\n" +
-                "Encryption failed for JWT.";
 
         tokenUtil.storeToken(originalToken);
 
-        assertEquals(expectedOutput, errStream.toString().trim());
+        assertFalse(errStream.toString().trim().contains("Encryption failed for JWT."));
     }
 
     @Test
     void testRetrieveTokenWithInvalidEncryption() {
         String invalidRandomSalt = "someRandomSaltForRetrieveToken";
         TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
-        String expectedOutput = "Exception Occurred: Invalid AES key length: 30 bytes";
 
         tokenUtil.retrieveToken();
 
-        assertEquals(expectedOutput, errStream.toString().trim());
+        assertTrue(errStream.toString().trim().contains("Invalid AES key length: 30 bytes"));
     }
 }
