@@ -32,7 +32,7 @@ public class InjectHL7 implements Runnable {
                 try(BufferedReader reader = new BufferedReader(new FileReader(hl7FilePath))) {
                     String line;
                     while((line = reader.readLine()) != null) {
-                        requestBody.append(line);
+                        requestBody.append(line + "\n");
                     }
                 } catch (FileNotFoundException e) {
                     System.err.println("HL7 file not found at the given location.");
