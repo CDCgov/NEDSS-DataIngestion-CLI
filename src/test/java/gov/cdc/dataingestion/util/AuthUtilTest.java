@@ -59,10 +59,10 @@ class AuthUtilTest {
         authModelMock = new AuthModel();
         propUtilMock = new PropUtil();
         Properties propertiesMock = propUtilMock.loadPropertiesFile();
-        serviceReportsEndpoint = propertiesMock.getProperty("service.int1.reportsEndpoint");
-        serviceDltEndpoint = propertiesMock.getProperty("service.int1.dltErrorMessages");
-        serviceValidationEndpoint = propertiesMock.getProperty("service.int1.hl7Validation");
-        serviceTokenEndpoint = propertiesMock.getProperty("service.int1.tokenEndpoint");
+        serviceReportsEndpoint = propertiesMock.getProperty("service.env.reportsEndpoint");
+        serviceDltEndpoint = propertiesMock.getProperty("service.env.dltErrorMessages");
+        serviceValidationEndpoint = propertiesMock.getProperty("service.env.hl7Validation");
+        serviceTokenEndpoint = propertiesMock.getProperty("service.env.tokenEndpoint");
     }
 
     @AfterEach
