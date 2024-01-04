@@ -1,5 +1,6 @@
 package gov.cdc.dataingestion.commands;
 
+import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
 import gov.cdc.dataingestion.util.PropUtil;
@@ -9,7 +10,7 @@ import java.io.Console;
 import java.util.Properties;
 
 @CommandLine.Command(name = "register", mixinStandardHelpOptions = true, description = "Client will be onboarded providing username and secret.")
-public class RegisterUser implements Runnable {
+public class RegisterUser extends AppConfig implements Runnable {
 
     @CommandLine.Option(names = {"--client-username"}, description = "Username provided by the client", interactive = true, echo = true, required = true)
     String username;
@@ -25,7 +26,6 @@ public class RegisterUser implements Runnable {
 
     AuthModel authModel = new AuthModel();
     AuthUtil authUtil = new AuthUtil();
-    PropUtil propUtil = new PropUtil();
 
 
     @Override
@@ -33,9 +33,8 @@ public class RegisterUser implements Runnable {
     public void run() {
         if(username != null && password != null && adminUser != null && adminPassword != null) {
             if(!username.isEmpty() && password.length > 0 && !adminUser.isEmpty() && adminPassword.length > 0) {
-                Properties properties = propUtil.loadPropertiesFile();
                 // Serving data from INT1 environment as the production doesn't have data yet
-                String serviceEndpoint = properties.getProperty("service.int1.registrationEndpoint");
+                String serviceEndpoint = getProperty("service.env.url") + getProperty("service.env.registrationEndpoint");
                 String jsonRequestBody = "{\"username\": \"" + username.trim() + "\", \"password\": \"" + new String(password) + "\"}";
 
                 authModel.setAdminUser(adminUser.trim());
