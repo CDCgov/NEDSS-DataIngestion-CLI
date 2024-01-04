@@ -54,12 +54,12 @@ The `register` command allows you to onboard a client by providing their usernam
 Mac OS/Linux:
 
 ```bash
-./nbs-di-cli register --client-username --client-secret --username --password
+./nbs-di-cli register --client-username --client-secret --admin-user --admin-password
 ```
 
 Windows:
 ```bash
-nbs-di-cli register --client-username --client-secret --username --password
+nbs-di-cli register --client-username --client-secret --admin-user --admin-password
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
@@ -70,9 +70,9 @@ Arguments:
 
 * *--client-secret*: Secret provided by the client (required).
 
-* *--username*: Admin username to connect to the DataIngestion Service (required).
+* *--admin-username*: Admin username to connect to the DataIngestion Service (required).
 
-* *--password*: Admin password to connect to the DataIngestion Service (required).
+* *--admin-password*: Admin password to connect to the DataIngestion Service (required).
 
 
 ### token Command <a name="token-command"></a>
