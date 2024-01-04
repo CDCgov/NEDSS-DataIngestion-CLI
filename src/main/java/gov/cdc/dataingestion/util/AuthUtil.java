@@ -62,7 +62,7 @@ public class AuthUtil {
             return result;
         } else if (statusCode == 401) {
             httpsClient.close();
-            return "Unauthorized. Username/password is incorrect.";
+            return "Unauthorized: Your token may have expired. Please review and confirm your authentication settings.";
         } else {
             String result;
             if (name.equals("hl7validation")) {
