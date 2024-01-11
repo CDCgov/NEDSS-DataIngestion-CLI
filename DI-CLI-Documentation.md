@@ -10,17 +10,17 @@
 
 4. [Command Reference](#command-reference)
 
-   - [register](#register-command)
+    - [register](#register-command)
 
-   - [token](#token-command)
+    - [token](#token-command)
 
-   - [injecthl7](#injecthl7-command)
+    - [injecthl7](#injecthl7-command)
 
-   - [status](#status-command)
+    - [status](#status-command)
 
-   - [hl7validation](#hl7-validation)
+    - [hl7validation](#hl7-validation)
 
-   - [dltmessages](#dlt-messages)
+    - [dltmessages](#dlt-messages)
 
 5. [Troubleshooting](#troubleshooting)
 
@@ -34,6 +34,9 @@ The DataIngestion CLI is packaged using GraalVM, and no additional dependencies 
 
 1. Download the `nbs-di-cli` application from source installation folder.
 2. Run the below commands directly from where you downloaded the `nbs-di-cli` application.
+3. Set up system environment variable
+    - Mac: run `nano ~/.zshrc`, add `export DI_URL=[URL_GOES_HERE]`, exit terminal or `source` it
+    - Windows: press `windows` button and search for `env`, select `environment varibles`, add new system variable where variable name is `DI_URL` and value is `YOUR DI URL`.
 
 ## Getting Started <a name="getting-started"></a>
 
@@ -212,8 +215,8 @@ If you encounter any issues or errors while using the DataIngestion CLI, conside
 * Check your internet connection to ensure successful communication with the Data Ingestion service.
 
 * If you're facing ***Unauthorized error*** in the following scenarios:
-   * During token generation, that means you provided wrong credentials.
-   * After token generation, (usually token is valid for an hour), that means the geenrated token is expired and you'll have to re-run the token command.
+    * During token generation, that means you provided wrong credentials.
+    * After token generation, (usually token is valid for an hour), that means the geenrated token is expired and you'll have to re-run the token command.
 
 * For specific error messages, refer to the error output provided by the CLI.
 
