@@ -3,13 +3,11 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
-import gov.cdc.dataingestion.util.PropUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import picocli.CommandLine;
 
 import java.util.List;
-import java.util.Properties;
 
 @CommandLine.Command(name = "dltmessages", mixinStandardHelpOptions = true, description = "This functionality to view the messages in the dead letter messages.")
 public class DeadLetterMessages  extends AppConfig implements Runnable {

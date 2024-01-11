@@ -3,11 +3,9 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
-import gov.cdc.dataingestion.util.PropUtil;
 import gov.cdc.dataingestion.util.TokenUtil;
 import picocli.CommandLine;
 
-import java.util.Properties;
 
 @CommandLine.Command(name = "token", mixinStandardHelpOptions = true, description = "Generates a JWT token to connect to DI Service.")
 public class TokenGenerator extends AppConfig implements Runnable {

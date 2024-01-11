@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class AppConfig {
     private Properties properties;
-    public PropUtil propUtil = new PropUtil();
+    public PropUtil propUtil = new PropUtil(); //NOSONAR
 
     public AppConfig() {
         this.properties = new Properties();

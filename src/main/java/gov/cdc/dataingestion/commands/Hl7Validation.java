@@ -3,13 +3,11 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
-import gov.cdc.dataingestion.util.PropUtil;
 import picocli.CommandLine;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
 
 @CommandLine.Command(name = "validatehl7", mixinStandardHelpOptions = true, description = "This functionality will validate the provided HL7 message.")
 public class Hl7Validation extends AppConfig implements Runnable{

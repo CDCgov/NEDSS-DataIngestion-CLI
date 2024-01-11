@@ -3,14 +3,12 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
-import gov.cdc.dataingestion.util.PropUtil;
 import picocli.CommandLine;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
 
 @CommandLine.Command(name = "injecthl7", mixinStandardHelpOptions = true, description = "This functionality will let developers use the /api/reports endpoint of DI Service.")
 public class InjectHL7 extends AppConfig implements Runnable {

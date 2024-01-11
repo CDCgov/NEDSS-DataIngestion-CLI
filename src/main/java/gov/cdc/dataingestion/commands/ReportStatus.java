@@ -3,10 +3,7 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
-import gov.cdc.dataingestion.util.PropUtil;
 import picocli.CommandLine;
-
-import java.util.Properties;
 
 @CommandLine.Command(name = "status", mixinStandardHelpOptions = true, description = "This functionality will print out the status of the report for the provided UUID.")
 public class ReportStatus extends AppConfig implements Runnable{

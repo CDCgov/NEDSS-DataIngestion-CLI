@@ -3,11 +3,8 @@ package gov.cdc.dataingestion.commands;
 import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
-import gov.cdc.dataingestion.util.PropUtil;
 import picocli.CommandLine;
 
-import java.io.Console;
-import java.util.Properties;
 
 @CommandLine.Command(name = "register", mixinStandardHelpOptions = true, description = "Client will be onboarded providing username and secret.")
 public class RegisterUser extends AppConfig implements Runnable {
