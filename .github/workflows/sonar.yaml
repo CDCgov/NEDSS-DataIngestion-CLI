@@ -59,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./gradlew clean build jacocoTestReport sonar -DUSERNAME=${{ env.di_username }} -DPASSWORD=${{ env.di_password }}
+          ./gradlew clean build jacocoTestReport sonar -DUSERNAME=${{ env.di_username }} -DPASSWORD=${{ env.di_password }} -DDI_URL=https://dataingestion.int1.nbspreview.com
 
 
       - name: Publish Testing Reports

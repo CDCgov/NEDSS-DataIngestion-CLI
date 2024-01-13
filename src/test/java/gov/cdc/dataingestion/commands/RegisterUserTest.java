@@ -35,7 +35,6 @@ class RegisterUserTest {
         System.setErr(new PrintStream(errStream));
         registerUser = new RegisterUser();
         registerUser.authUtil = authUtilMock;
-        registerUser.propUtil = propUtilMock;
         registerUser.authModel = new AuthModel();
         when(mockProperties.getProperty("service.registrationEndpoint")).thenReturn("testRegistrationEndpoint");
     }
@@ -53,7 +52,6 @@ class RegisterUserTest {
         registerUser.adminUser = "adminUser";
         registerUser.adminPassword = "adminPassword".toCharArray();
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn("User Created Successfully.");
 
         registerUser.run();
@@ -74,7 +72,6 @@ class RegisterUserTest {
         registerUser.adminUser = "adminUser";
         registerUser.adminPassword = "adminPassword".toCharArray();
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn("User already exists.Please choose another.");
 
         registerUser.run();
@@ -95,7 +92,6 @@ class RegisterUserTest {
         registerUser.adminUser = "notAdminUser";
         registerUser.adminPassword = "notAdminPassword".toCharArray();
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn("Unauthorized. Username/password is incorrect.");
 
         registerUser.run();
@@ -116,7 +112,6 @@ class RegisterUserTest {
         registerUser.adminUser = "notAdminUser";
         registerUser.adminPassword = "notAdminPassword".toCharArray();
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenReturn(null);
 
         registerUser.run();
@@ -137,7 +132,6 @@ class RegisterUserTest {
         registerUser.adminUser = "notAdminUser";
         registerUser.adminPassword = "notAdminPassword".toCharArray();
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("register"))).thenThrow(new RuntimeException("An exception occurred."));
 
         assertThrows(RuntimeException.class, registerUser::run);

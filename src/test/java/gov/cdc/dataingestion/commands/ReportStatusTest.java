@@ -36,7 +36,6 @@ class ReportStatusTest {
         System.setErr(new PrintStream(errStream));
         reportStatus = new ReportStatus();
         reportStatus.authUtil = authUtilMock;
-        reportStatus.propUtil = propUtilMock;
         when(mockProperties.getProperty("service.reportStatusEndpoint")).thenReturn("testReportStatusEndpoint");
     }
 
@@ -50,7 +49,6 @@ class ReportStatusTest {
     void testRunSuccessfulStatus() {
         reportStatus.reportUuid = "12345";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn("Success");
 
         reportStatus.run();
@@ -63,7 +61,6 @@ class ReportStatusTest {
     void testRunNullReportId() {
         reportStatus.reportUuid = null;
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn("Success");
 
         reportStatus.run();
@@ -76,7 +73,6 @@ class ReportStatusTest {
         reportStatus.reportUuid = "12345";
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn(apiResponse);
 
         reportStatus.run();

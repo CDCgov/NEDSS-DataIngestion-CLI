@@ -38,7 +38,6 @@ class InjectHL7Test {
         System.setErr(new PrintStream(errStream));
         injectHL7 = new InjectHL7();
         injectHL7.authUtil = authUtilMock;
-        injectHL7.propUtil = propUtilMock;
         injectHL7.authModel = new AuthModel();
         when(mockProperties.getProperty("service.reportsEndpoint")).thenReturn("testReportsEndpoint");
     }
@@ -53,7 +52,6 @@ class InjectHL7Test {
     void testRunSuccessfulInjection() throws IOException {
         String apiResponse = "Dummy_UUID";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
         File tempHL7File = getFile();
 
@@ -81,7 +79,6 @@ class InjectHL7Test {
     void testRunUserUnauthorized() throws IOException {
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("injecthl7"))).thenReturn(apiResponse);
         File tempHL7File = getFile();
 

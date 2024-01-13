@@ -38,7 +38,6 @@ class Hl7ValidationTest {
         System.setErr(new PrintStream(errStream));
         target = new Hl7Validation();
         target.authUtil = authUtilMock;
-        target.propUtil = propUtilMock;
         target.authModel = new AuthModel();
         when(mockProperties.getProperty("service.hl7Validation")).thenReturn("testHl7Validation");
     }
@@ -53,7 +52,6 @@ class Hl7ValidationTest {
     void testRunSuccessfulInjection() throws IOException {
         String apiResponse = "Dummy_UUID";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
         File tempHL7File = getFile();
 
@@ -81,7 +79,6 @@ class Hl7ValidationTest {
     void testRunAdminUnauthorized() throws IOException {
         String apiResponse = "Unauthorized. Admin username/password is incorrect.";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("hl7validation"))).thenReturn(apiResponse);
         File tempHL7File = getFile();
 

@@ -1,8 +1,8 @@
 package gov.cdc.dataingestion.commands;
 
-import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
+import gov.cdc.dataingestion.util.PropUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import picocli.CommandLine;
@@ -10,7 +10,7 @@ import picocli.CommandLine;
 import java.util.List;
 
 @CommandLine.Command(name = "dltmessages", mixinStandardHelpOptions = true, description = "This functionality to view the messages in the dead letter messages.")
-public class DeadLetterMessages  extends AppConfig implements Runnable {
+public class DeadLetterMessages  extends PropUtil implements Runnable {
 
     @CommandLine.Option(names = {"--msgsize"}, description = "Number of Messages to display.Default is 10", interactive = true, echo = true, required = false)//NOSONAR
     String msgsize = "10";

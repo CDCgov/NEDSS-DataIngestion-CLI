@@ -1,14 +1,14 @@
 package gov.cdc.dataingestion.commands;
 
-import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
+import gov.cdc.dataingestion.util.PropUtil;
 import gov.cdc.dataingestion.util.TokenUtil;
 import picocli.CommandLine;
 
 
 @CommandLine.Command(name = "token", mixinStandardHelpOptions = true, description = "Generates a JWT token to connect to DI Service.")
-public class TokenGenerator extends AppConfig implements Runnable {
+public class TokenGenerator extends PropUtil implements Runnable {
 
     @CommandLine.Option(names = {"--username"}, description = "Username to connect to DI service", interactive = true, echo = true, required = true)
     String username;

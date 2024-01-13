@@ -29,7 +29,6 @@ class DeadLetterMessagesTest {
     @Mock
     private PropUtil propUtilMock;
     private DeadLetterMessages target;
-    Properties mockProperties = mock(Properties.class);
 
     @BeforeEach
     void setUp() {
@@ -38,9 +37,8 @@ class DeadLetterMessagesTest {
         System.setErr(new PrintStream(errStream));
         target = new DeadLetterMessages();
         target.authUtil = authUtilMock;
-        target.propUtil = propUtilMock;
         target.authModel = new AuthModel();
-        when(mockProperties.getProperty("service.dltMessagesEndpoint")).thenReturn("testDltMessagesEndpoint");
+        when(propUtilMock.getProperty("service.dltMessagesEndpoint")).thenReturn("testDltMessagesEndpoint");
     }
 
     @AfterEach
@@ -50,10 +48,9 @@ class DeadLetterMessagesTest {
     }
 
     @Test
-    void testRunSuccessViewDltMessages() throws IOException {
+    void testRunSuccessViewDltMessages() {
         String apiResponse = "[{\"errorMessageId\":\"E8F2D31D-520F-492F-97A1-8A2557DC129A\",\"errorMessageSource\":\"elr_raw\",\"message\":null,\"errorStackTrace\":null,\"errorStackTraceShort\":\"DiHL7Exception: Invalid Message Found unknown segment: SFT at SFT\",\"dltOccurrence\":1,\"dltStatus\":\"ERROR\",\"createdOn\":\"2023-11-22T03:51:18.380+00:00\",\"updatedOn\":null,\"createdBy\":\"elr_raw_dlt\",\"updatedBy\":\"elr_raw_dlt\"}]";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
 
         target.msgsize = "2";
@@ -67,10 +64,9 @@ class DeadLetterMessagesTest {
         assertEquals(expectedOutput, outStream.toString().trim());
     }
     @Test
-    void testRunSuccessForEmptyMessage() throws IOException {
+    void testRunSuccessForEmptyMessage() {
         String apiResponse = "";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
 
         target.msgsize = "";
@@ -87,7 +83,6 @@ class DeadLetterMessagesTest {
     void testRunUserUnauthorized() throws IOException {
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("dltmessages"))).thenReturn(apiResponse);
 
         target.run();

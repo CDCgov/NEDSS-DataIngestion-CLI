@@ -1,8 +1,8 @@
 package gov.cdc.dataingestion.commands;
 
-import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
+import gov.cdc.dataingestion.util.PropUtil;
 import picocli.CommandLine;
 
 import java.io.BufferedReader;
@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @CommandLine.Command(name = "injecthl7", mixinStandardHelpOptions = true, description = "This functionality will let developers use the /api/reports endpoint of DI Service.")
-public class InjectHL7 extends AppConfig implements Runnable {
+public class InjectHL7 extends PropUtil implements Runnable {
 
     @CommandLine.Option(names = {"--hl7-file"}, description = "HL7 file name with fully qualified path", interactive = true, echo = true, required = true)
     String hl7FilePath;

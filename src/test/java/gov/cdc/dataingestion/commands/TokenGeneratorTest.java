@@ -34,7 +34,6 @@ class TokenGeneratorTest {
         System.setOut(new PrintStream(outStream));
         System.setErr(new PrintStream(errStream));
         tokenGenerator = new TokenGenerator();
-        tokenGenerator.propUtil = propUtilMock;
         tokenGenerator.authUtil = authUtilMock;
         tokenGenerator.authModel = new AuthModel();
         when(mockProperties.getProperty("service.tokenEndpoint")).thenReturn("testTokenEndpoint");
@@ -52,7 +51,6 @@ class TokenGeneratorTest {
         char[] password = "testUserPassword".toCharArray();
         String apiResponse = "Token generated.";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
 
         tokenGenerator.username = username;
@@ -69,7 +67,6 @@ class TokenGeneratorTest {
         char[] password = "notTestUserPassword".toCharArray();
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
 
         tokenGenerator.username = username;

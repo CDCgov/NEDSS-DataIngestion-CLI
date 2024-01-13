@@ -1,13 +1,13 @@
 package gov.cdc.dataingestion.commands;
 
-import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
+import gov.cdc.dataingestion.util.PropUtil;
 import picocli.CommandLine;
 
 
 @CommandLine.Command(name = "register", mixinStandardHelpOptions = true, description = "Client will be onboarded providing username and secret.")
-public class RegisterUser extends AppConfig implements Runnable {
+public class RegisterUser extends PropUtil implements Runnable {
 
     @CommandLine.Option(names = {"--client-username"}, description = "Username provided by the client", interactive = true, echo = true, required = true)
     String username;

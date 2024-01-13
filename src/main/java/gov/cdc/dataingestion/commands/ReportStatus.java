@@ -1,12 +1,12 @@
 package gov.cdc.dataingestion.commands;
 
-import gov.cdc.dataingestion.config.AppConfig;
 import gov.cdc.dataingestion.model.AuthModel;
 import gov.cdc.dataingestion.util.AuthUtil;
+import gov.cdc.dataingestion.util.PropUtil;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "status", mixinStandardHelpOptions = true, description = "This functionality will print out the status of the report for the provided UUID.")
-public class ReportStatus extends AppConfig implements Runnable{
+public class ReportStatus extends PropUtil implements Runnable{
     @CommandLine.Option(names = {"--report-id"}, description = "UUID provided by Data Ingestion Service during report ingestion", interactive = true, echo = true, required = true)
     String reportUuid;
 
