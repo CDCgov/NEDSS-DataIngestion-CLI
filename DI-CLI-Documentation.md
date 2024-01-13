@@ -37,7 +37,7 @@ The DataIngestion CLI is packaged using GraalVM, and no additional dependencies 
 3. Set up system environment variable
     - Mac: run `nano ~/.zshrc`, add `export DI_URL=[URL_GOES_HERE]`, exit terminal or `source` it
     - Windows: press `windows` button and search for `env`, select `environment varibles`, add new system variable where variable name is `DI_URL` and value is `YOUR DI URL`.
-
+    - Linux: run `nano ~/.bashrc`, add `export DI_URL=[URL_GOES_HERE]`, exit terminal or `source` it
 ## Getting Started <a name="getting-started"></a>
 
 Before using the DataIngestion CLI, ensure you have the necessary credentials and permissions to access the DataIngestion Service. The CLI requires an username and password to connect to the service.
