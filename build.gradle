@@ -49,16 +49,16 @@ graalvmNative {
     binaries.main {
         def osName = System.getProperty('os.name').toLowerCase();
         if(osName.contains("win")) {
-            imageName.set("NEDSS-DataIngestion-CLI-windows")
+            imageName.set("NBS-DataIngestion-CLI-windows")
         }
         else if(osName.contains("nix") || osName.contains("nux")) {
-            imageName.set("NEDSS-DataIngestion-CLI-linux")
+            imageName.set("NBS-DataIngestion-CLI-linux")
         }
         else if(osName.contains("mac")) {
-            imageName.set("NEDSS-DataIngestion-CLI-macos")
+            imageName.set("NBS-DataIngestion-CLI-macos")
         }
         else {
-            imageName.set("NEDSS-DataIngestion-CLI")
+            imageName.set("NBS-DataIngestion-CLI")
         }
         debug = true
         verbose = true
