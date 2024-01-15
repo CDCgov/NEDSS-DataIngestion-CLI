@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, macos-11, windows-latest, ubuntu-latest]
+        os: [macos-latest-x64, macos-latest-arm64, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
 
@@ -21,7 +21,14 @@ jobs:
           native-image-job-reports: 'true'
 
       - name: CLI Native Image build using gradle
-        run: ./gradlew nativeCompile
+        run: |
+          if [ ${{ matrix.os }} == 'macos-latest-x64' ]; then
+          ./gradlew nativeCompile -Pos=macos-x86_64
+          elif [ ${{ matrix.os }} == 'macos-latest-arm64' ]; then
+          ./gradlew nativeCompile -Pos=macos-aarch64
+          else
+          ./gradlew nativeCompile
+          fi
 
       - if: matrix.os == 'macos-latest'
         name: Copy and compress macos binary image to destination folder
