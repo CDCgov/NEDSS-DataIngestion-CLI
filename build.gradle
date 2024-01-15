@@ -48,6 +48,7 @@ graalvmNative {
     }
     binaries.main {
         def osName = System.getProperty('os.name').toLowerCase();
+        println("OS name is..." + osName);
         if(osName.contains("win")) {
             imageName.set("NBS-DataIngestion-CLI-windows")
         }
