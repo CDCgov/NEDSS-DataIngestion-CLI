@@ -58,7 +58,12 @@ graalvmNative {
             imageName.set("NBS-DataIngestion-CLI-linux")
         }
         else if(osName.contains("mac")) {
-            imageName.set("NBS-DataIngestion-CLI-macos")
+            if(osArch == "aarch64") {
+                imageName.set("NBS-DataIngestion-CLI-macos-aarch64")
+            }
+            else {
+                imageName.set("NBS-DataIngestion-CLI-macos")
+            }
         }
         else {
             imageName.set("NBS-DataIngestion-CLI")
