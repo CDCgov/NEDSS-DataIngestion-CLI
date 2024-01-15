@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, macos-11, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
 
@@ -24,6 +24,13 @@ jobs:
         run: ./gradlew nativeCompile
 
       - if: matrix.os == 'macos-latest'
+        name: Copy and compress macos binary image to destination folder
+        run: |
+          mkdir -p dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NBS-DataIngestion-CLI-macos dataingestion-cli-binary-images/
+          zip -r dataingestion-cli-binary-images/NBS-DataIngestion-CLI-macos dataingestion-cli-binary-images
+
+      - if: matrix.os == 'macos-11'
         name: Copy and compress macos binary image to destination folder
         run: |
           mkdir -p dataingestion-cli-binary-images
