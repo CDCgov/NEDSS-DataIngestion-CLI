@@ -72,7 +72,6 @@ graalvmNative {
         buildArgs.add("-H:+ReportUnsupportedElementsAtRuntime")
         buildArgs.add("--initialize-at-build-time=java.lang.String")
         buildArgs.add("--initialize-at-build-time=java.util.**")
-        buildArgs.add("-H:Target=x86_64-macos")
         buildArgs.add("-H:ReflectionConfigurationFiles=${project.projectDir}/src/main/resources/reflection-config.json")
     }
 }
