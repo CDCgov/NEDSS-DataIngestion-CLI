@@ -60,6 +60,10 @@ Mac OS:
 ```bash
 ./NBS-DataIngestion-CLI-macos register --client-username --client-secret --admin-user --admin-password
 ```
+or 
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 register --client-username --client-secret --admin-user --admin-password
+```
 
 Linux:
 
@@ -97,6 +101,10 @@ Mac OS:
 ```bash
 ./NBS-DataIngestion-CLI-macos token --username --password
 ```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 token --username --password
+```
 
 Linux:
 
@@ -129,6 +137,10 @@ Mac OS:
 ```bash
 ./NBS-DataIngestion-CLI-macos injecthl7 --hl7-file
 ```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 injecthl7 --hl7-file
+```
 
 Linux:
 
@@ -159,6 +171,10 @@ Mac OS:
 
 ```bash
 ./NBS-DataIngestion-CLI-macos status --report-id
+```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 status --report-id
 ```
 
 Linux:
@@ -191,6 +207,10 @@ Mac OS:
 ```bash
 ./NBS-DataIngestion-CLI-macos validatehl7 --hl7-file
 ```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 validatehl7 --hl7-file
+```
 
 Linux:
 
@@ -221,6 +241,10 @@ Mac OS:
 
 ```bash
 ./NBS-DataIngestion-CLI-macos dltmessages --msgsize
+```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 dltmessages --msgsize
 ```
 
 Linux:
