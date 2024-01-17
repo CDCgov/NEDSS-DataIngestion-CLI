@@ -1,10 +1,8 @@
 name: Data Ingestion CLI GraalVM Native Image Build Pipeline
 #on: [push, pull_request]
 on:
-  push:
-    branches: ["CNDIT-895-graalvm-image-multiple-os-platform"]
   pull_request:
-    branches: ["CNDIT-895-graalvm-image-multiple-os-platform"]
+    branches: ["main"]
 
 jobs:
   build:

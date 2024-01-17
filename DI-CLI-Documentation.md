@@ -35,6 +35,10 @@ The DataIngestion CLI is packaged using GraalVM, and no additional dependencies 
 1. Download the `NBS-DataIngestion-CLI-*` application (based on the OS that you use) from source installation folder.
 2. Run the below commands directly from where you downloaded the `NBS-DataIngestion-CLI-*` application (based on the OS that you use).
 
+*ONLY FOR MAC USERS:*
+- If you're using the latest Mac with Apple Silicon Chip, please download and use the image named `NBS-DataIngestion-CLI-macos-aarch64`. For other mac users, use the image named `NBS-DataIngestion-CLI-macos`.
+- If you're facing "Cannot open because of unidentified developer", please go to Settings -> Privacy & Security -> Allow `NBS-DataIngestion-CLI-macos` to run on this computer. 
+
 ## Getting Started <a name="getting-started"></a>
 
 Before using the DataIngestion CLI, ensure you have the necessary credentials and permissions to access the DataIngestion Service. The CLI requires an username and password to connect to the service.
