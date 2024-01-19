@@ -2,36 +2,19 @@ package gov.cdc.dataingestion.model;
 
 public class AuthModel {
 
-    private String username;
-    private char[] password;
-    private String adminUser;
-    private char[] adminPassword;
+    private String clientId;
+    private char[] clientSecret;
+
     private String serviceEndpoint;
     private String requestBody;
 
-    public String getUsername() { return username; }
+    public String getClientId() { return clientId; }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setClientId(String username) { this.clientId = username; }
 
-    public char[] getPassword() { return password; }
+    public char[] getClientSecret() { return clientSecret; }
 
-    public void setPassword(char[] password) { this.password = password; }
-
-    public String getAdminUser() {
-        return adminUser;
-    }
-
-    public void setAdminUser(String adminUser) {
-        this.adminUser = adminUser;
-    }
-
-    public char[] getAdminPassword() {
-        return adminPassword;
-    }
-
-    public void setAdminPassword(char[] adminPassword) {
-        this.adminPassword = adminPassword;
-    }
+    public void setClientSecret(char[] password) { this.clientSecret = password; }
 
     public String getServiceEndpoint() {
         return serviceEndpoint;

@@ -10,8 +10,6 @@
 
 4. [Command Reference](#command-reference)
 
-   - [register](#register-command)
-
    - [token](#token-command)
 
    - [injecthl7](#injecthl7-command)
@@ -37,7 +35,12 @@ The DataIngestion CLI is packaged using GraalVM, and no additional dependencies 
 
 *ONLY FOR MAC USERS:*
 - If you're using the latest Mac with Apple Silicon Chip, please download and use the image named `NBS-DataIngestion-CLI-macos-aarch64`. For other mac users, use the image named `NBS-DataIngestion-CLI-macos`.
-- If you're facing "Cannot open because of unidentified developer", please go to Settings -> Privacy & Security -> Allow `NBS-DataIngestion-CLI-macos` to run on this computer. 
+- If you're facing "Cannot open because of unidentified developer", please go to Settings -> Privacy & Security -> Allow `NBS-DataIngestion-CLI-macos` to run on this computer.
+
+- To ensure executable files downloaded on Mac or Linux systems are runnable, use the command chmod +x <filename> to grant execution permissions, thereby preventing errors related to unrecognized software or access denial. For example,
+```bash
+chmod +x ./NBS-DataIngestion-CLI-macos
+```
 
 ## Getting Started <a name="getting-started"></a>
 
@@ -49,47 +52,6 @@ To get started, open a terminal or command prompt and navigate to the directory 
 
 The DataIngestion CLI offers the following commands with their respective functionalities:
 
-### register Command <a name="register-command"></a>
-
-The `register` command allows you to onboard a client by providing their username and secret.
-
-**Usage:**
-
-Mac OS:
-
-```bash
-./NBS-DataIngestion-CLI-macos register --client-username --client-secret --admin-user --admin-password
-```
-or 
-```bash
-./NBS-DataIngestion-CLI-macos-aarch64 register --client-username --client-secret --admin-user --admin-password
-```
-
-Linux:
-
-```bash
-./NBS-DataIngestion-CLI-linux register --client-username --client-secret --admin-user --admin-password
-```
-
-Windows:
-
-```bash
-NBS-DataIngestion-CLI-windows register --client-username --client-secret --admin-user --admin-password
-```
-
-You will be prompted with interactive input where you'll be providing all the required details to the CLI.
-
-Arguments:
-
-* *--client-username*: Username provided by the client (required).
-
-* *--client-secret*: Secret provided by the client (required).
-
-* *--admin-username*: Admin username to connect to the DataIngestion Service (required).
-
-* *--admin-password*: Admin password to connect to the DataIngestion Service (required).
-
-
 ### token Command <a name="token-command"></a>
 
 The token command generates a JWT token, which is used for authentication.
@@ -99,32 +61,32 @@ Usage:
 Mac OS:
 
 ```bash
-./NBS-DataIngestion-CLI-macos token --username --password
+./NBS-DataIngestion-CLI-macos token --client-id --client-secret
 ```
 or
 ```bash
-./NBS-DataIngestion-CLI-macos-aarch64 token --username --password
+./NBS-DataIngestion-CLI-macos-aarch64 token --client-id --client-secret
 ```
 
 Linux:
 
 ```bash
-./NBS-DataIngestion-CLI-linux token --username --password
+./NBS-DataIngestion-CLI-linux token --client-id --client-secret
 ```
 
 Windows:
 
 ```bash
-NBS-DataIngestion-CLI-windows token --username --password
+NBS-DataIngestion-CLI-windows token --client-id --client-secret
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
-* *--username*: Username to connect to the DataIngestion Service (required).
+* *--client-id*: Client ID to connect to the DataIngestion Service (required).
 
-* *--password*: Password to connect to the DataIngestion Service (required).
+* *--client-secret*: Client Secret to connect to the DataIngestion Service (required).
 
 ### injecthl7 Command <a name="injecthl7-command"></a>
 
@@ -276,7 +238,7 @@ If you encounter any issues or errors while using the DataIngestion CLI, conside
 
 * Check your internet connection to ensure successful communication with the Data Ingestion service.
 
-* If you're facing ***Unauthorized error*** in the following scenarios:
+* If you're facing ***Unauthorized: Your token may have expired.*** in the following scenarios:
    * During token generation, that means you provided wrong credentials.
    * After token generation, (usually token is valid for an hour), that means the generated token is expired, and you'll have to re-run the token command.
 

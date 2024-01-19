@@ -115,26 +115,6 @@ class AuthUtilTest {
     }
 
     @Test
-    void testGetResponseForRegisterSuccessful() throws Exception {
-        String username="testuser";
-        String password="test123";
-        String jsonRequestBody = "{\"username\": \"" + username + "\", \"password\": \"" + new String(password) + "\"}";
-
-        authModelMock.setRequestBody(jsonRequestBody);
-        authModelMock.setServiceEndpoint(serviceReportsEndpoint);
-
-        when(httpClientMock.execute(httpGetMock)).thenReturn(httpResponseMock);
-        when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
-        when(httpResponseMock.getStatusLine().getStatusCode()).thenReturn(200);
-        when(httpResponseMock.getEntity()).thenReturn(mock(HttpEntity.class));
-        when(httpResponseMock.getEntity().getContent()).thenReturn(toInputStream("Dummy_USER"));
-
-        String response=authUtil.getResponseFromDIService(authModelMock, "register");
-        assertNotNull(response);
-
-    }
-
-    @Test
     void testGetResponseForHL7ValidationSuccessful() throws Exception {
         authModelMock.setRequestBody("Dummy HL7 Input");
         authModelMock.setServiceEndpoint(serviceValidationEndpoint);
@@ -150,8 +130,8 @@ class AuthUtilTest {
 
     @Test
     void testGetResponseForTokenSuccessful() throws Exception {
-        authModelMock.setUsername(System.getProperty("USERNAME"));
-        authModelMock.setPassword(System.getProperty("PASSWORD").toCharArray());
+        authModelMock.setClientId(System.getProperty("USERNAME"));
+        authModelMock.setClientSecret(System.getProperty("PASSWORD").toCharArray());
         authModelMock.setServiceEndpoint(serviceTokenEndpoint);
         when(httpClientMock.execute(httpGetMock)).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));

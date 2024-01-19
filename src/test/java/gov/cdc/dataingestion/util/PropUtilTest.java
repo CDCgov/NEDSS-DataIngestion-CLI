@@ -30,7 +30,6 @@ class PropUtilTest {
         assertNotNull(propertiesMock);
         assertFalse(propertiesMock.isEmpty());
 
-        assertEquals(propertiesMock.getProperty("service.registrationEndpoint"), "testRegistrationEndpoint");
         assertEquals(propertiesMock.getProperty("service.tokenEndpoint"), "testTokenEndpoint");
         assertEquals( propertiesMock.getProperty("service.reportsEndpoint"), "testReportsEndpoint");
     }
