@@ -26,10 +26,6 @@ public class AuthUtil {
     private static final String CLIENT_SECRET_KEY = "clientSecret";
     EncryptionUtil encryptionUtil = new EncryptionUtil(randomSaltForJwtEncryption);
 
-//    String apiToken = encryptionUtil.retrieveString(TOKEN_KEY);
-//    String clientId = encryptionUtil.retrieveString(CLIENT_ID_KEY);
-//    String clientSecret = encryptionUtil.retrieveString(CLIENT_SECRET_KEY);
-
     public String getResponseFromDIService(AuthModel authModel, String name) {
         try {
             UsernamePasswordCredentials credentials = null;
@@ -94,8 +90,8 @@ public class AuthUtil {
             HttpGet getRequest = new HttpGet(authModel.getServiceEndpoint());
             getRequest.addHeader("authorization", "Bearer " + apiToken);
             getRequest.addHeader("accept", "*/*");
-            getRequest.addHeader("clientId", clientId);
-            getRequest.addHeader("clientSecret", clientSecret);
+            getRequest.addHeader(CLIENT_ID_KEY, clientId);
+            getRequest.addHeader(CLIENT_SECRET_KEY, clientSecret);
             response = httpsClient.execute(getRequest);
         }
         else {
@@ -107,8 +103,8 @@ public class AuthUtil {
             else {
                 postRequest.addHeader("authorization", "Bearer " + apiToken);
             }
-            postRequest.addHeader("clientId", clientId);
-            postRequest.addHeader("clientSecret", clientSecret);
+            postRequest.addHeader(CLIENT_ID_KEY, clientId);
+            postRequest.addHeader(CLIENT_SECRET_KEY, clientSecret);
             postRequest.addHeader("accept", "*/*");
 
             if (name.equals("injecthl7")) {
