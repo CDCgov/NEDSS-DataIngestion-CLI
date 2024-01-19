@@ -1,0 +1,66 @@
+name: Data Ingestion CLI GraalVM Native Image Build Pipeline
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: Data Ingestion CLI build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '17.0.7'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-job-reports: 'true'
+
+      - name: CLI Native Image build using gradle
+        run: ./gradlew nativeCompile
+
+      - if: matrix.os == 'macos-latest'
+        name: Copy and compress macos binary image to destination folder
+        run: |
+          mkdir -p dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NBS-DataIngestion-CLI-macos dataingestion-cli-binary-images/
+          zip -r dataingestion-cli-binary-images/NBS-DataIngestion-CLI-macos dataingestion-cli-binary-images
+
+      - if: matrix.os == 'ubuntu-latest'
+        name: Copy and compress linux binary image to destination folder
+        run: |
+          mkdir -p dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NBS-DataIngestion-CLI-linux dataingestion-cli-binary-images/
+          zip -r dataingestion-cli-binary-images/NBS-DataIngestion-CLI-linux dataingestion-cli-binary-images
+
+      - if: matrix.os == 'windows-latest'
+        name: Copy and compress windows binary image to destination folder
+        run: |
+          mkdir -p dataingestion-cli-binary-images
+          cp ${{ github.workspace }}/build/native/nativeCompile/NBS-DataIngestion-CLI-windows.exe dataingestion-cli-binary-images/
+          Compress-Archive -Path dataingestion-cli-binary-images/* -Destination dataingestion-cli-binary-images/NBS-DataIngestion-CLI-windows
+
+      - if: matrix.os == 'macos-latest'
+        name: Archive binary image asset for macos
+        uses: actions/upload-artifact@v3
+        with:
+          name: NBS-DataIngestion-CLI-macos
+          path: dataingestion-cli-binary-images/
+
+      - if: matrix.os == 'ubuntu-latest'
+        name: Archive binary image asset for linux
+        uses: actions/upload-artifact@v3
+        with:
+          name: NBS-DataIngestion-CLI-linux
+          path: dataingestion-cli-binary-images/
+
+      - if: matrix.os == 'windows-latest'
+        name: Archive binary image asset for windows
+        uses: actions/upload-artifact@v3
+        with:
+          name: NBS-DataIngestion-CLI-windows
+          path: dataingestion-cli-binary-images/
