@@ -40,7 +40,6 @@ public class EncryptionUtil {
             SecretKey secretKey = new SecretKeySpec(jwtRandomSalt.getBytes(), ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             byte[] iv = cipher.getIV();
-//            preferences.putByteArray("iv_" + key, iv);
             byte[] encryptedBytes = cipher.doFinal(data.getBytes());
             byte[] combined = new byte[iv.length + encryptedBytes.length];
             System.arraycopy(iv, 0, combined, 0, iv.length);
@@ -61,7 +60,6 @@ public class EncryptionUtil {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             byte[] combined = Base64.getDecoder().decode(encryptedData);
-//            byte[] iv = preferences.getByteArray("iv_" + key, null);
             byte[] ivFromCombined = Arrays.copyOfRange(combined, 0, 12);
             GCMParameterSpec parameterSpec = new GCMParameterSpec(128, ivFromCombined);
             SecretKey secretKey = new SecretKeySpec(jwtRandomSalt.getBytes(), ALGORITHM);

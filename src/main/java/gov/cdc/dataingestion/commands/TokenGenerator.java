@@ -14,7 +14,7 @@ public class TokenGenerator implements Runnable {
     @CommandLine.Option(names = {"--client-id"}, description = "Client ID to connect to DI service", interactive = true, echo = true, required = true)
     String clientId;
 
-    @CommandLine.Option(names = {"--secret"}, description = "Secret to connect to DI service", interactive = true, required = true)
+    @CommandLine.Option(names = {"--client-secret"}, description = "Client Secret to connect to DI service", interactive = true, required = true)
     char[] clientSecret;
 
     private String randomSaltForJwtEncryption = "DICLI_RandomSalt";
@@ -37,7 +37,7 @@ public class TokenGenerator implements Runnable {
                 authModel.setClientId(clientId.trim());
                 authModel.setClientSecret(clientSecret);
                 // Serving data from INT1 environment as the production doesn't have data yet
-                authModel.setServiceEndpoint(properties.getProperty("service.local.tokenEndpoint"));
+                authModel.setServiceEndpoint(properties.getProperty("service.int1.tokenEndpoint"));
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "token");
 
