@@ -32,14 +32,18 @@ The DataIngestion CLI is a command-line tool that allows users to interact with 
 
 The DataIngestion CLI is packaged using GraalVM, and no additional dependencies or prerequisites are required for installation. To install the CLI, follow these steps:
 
-1. Download the `nbs-di-cli` application from source installation folder.
-2. Run the below commands directly from where you downloaded the `nbs-di-cli` application.
+1. Download the `NBS-DataIngestion-CLI-*` application (based on the OS that you use) from source installation folder.
+2. Run the below commands directly from where you downloaded the `NBS-DataIngestion-CLI-*` application (based on the OS that you use).
+
+*ONLY FOR MAC USERS:*
+- If you're using the latest Mac with Apple Silicon Chip, please download and use the image named `NBS-DataIngestion-CLI-macos-aarch64`. For other mac users, use the image named `NBS-DataIngestion-CLI-macos`.
+- If you're facing "Cannot open because of unidentified developer", please go to Settings -> Privacy & Security -> Allow `NBS-DataIngestion-CLI-macos` to run on this computer. 
 
 ## Getting Started <a name="getting-started"></a>
 
 Before using the DataIngestion CLI, ensure you have the necessary credentials and permissions to access the DataIngestion Service. The CLI requires an username and password to connect to the service.
 
-To get started, open a terminal or command prompt and navigate to the directory where you extracted the `nbs-di-cli` application.
+To get started, open a terminal or command prompt and navigate to the directory where you extracted the `NBS-DataIngestion-CLI-*` application (based on the OS that you use).
 
 ## Command Reference <a name="command-reference"></a>
 
@@ -51,15 +55,26 @@ The `register` command allows you to onboard a client by providing their usernam
 
 **Usage:**
 
-Mac OS/Linux:
+Mac OS:
 
 ```bash
-./nbs-di-cli register --client-username --client-secret --admin-user --admin-password
+./NBS-DataIngestion-CLI-macos register --client-username --client-secret --admin-user --admin-password
+```
+or 
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 register --client-username --client-secret --admin-user --admin-password
+```
+
+Linux:
+
+```bash
+./NBS-DataIngestion-CLI-linux register --client-username --client-secret --admin-user --admin-password
 ```
 
 Windows:
+
 ```bash
-nbs-di-cli register --client-username --client-secret --admin-user --admin-password
+NBS-DataIngestion-CLI-windows register --client-username --client-secret --admin-user --admin-password
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
@@ -81,16 +96,26 @@ The token command generates a JWT token, which is used for authentication.
 
 Usage:
 
-Mac OS/Linux:
+Mac OS:
 
 ```bash
-./nbs-di-cli token --username --password
+./NBS-DataIngestion-CLI-macos token --username --password
+```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 token --username --password
+```
+
+Linux:
+
+```bash
+./NBS-DataIngestion-CLI-linux token --username --password
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli token --username --password
+NBS-DataIngestion-CLI-windows token --username --password
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
@@ -103,20 +128,30 @@ Arguments:
 
 ### injecthl7 Command <a name="injecthl7-command"></a>
 
-The injecthl7 command allows developers to use the /api/reports endpoint of the DataIngestion Service.
+The injecthl7 command allows developers to use the `/api/reports` endpoint of the DataIngestion Service.
 
 Usage:
 
-Mac OS/Linux:
+Mac OS:
 
 ```bash
-./nbs-di-cli injecthl7 --hl7-file
+./NBS-DataIngestion-CLI-macos injecthl7 --hl7-file
+```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 injecthl7 --hl7-file
+```
+
+Linux:
+
+```bash
+./NBS-DataIngestion-CLI-linux injecthl7 --hl7-file
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli injecthl7 --hl7-file
+NBS-DataIngestion-CLI-windows injecthl7 --hl7-file
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
@@ -128,20 +163,30 @@ Arguments:
 
 ### status Command <a name="status-command"></a>
 
-The status command allows developers to use the /report-status/{id} endpoint of the DataIngestion Service.
+The status command allows developers to use the `/report-status/{id}` endpoint of the DataIngestion Service.
 
 Usage:
 
-Mac OS/Linux:
+Mac OS:
 
 ```bash
-./nbs-di-cli status --report-id
+./NBS-DataIngestion-CLI-macos status --report-id
+```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 status --report-id
+```
+
+Linux:
+
+```bash
+./NBS-DataIngestion-CLI-linux status --report-id
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli status --report-id
+NBS-DataIngestion-CLI-windows status --report-id
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
@@ -153,20 +198,30 @@ Arguments:
 
 ### hl7 validation Command <a name="hl7-validation"></a>
 
-HL7 Validate command allows developers to use the /api/reports/hl7-validator endpoint of the DataIngestion Service to validate any HL7 messages.
+HL7 Validate command allows developers to use the `/api/reports/hl7-validator` endpoint of the DataIngestion Service to validate any HL7 messages.
 
 Usage:
 
-Mac OS/Linux:
+Mac OS:
 
 ```bash
-./nbs-di-cli validatehl7 --hl7-file
+./NBS-DataIngestion-CLI-macos validatehl7 --hl7-file
+```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 validatehl7 --hl7-file
+```
+
+Linux:
+
+```bash
+./NBS-DataIngestion-CLI-linux validatehl7 --hl7-file
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli validatehl7 --hl7-file
+NBS-DataIngestion-CLI-windows validatehl7 --hl7-file
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
@@ -178,20 +233,30 @@ Arguments:
 
 ### Get dlt messages Command <a name="dlt-messages"></a>
 
-Get DLT Messages command allows developers to use the api/reports-dlt/get-error-messages endpoint of the DataIngestion Service to view the DLT messages.
+Get DLT Messages command allows developers to use the `/api/reports-dlt/get-error-messages` endpoint of the DataIngestion Service to view the DLT messages.
 
 Usage:
 
-Mac OS/Linux:
+Mac OS:
 
 ```bash
-./nbs-di-cli dltmessages --msgsize
+./NBS-DataIngestion-CLI-macos dltmessages --msgsize
+```
+or
+```bash
+./NBS-DataIngestion-CLI-macos-aarch64 dltmessages --msgsize
+```
+
+Linux:
+
+```bash
+./NBS-DataIngestion-CLI-linux dltmessages --msgsize
 ```
 
 Windows:
 
 ```bash
-nbs-di-cli dltmessages --msgsize
+NBS-DataIngestion-CLI-windows dltmessages --msgsize
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
@@ -213,7 +278,7 @@ If you encounter any issues or errors while using the DataIngestion CLI, conside
 
 * If you're facing ***Unauthorized error*** in the following scenarios:
    * During token generation, that means you provided wrong credentials.
-   * After token generation, (usually token is valid for an hour), that means the geenrated token is expired and you'll have to re-run the token command.
+   * After token generation, (usually token is valid for an hour), that means the generated token is expired, and you'll have to re-run the token command.
 
 * For specific error messages, refer to the error output provided by the CLI.
 

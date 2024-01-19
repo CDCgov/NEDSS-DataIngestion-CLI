@@ -47,7 +47,25 @@ graalvmNative {
         resources.autodetect()
     }
     binaries.main {
-        imageName.set("nbs-di-cli")
+        def osName = System.getProperty('os.name').toLowerCase();
+        def osArch = System.getProperty('os.arch').toLowerCase();
+        if(osName.contains("win")) {
+            imageName.set("NBS-DataIngestion-CLI-windows")
+        }
+        else if(osName.contains("nix") || osName.contains("nux")) {
+            imageName.set("NBS-DataIngestion-CLI-linux")
+        }
+        else if(osName.contains("mac")) {
+            if(osArch == "aarch64") {
+                imageName.set("NBS-DataIngestion-CLI-macos-aarch64")
+            }
+            else {
+                imageName.set("NBS-DataIngestion-CLI-macos")
+            }
+        }
+        else {
+            imageName.set("NBS-DataIngestion-CLI")
+        }
         debug = true
         verbose = true
         buildArgs.add("-H:+ReportExceptionStackTraces")
