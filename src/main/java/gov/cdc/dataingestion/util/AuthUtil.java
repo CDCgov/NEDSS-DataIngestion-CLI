@@ -21,25 +21,26 @@ import java.nio.charset.StandardCharsets;
 
 public class AuthUtil {
     private String randomSaltForJwtEncryption = "DICLI_RandomSalt";
-    TokenUtil tokenUtil = new TokenUtil(randomSaltForJwtEncryption);
+    private static final String TOKEN_KEY = "apiJwt";
+    private static final String CLIENT_ID_KEY = "clientId";
+    private static final String CLIENT_SECRET_KEY = "clientSecret";
+    EncryptionUtil encryptionUtil = new EncryptionUtil(randomSaltForJwtEncryption);
+
+//    String apiToken = encryptionUtil.retrieveString(TOKEN_KEY);
+//    String clientId = encryptionUtil.retrieveString(CLIENT_ID_KEY);
+//    String clientSecret = encryptionUtil.retrieveString(CLIENT_SECRET_KEY);
 
     public String getResponseFromDIService(AuthModel authModel, String name) {
         try {
             UsernamePasswordCredentials credentials = null;
-            if(name.equals("register")) {
-                credentials = new UsernamePasswordCredentials(authModel.getAdminUser(), new String(authModel.getAdminPassword()));
-            }
-            else {
-                if(authModel.getUsername() != null) {
-                    credentials = new UsernamePasswordCredentials(authModel.getUsername(), new String(authModel.getPassword()));
-                }
-
+            String apiToken = null;
+            if(authModel.getClientId() != null) {
+                credentials = new UsernamePasswordCredentials(authModel.getClientId(), new String(authModel.getClientSecret()));
             }
 
             CloseableHttpClient httpsClient = HttpClients.createDefault();
             CloseableHttpResponse response = null;
 
-            String apiToken = tokenUtil.retrieveToken();
             int statusCode = 0;
             response = executeHttpRequest(authModel, name, credentials, httpsClient, apiToken);
             if(response == null) {
@@ -76,16 +77,28 @@ public class AuthUtil {
         }
     }
 
-    private static CloseableHttpResponse executeHttpRequest(AuthModel authModel, String name, UsernamePasswordCredentials credentials, CloseableHttpClient httpsClient, String apiToken) throws IOException, AuthenticationException {
+    private CloseableHttpResponse executeHttpRequest(AuthModel authModel, String name, UsernamePasswordCredentials credentials, CloseableHttpClient httpsClient, String apiToken) throws IOException, AuthenticationException {
         CloseableHttpResponse response;
+        String clientId;
+        String clientSecret;
+        if(authModel.getClientId() == null) {
+            apiToken = encryptionUtil.retrieveString(TOKEN_KEY);
+            clientId = encryptionUtil.retrieveString(CLIENT_ID_KEY);
+            clientSecret = encryptionUtil.retrieveString(CLIENT_SECRET_KEY);
+        }
+        else {
+            clientId = authModel.getClientId();
+            clientSecret = new String(authModel.getClientSecret());
+        }
         if(name.equals("status") || name.equals("dltmessages")) {
             HttpGet getRequest = new HttpGet(authModel.getServiceEndpoint());
             getRequest.addHeader("authorization", "Bearer " + apiToken);
             getRequest.addHeader("accept", "*/*");
+            getRequest.addHeader("clientId", clientId);
+            getRequest.addHeader("clientSecret", clientSecret);
             response = httpsClient.execute(getRequest);
         }
         else {
-
             HttpPost postRequest = new HttpPost(authModel.getServiceEndpoint());
             if(credentials != null) {
                 Header authHeader = new BasicScheme(StandardCharsets.UTF_8).authenticate(credentials, postRequest, null);
@@ -94,14 +107,13 @@ public class AuthUtil {
             else {
                 postRequest.addHeader("authorization", "Bearer " + apiToken);
             }
+            postRequest.addHeader("clientId", clientId);
+            postRequest.addHeader("clientSecret", clientSecret);
             postRequest.addHeader("accept", "*/*");
 
             if (name.equals("injecthl7")) {
                 postRequest.addHeader("msgType", "HL7");
                 postRequest.addHeader("validationActive", "true");
-            }
-            if(name.equals("register")) {
-                postRequest.addHeader("Content-Type", "application/json");
             }
             else {
                 postRequest.addHeader("Content-Type", "text/plain");

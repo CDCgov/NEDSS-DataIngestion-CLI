@@ -22,7 +22,7 @@ public class ReportStatus implements Runnable{
         if(reportUuid != null) {
                 Properties properties = propUtil.loadPropertiesFile();
                 // Serving data from INT1 environment as the production doesn't have data yet
-                String serviceEndpoint = properties.getProperty("service.int1.reportStatusEndpoint");
+                String serviceEndpoint = properties.getProperty("service.local.reportStatusEndpoint");
 
                 authModel.setServiceEndpoint(serviceEndpoint + "/" + reportUuid);
 

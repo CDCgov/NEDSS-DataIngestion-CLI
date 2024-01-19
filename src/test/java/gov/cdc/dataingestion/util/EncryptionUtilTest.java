@@ -8,7 +8,10 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TokenUtilTest {
+class EncryptionUtilTest {
+    private static final String TOKEN_KEY = "apiJwt";
+    private static final String CLIENT_ID_KEY = "clientId";
+    private static final String CLIENT_SECRET_KEY = "clientSecret";
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
     @BeforeEach
@@ -20,11 +23,11 @@ class TokenUtilTest {
     void testStoreAndRetrieveToken() {
         String originalToken = "testToken";
         String validRandomSalt = "random_Salt_Test";
-        TokenUtil tokenUtil = new TokenUtil(validRandomSalt);
+        EncryptionUtil encryptionUtil = new EncryptionUtil(validRandomSalt);
 
-        tokenUtil.storeToken(originalToken);
+        encryptionUtil.storeString(originalToken, TOKEN_KEY);
 
-        String retrievedToken = tokenUtil.retrieveToken();
+        String retrievedToken = encryptionUtil.retrieveString(TOKEN_KEY);
         assertEquals(originalToken, retrievedToken);
     }
 
@@ -32,11 +35,11 @@ class TokenUtilTest {
     void testStoreTokenWithInvalidEncryption() {
         String originalToken = "testToken";
         String invalidRandomSalt = "someRandomSaltForStoreToken";
-        TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
-        String expectedOutput = "Exception Occurred: Invalid AES key length: 27 bytes\n" +
-                "Encryption failed for JWT.";
+        EncryptionUtil encryptionUtil = new EncryptionUtil(invalidRandomSalt);
+        String expectedOutput = "Exception occurred during encryption: Invalid AES key length: 27 bytes\n" +
+                "Encryption failed for given data.";
 
-        tokenUtil.storeToken(originalToken);
+        encryptionUtil.storeString(originalToken, TOKEN_KEY);
 
         assertEquals(expectedOutput, outStream.toString().trim());
     }
@@ -44,10 +47,10 @@ class TokenUtilTest {
     @Test
     void testRetrieveTokenWithInvalidEncryption() {
         String invalidRandomSalt = "someRandomSaltForRetrieveToken";
-        TokenUtil tokenUtil = new TokenUtil(invalidRandomSalt);
-        String expectedOutput = "Exception Occurred: Invalid AES key length: 30 bytes";
+        EncryptionUtil encryptionUtil = new EncryptionUtil(invalidRandomSalt);
+        String expectedOutput = "Exception occurred during decryption: Invalid AES key length: 30 bytes";
 
-        tokenUtil.retrieveToken();
+        encryptionUtil.retrieveString(TOKEN_KEY);
 
         assertEquals(expectedOutput, outStream.toString().trim());
     }

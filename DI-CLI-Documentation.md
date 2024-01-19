@@ -10,8 +10,6 @@
 
 4. [Command Reference](#command-reference)
 
-   - [register](#register-command)
-
    - [token](#token-command)
 
    - [injecthl7](#injecthl7-command)
@@ -48,47 +46,6 @@ To get started, open a terminal or command prompt and navigate to the directory 
 ## Command Reference <a name="command-reference"></a>
 
 The DataIngestion CLI offers the following commands with their respective functionalities:
-
-### register Command <a name="register-command"></a>
-
-The `register` command allows you to onboard a client by providing their username and secret.
-
-**Usage:**
-
-Mac OS:
-
-```bash
-./NBS-DataIngestion-CLI-macos register --client-username --client-secret --admin-user --admin-password
-```
-or 
-```bash
-./NBS-DataIngestion-CLI-macos-aarch64 register --client-username --client-secret --admin-user --admin-password
-```
-
-Linux:
-
-```bash
-./NBS-DataIngestion-CLI-linux register --client-username --client-secret --admin-user --admin-password
-```
-
-Windows:
-
-```bash
-NBS-DataIngestion-CLI-windows register --client-username --client-secret --admin-user --admin-password
-```
-
-You will be prompted with interactive input where you'll be providing all the required details to the CLI.
-
-Arguments:
-
-* *--client-username*: Username provided by the client (required).
-
-* *--client-secret*: Secret provided by the client (required).
-
-* *--admin-username*: Admin username to connect to the DataIngestion Service (required).
-
-* *--admin-password*: Admin password to connect to the DataIngestion Service (required).
-
 
 ### token Command <a name="token-command"></a>
 

@@ -55,8 +55,8 @@ class TokenGeneratorTest {
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
 
-        tokenGenerator.username = username;
-        tokenGenerator.password = password;
+        tokenGenerator.clientId = username;
+        tokenGenerator.clientSecret = password;
         tokenGenerator.run();
 
         verify(authUtilMock).getResponseFromDIService(tokenGenerator.authModel, "token");
@@ -72,8 +72,8 @@ class TokenGeneratorTest {
         when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("token"))).thenReturn(apiResponse);
 
-        tokenGenerator.username = username;
-        tokenGenerator.password = password;
+        tokenGenerator.clientId = username;
+        tokenGenerator.clientSecret = password;
         tokenGenerator.run();
 
         verify(authUtilMock).getResponseFromDIService(tokenGenerator.authModel, "token");
@@ -86,8 +86,8 @@ class TokenGeneratorTest {
         char[] password = "testUserPassword".toCharArray();
         String expectedOutput = "Username or password is empty.";
 
-        tokenGenerator.username = username;
-        tokenGenerator.password = password;
+        tokenGenerator.clientId = username;
+        tokenGenerator.clientSecret = password;
         tokenGenerator.run();
 
         verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
@@ -100,8 +100,8 @@ class TokenGeneratorTest {
         char[] password = null;
         String expectedOutput = "Username or password is null.";
 
-        tokenGenerator.username = username;
-        tokenGenerator.password = password;
+        tokenGenerator.clientId = username;
+        tokenGenerator.clientSecret = password;
         tokenGenerator.run();
 
         verify(authUtilMock, never()).getResponseFromDIService(any(AuthModel.class), anyString());
