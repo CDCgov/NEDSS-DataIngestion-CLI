@@ -21,9 +21,30 @@ class PropUtilTest {
     }
 
     @Test
+<<<<<<< HEAD
     void testGetProperty() {
         String result = propUtil.getProperty("service.tokenEndpoint");
         assertEquals("testTokenEndpoint", result);
+=======
+    void testLoadPropertiesFileSuccess() {
+        propUtil.propertiesFileName = "test.config.properties";
+        propertiesMock = propUtil.loadPropertiesFile();
+
+        assertNotNull(propertiesMock);
+        assertFalse(propertiesMock.isEmpty());
+
+        assertEquals(propertiesMock.getProperty("service.tokenEndpoint"), "testTokenEndpoint");
+        assertEquals( propertiesMock.getProperty("service.reportsEndpoint"), "testReportsEndpoint");
+    }
+
+    @Test
+    void testLoadPropertiesFileEmptyProperties() {
+        propUtil.propertiesFileName = "test.empty.config.properties";
+        propertiesMock = propUtil.loadPropertiesFile();
+
+        assertTrue(propertiesMock.isEmpty());
+
+>>>>>>> CNDIT-907-keycloak-updates
     }
 
     @Test

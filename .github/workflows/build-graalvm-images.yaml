@@ -1,7 +1,7 @@
 name: Data Ingestion CLI GraalVM Native Image Build Pipeline
 on:
-  pull_request:
-    branches: ["main"]
+  push:
+    branches: ["CNDIT-872-2-keycloak"]
 
 jobs:
   build:

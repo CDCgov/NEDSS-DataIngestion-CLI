@@ -1,17 +1,13 @@
 package gov.cdc.dataingestion;
 
 import gov.cdc.dataingestion.commands.InjectHL7;
-import gov.cdc.dataingestion.commands.RegisterUser;
 import gov.cdc.dataingestion.commands.TokenGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import picocli.CommandLine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.StringWriter;
-import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,20 +21,11 @@ class DataIngestionCLITest {
 
     @Test
     void testMainExitCodeMissingArguments() {
-        String[] args = { "register", "--client-secret=secret", "--admin-password=password" };
+        String[] args = { "status" };
 
         int exitCode = new CommandLine(new DataIngestionCLI()).execute(args);
 
         assertEquals(2, exitCode);
-    }
-
-    @Test
-    void testMainRegisterUserSubCommand() {
-        CommandLine cmd = new CommandLine(new DataIngestionCLI());
-        CommandLine subCommand = cmd.getSubcommands().get("register");
-
-        assertNotNull(subCommand);
-        assertEquals(RegisterUser.class, subCommand.getCommand().getClass());
     }
 
     @Test
