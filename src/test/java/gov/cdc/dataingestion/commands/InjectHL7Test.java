@@ -53,7 +53,7 @@ class InjectHL7Test {
         String apiResponse = "Dummy_UUID";
 
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
-        File tempHL7File = getFile();
+        File tempHL7File = getFile(false);
 
         injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
 
@@ -80,7 +80,7 @@ class InjectHL7Test {
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("injecthl7"))).thenReturn(apiResponse);
-        File tempHL7File = getFile();
+        File tempHL7File = getFile(false);
 
         injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
         injectHL7.run();
@@ -100,15 +100,31 @@ class InjectHL7Test {
         verifyNoInteractions(authUtilMock);
     }
 
-    private static File getFile() throws IOException {
+    @Test
+    void testRunInjectionWherePayloadIsEmpty() throws IOException {
+        String apiResponse = "Dummy_UUID";
+        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
+        File tempHL7File = getFile(true);
+        injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
+        assertThrows(RuntimeException.class, injectHL7::run);
+
+    }
+
+    private static File getFile(boolean isEmpty) throws IOException {
         File tempHL7File = File.createTempFile("test-hl7-input", ".hl7");
 
         try (FileWriter writer = new FileWriter(tempHL7File)) {
-            writer.write("MSH|^~\\&|SIMHOSP|SFAC|RAPP|RFAC|20200508130643||ADT^A01|5|T|2.3|||AL||44|ASCII\n" +
-                    "EVN|A01|20200508130643|||C006^Wolf^Kathy^^^Dr^^^DRNBR^PRSNL^^^ORGDR|\n" +
-                    "PID|1|2590157853^^^SIMULATOR MRN^MRN|2590157853^^^SIMULATOR MRN^MRN~2478684691^^^NHSNBR^NHSNMBR||Esterkin^AKI Scenario 6^^^Miss^^CURRENT||19890118000000|F|||170 Juice Place^^London^^RW21 6KC^GBR^HOME||020 5368 1665^HOME|||||||||R^Other - Chinese^^^||||||||\n" +
-                    "PD1|||FAMILY PRACTICE^^12345|\n" +
-                    "PV1|1|I|RenalWard^MainRoom^Bed 1^Simulated Dummy Hospital^^BED^Main Building^5|28b|||C006^Wolf^Kathy^^^Dr^^^DRNBR^PRSNL^^^ORGDR|||MED|||||||||6145914547062969032^^^^visitid||||||||||||||||||||||ARRIVED|||20200508130643||");
+            if (!isEmpty) {
+                writer.write("MSH|^~\\&|SIMHOSP|SFAC|RAPP|RFAC|20200508130643||ADT^A01|5|T|2.3|||AL||44|ASCII\n" +
+                        "EVN|A01|20200508130643|||C006^Wolf^Kathy^^^Dr^^^DRNBR^PRSNL^^^ORGDR|\n" +
+                        "PID|1|2590157853^^^SIMULATOR MRN^MRN|2590157853^^^SIMULATOR MRN^MRN~2478684691^^^NHSNBR^NHSNMBR||Esterkin^AKI Scenario 6^^^Miss^^CURRENT||19890118000000|F|||170 Juice Place^^London^^RW21 6KC^GBR^HOME||020 5368 1665^HOME|||||||||R^Other - Chinese^^^||||||||\n" +
+                        "PD1|||FAMILY PRACTICE^^12345|\n" +
+                        "PV1|1|I|RenalWard^MainRoom^Bed 1^Simulated Dummy Hospital^^BED^Main Building^5|28b|||C006^Wolf^Kathy^^^Dr^^^DRNBR^PRSNL^^^ORGDR|||MED|||||||||6145914547062969032^^^^visitid||||||||||||||||||||||ARRIVED|||20200508130643||");
+            } else {
+                writer.write("");
+            }
+
         }
         return tempHL7File;
     }
