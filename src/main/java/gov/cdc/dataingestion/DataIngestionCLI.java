@@ -5,7 +5,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 @Command(name = "DataIngestionCLI",
-        subcommands = { RegisterUser.class, TokenGenerator.class, InjectHL7.class, ReportStatus.class, Hl7Validation.class, DeadLetterMessages.class },
+        subcommands = { TokenGenerator.class, InjectHL7.class, ReportStatus.class, Hl7Validation.class, DeadLetterMessages.class },
         mixinStandardHelpOptions = true, version = "1.0",
         description = "Command Line Interface to connect to NBS DI Service.")
 class DataIngestionCLI {
