@@ -103,7 +103,6 @@ class InjectHL7Test {
     @Test
     void testRunInjectionWherePayloadIsEmpty() throws IOException {
         String apiResponse = "Dummy_UUID";
-        when(propUtilMock.loadPropertiesFile()).thenReturn(mockProperties);
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
         File tempHL7File = getFile(true);
         injectHL7.hl7FilePath = tempHL7File.getAbsolutePath();
