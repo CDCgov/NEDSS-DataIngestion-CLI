@@ -10,13 +10,7 @@
 
 4. [Command Reference](#command-reference)
 
-<<<<<<< HEAD
-    - [register](#register-command)
-
     - [token](#token-command)
-=======
-   - [token](#token-command)
->>>>>>> CNDIT-907-keycloak-updates
 
     - [injecthl7](#injecthl7-command)
 

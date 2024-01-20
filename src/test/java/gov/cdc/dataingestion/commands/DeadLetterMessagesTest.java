@@ -61,6 +61,7 @@ class DeadLetterMessagesTest {
         verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
         String expectedOutput = "ERROR_STACK_TRACE:DiHL7Exception: Invalid Message Found unknown segment: SFT at SFT MSG_ID:E8F2D31D-520F-492F-97A1-8A2557DC129A CREATED_ON:2023-11-22T03:51:18.380+00:00";
 
+
         assertEquals(expectedOutput, outStream.toString().trim());
     }
     @Test

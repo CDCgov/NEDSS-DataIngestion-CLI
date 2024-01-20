@@ -37,7 +37,6 @@ public class PropUtil {
     protected void loadProperties() {
         properties = loadPropertiesFile();
         String envVarValue = System.getenv(DI_URL);
-        System.out.println(envVarValue);
         if (envVarValue != null) {
             properties.setProperty("service.env.url", envVarValue);
         }
