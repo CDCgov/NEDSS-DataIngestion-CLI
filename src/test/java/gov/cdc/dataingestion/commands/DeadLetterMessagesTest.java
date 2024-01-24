@@ -80,6 +80,38 @@ class DeadLetterMessagesTest {
         assertEquals(expectedOutput, outStream.toString().trim());
     }
     @Test
+    void testRunForNegativeInput() {
+        String apiResponse = "[{\"errorMessageId\":\"E8F2D31D-520F-492F-97A1-8A2557DC129A\",\"errorMessageSource\":\"elr_raw\",\"message\":null,\"errorStackTrace\":null,\"errorStackTraceShort\":\"DiHL7Exception: Invalid Message Found unknown segment: SFT at SFT\",\"dltOccurrence\":1,\"dltStatus\":\"ERROR\",\"createdOn\":\"2023-11-22T03:51:18.380+00:00\",\"updatedOn\":null,\"createdBy\":\"elr_raw_dlt\",\"updatedBy\":\"elr_raw_dlt\"}]";
+
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
+
+        target.msgsize = "-2";
+
+        target.run();
+
+        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
+        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
+        String expectedOutput = "Invalid input. Please enter a positive number";
+
+        assertEquals(expectedOutput, outStream.toString().trim());
+    }
+    @Test
+    void testRunForNonNumericInput() {
+        String apiResponse = "[{\"errorMessageId\":\"E8F2D31D-520F-492F-97A1-8A2557DC129A\",\"errorMessageSource\":\"elr_raw\",\"message\":null,\"errorStackTrace\":null,\"errorStackTraceShort\":\"DiHL7Exception: Invalid Message Found unknown segment: SFT at SFT\",\"dltOccurrence\":1,\"dltStatus\":\"ERROR\",\"createdOn\":\"2023-11-22T03:51:18.380+00:00\",\"updatedOn\":null,\"createdBy\":\"elr_raw_dlt\",\"updatedBy\":\"elr_raw_dlt\"}]";
+
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
+
+        target.msgsize = "abc";
+
+        target.run();
+
+        ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
+        verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
+        String expectedOutput = "Invalid input. Please enter a positive number";
+
+        assertEquals(expectedOutput, outStream.toString().trim());
+    }
+    @Test
     void testRunUserUnauthorized() throws IOException {
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 

@@ -34,7 +34,18 @@ public class DeadLetterMessages  extends PropUtil implements Runnable {
         } else {
             int nonOfMsgDisplay = 0;
             if (!msgSize.isEmpty()) {
-                nonOfMsgDisplay = Integer.parseInt(msgSize);
+                try {
+                    nonOfMsgDisplay =Double.valueOf(msgSize).intValue();
+                }catch (NumberFormatException ex){
+                    nonOfMsgDisplay=0;
+                    System.out.println("Invalid input. Please enter a positive number");//NOSONAR
+                    return;
+                }
+                if(nonOfMsgDisplay<=0){
+                    nonOfMsgDisplay=0;
+                    System.out.println("Invalid input. Please enter a positive number");//NOSONAR
+                    return;
+                }
             }
             JSONArray jsonArray = new JSONArray(dltMsgs);
             int availableMsgSize = jsonArray.length();
