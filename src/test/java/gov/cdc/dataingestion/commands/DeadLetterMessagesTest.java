@@ -91,7 +91,7 @@ class DeadLetterMessagesTest {
 
         ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
         verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
-        String expectedOutput = "Invalid input. Please enter a positive number";
+        String expectedOutput = "Invalid input. Please enter a positive number.";
 
         assertEquals(expectedOutput, outStream.toString().trim());
     }
@@ -107,7 +107,7 @@ class DeadLetterMessagesTest {
 
         ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
         verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
-        String expectedOutput = "Invalid input. Please enter a positive number";
+        String expectedOutput = "Invalid input. Please enter a positive number.";
 
         assertEquals(expectedOutput, outStream.toString().trim());
     }

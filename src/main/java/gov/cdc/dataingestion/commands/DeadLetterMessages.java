@@ -38,12 +38,12 @@ public class DeadLetterMessages  extends PropUtil implements Runnable {
                     nonOfMsgDisplay =Double.valueOf(msgSize).intValue();
                 }catch (NumberFormatException ex){
                     nonOfMsgDisplay=0;
-                    System.out.println("Invalid input. Please enter a positive number");//NOSONAR
+                    System.out.println("Invalid input. Please enter a positive number.");//NOSONAR
                     return;
                 }
                 if(nonOfMsgDisplay<=0){
                     nonOfMsgDisplay=0;
-                    System.out.println("Invalid input. Please enter a positive number");//NOSONAR
+                    System.out.println("Invalid input. Please enter a positive number.");//NOSONAR
                     return;
                 }
             }
