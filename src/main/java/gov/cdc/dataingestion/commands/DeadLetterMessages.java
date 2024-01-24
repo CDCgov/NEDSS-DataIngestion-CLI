@@ -12,7 +12,7 @@ import java.util.List;
 @CommandLine.Command(name = "dltmessages", mixinStandardHelpOptions = true, description = "This functionality to view the messages in the dead letter messages.")
 public class DeadLetterMessages  extends PropUtil implements Runnable {
 
-    @CommandLine.Option(names = {"--msgsize"}, description = "Number of Messages to display.Default is 10", interactive = true, echo = true, required = false)//NOSONAR
+    @CommandLine.Option(names = {"--msg-size"}, description = "Number of messages to be displayed.Default is 10", interactive = true, echo = true, required = false)//NOSONAR
     String msgsize = "10";
 
     AuthModel authModel = new AuthModel();//NOSONAR
@@ -37,12 +37,10 @@ public class DeadLetterMessages  extends PropUtil implements Runnable {
                 try {
                     nonOfMsgDisplay =Double.valueOf(msgSize).intValue();
                 }catch (NumberFormatException ex){
-                    nonOfMsgDisplay=0;
                     System.out.println("Invalid input. Please enter a positive number.");//NOSONAR
                     return;
                 }
                 if(nonOfMsgDisplay<=0){
-                    nonOfMsgDisplay=0;
                     System.out.println("Invalid input. Please enter a positive number.");//NOSONAR
                     return;
                 }

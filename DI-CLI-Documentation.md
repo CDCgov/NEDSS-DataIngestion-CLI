@@ -206,30 +206,30 @@ Usage:
 Mac OS:
 
 ```bash
-./NBS-DataIngestion-CLI-macos dltmessages --msgsize
+./NBS-DataIngestion-CLI-macos dltmessages --msg-size
 ```
 or
 ```bash
-./NBS-DataIngestion-CLI-macos-aarch64 dltmessages --msgsize
+./NBS-DataIngestion-CLI-macos-aarch64 dltmessages --msg-size
 ```
 
 Linux:
 
 ```bash
-./NBS-DataIngestion-CLI-linux dltmessages --msgsize
+./NBS-DataIngestion-CLI-linux dltmessages --msg-size
 ```
 
 Windows:
 
 ```bash
-NBS-DataIngestion-CLI-windows dltmessages --msgsize
+NBS-DataIngestion-CLI-windows dltmessages --msg-size
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
-* *--msgsize*: Number of messages to be displayed on the screen(optional). Default is 10.
+* *--msg-size*: Number of messages to be displayed on the screen(optional). Default is 10.
 
 
 ### Troubleshooting <a name="troubleshooting"></a>
