@@ -61,7 +61,7 @@ class DeadLetterMessagesTest {
 
     @ParameterizedTest
     @CsvSource(value={"2,ERROR_STACK_TRACE:DiHL7Exception: Invalid Message Found unknown segment: SFT at SFT MSG_ID:E8F2D31D-520F-492F-97A1-8A2557DC129A CREATED_ON:2023-11-22T03:51:18.380+00:00","-2,Invalid input. Please enter a positive number.","abc,Invalid input. Please enter a positive number."})
-    void testRunSuccess_For_Valid_and_Invalid_Inputs(String messageSize, String expOutput) {
+    void testRunSuccess_For_Valid_and_Invalid_Inputs(String messageSize, String expectedOutput) {
         String apiResponse = "[{\"errorMessageId\":\"E8F2D31D-520F-492F-97A1-8A2557DC129A\",\"errorMessageSource\":\"elr_raw\",\"message\":null,\"errorStackTrace\":null,\"errorStackTraceShort\":\"DiHL7Exception: Invalid Message Found unknown segment: SFT at SFT\",\"dltOccurrence\":1,\"dltStatus\":\"ERROR\",\"createdOn\":\"2023-11-22T03:51:18.380+00:00\",\"updatedOn\":null,\"createdBy\":\"elr_raw_dlt\",\"updatedBy\":\"elr_raw_dlt\"}]";
 
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), anyString())).thenReturn(apiResponse);
@@ -72,7 +72,6 @@ class DeadLetterMessagesTest {
 
         ArgumentCaptor<AuthModel> authModelCaptor = ArgumentCaptor.forClass(AuthModel.class);
         verify(authUtilMock).getResponseFromDIService(authModelCaptor.capture(), anyString());
-        String expectedOutput = expOutput;
 
         assertEquals(expectedOutput, outStream.toString().trim());
     }
