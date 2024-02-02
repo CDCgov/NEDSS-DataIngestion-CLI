@@ -57,6 +57,11 @@ public class AuthUtil {
             String result = convertInputStreamToString(content);
             httpsClient.close();
             return result;
+        } else if (statusCode == 400) {
+            InputStream content = response.getEntity().getContent();
+            String result = convertInputStreamToString(content);
+            httpsClient.close();
+            return result;
         } else if (statusCode == 401) {
             httpsClient.close();
             return "Unauthorized: Your token may have expired. Please review and confirm your authentication settings.";

@@ -25,7 +25,7 @@ public class Hl7Validation extends PropUtil implements Runnable{
                 try(BufferedReader reader = new BufferedReader(new FileReader(hl7FilePath))) {
                     String line;
                     while((line = reader.readLine()) != null) {
-                        requestBody.append(line);
+                        requestBody.append(line + "\n");
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -65,7 +65,7 @@ class ReportStatusTest {
 
         reportStatus.run();
 
-        assertEquals("Report UUID is null.", errStream.toString().trim());
+        assertEquals("Report UUID is null or empty.", errStream.toString().trim());
     }
 
     @Test

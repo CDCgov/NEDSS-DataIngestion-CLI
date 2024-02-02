@@ -16,7 +16,7 @@ public class ReportStatus extends PropUtil implements Runnable{
     @Override
     @SuppressWarnings("java:S106")
     public void run() {
-        if(reportUuid != null) {
+        if(reportUuid != null && !reportUuid.isEmpty()) {
 
             // Serving data from INT1 environment as the production doesn't have data yet
             String serviceEndpoint = getProperty("service.env.url") + getProperty("service.env.reportStatusEndpoint");
@@ -27,7 +27,7 @@ public class ReportStatus extends PropUtil implements Runnable{
             System.out.println(apiResponse);
             }
         else {
-            System.err.println("Report UUID is null.");
+            System.err.println("Report UUID is null or empty.");
         }
     }
 }
