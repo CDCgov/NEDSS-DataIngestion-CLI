@@ -81,7 +81,7 @@ class TokenGeneratorTest {
     void testRunEmptyUsernameOrPassword() {
         String username = "";
         char[] password = "testUserPassword".toCharArray();
-        String expectedOutput = "Username or password is empty.";
+        String expectedOutput = "Client Id or Secret is empty.";
 
         tokenGenerator.clientId = username;
         tokenGenerator.clientSecret = password;
@@ -95,7 +95,7 @@ class TokenGeneratorTest {
     void testRunNullUsernameOrPassword() {
         String username = "testUser";
         char[] password = null;
-        String expectedOutput = "Username or password is null.";
+        String expectedOutput = "Client Id or Secret is null.";
 
         tokenGenerator.clientId = username;
         tokenGenerator.clientSecret = password;

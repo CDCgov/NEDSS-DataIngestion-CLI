@@ -49,11 +49,11 @@ public class TokenGenerator extends PropUtil implements Runnable {
                 }
             }
             else {
-                System.err.println("Username or password is empty.");
+                System.err.println("Client Id or Secret is empty.");
             }
         }
         else {
-            System.err.println("Username or password is null.");
+            System.err.println("Client Id or Secret is null.");
         }
     }
 }
