@@ -52,12 +52,7 @@ public class AuthUtil {
     }
 
     private String getResultFromResponse(String name, CloseableHttpClient httpsClient, CloseableHttpResponse response, int statusCode) throws IOException {
-        if (statusCode == 200) {
-            InputStream content = response.getEntity().getContent();
-            String result = convertInputStreamToString(content);
-            httpsClient.close();
-            return result;
-        } else if (statusCode == 400) {
+        if (statusCode == 200 || statusCode == 400) {
             InputStream content = response.getEntity().getContent();
             String result = convertInputStreamToString(content);
             httpsClient.close();
