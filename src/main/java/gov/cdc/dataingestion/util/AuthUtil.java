@@ -52,14 +52,14 @@ public class AuthUtil {
     }
 
     private String getResultFromResponse(String name, CloseableHttpClient httpsClient, CloseableHttpResponse response, int statusCode) throws IOException {
-        if (statusCode == 200 || statusCode == 400) {
+        if (statusCode == 200) {
             InputStream content = response.getEntity().getContent();
             String result = convertInputStreamToString(content);
             httpsClient.close();
             return result;
-        } else if (statusCode == 401) {
+        } else if (statusCode == 401 || statusCode == 400) {
             httpsClient.close();
-            return "Unauthorized: Your token may have expired. Please review and confirm your authentication settings.";
+            return convertInputStreamToString(response.getEntity().getContent());
         } else {
             String result;
             if (name.equals("hl7validation")) {

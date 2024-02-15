@@ -37,8 +37,8 @@ public class TokenGenerator extends PropUtil implements Runnable {
                 authModel.setServiceEndpoint(getProperty("service.env.url") + getProperty("service.env.tokenEndpoint"));
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "token");
-
-                if(apiResponse.contains("Error") || apiResponse.contains("Unauthorized") || apiResponse.contains("Exception")) {
+                if(apiResponse.toLowerCase().contains("error") || apiResponse.contains("Unauthorized")
+                        || apiResponse.contains("Bad Request") || apiResponse.toLowerCase().contains("exception")) {
                     System.out.println(apiResponse);
                 }
                 else {
