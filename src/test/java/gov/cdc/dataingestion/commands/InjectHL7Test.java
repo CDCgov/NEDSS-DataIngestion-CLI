@@ -39,7 +39,7 @@ class InjectHL7Test {
         injectHL7 = new InjectHL7();
         injectHL7.authUtil = authUtilMock;
         injectHL7.authModel = new AuthModel();
-        when(mockProperties.getProperty("service.reportsEndpoint")).thenReturn("testReportsEndpoint");
+        when(mockProperties.getProperty("service.elrIngestionEndpoint")).thenReturn("testElrIngestionEndpoint");
     }
 
     @AfterEach

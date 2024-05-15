@@ -13,12 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +45,7 @@ class AuthUtilTest {
 
     private AuthModel authModelMock;
     private PropUtil propUtilMock;
-    private String serviceReportsEndpoint;
+    private String serviceIngestionEndpoint;
     private String serviceDltEndpoint;
     private String serviceValidationEndpoint;
     private String serviceTokenEndpoint;
@@ -58,7 +56,7 @@ class AuthUtilTest {
         authUtil = new AuthUtil();
         authModelMock = new AuthModel();
         propUtilMock = new PropUtil();
-        serviceReportsEndpoint = propUtilMock.getProperty("service.env.reportsEndpoint");
+        serviceIngestionEndpoint = propUtilMock.getProperty("service.env.elrIngestionEndpoint");
         serviceDltEndpoint = propUtilMock.getProperty("service.env.dltErrorMessages");
         serviceValidationEndpoint = propUtilMock.getProperty("service.env.hl7Validation");
         serviceTokenEndpoint = propUtilMock.getProperty("service.env.tokenEndpoint");
@@ -72,7 +70,7 @@ class AuthUtilTest {
     @Test
     void testGetResponseFromDIServiceSuccessful() throws Exception {
         authModelMock.setRequestBody("Dummy HL7 Input");
-        authModelMock.setServiceEndpoint(serviceReportsEndpoint);
+        authModelMock.setServiceEndpoint(serviceIngestionEndpoint);
 
         when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));
@@ -86,7 +84,7 @@ class AuthUtilTest {
     @Test
     void testGetResponseFromDIServiceUnsuccessful() throws Exception {
         authModelMock.setRequestBody("Dummy HL7 Input");
-        authModelMock.setServiceEndpoint(serviceReportsEndpoint + "dummy_endpoint");
+        authModelMock.setServiceEndpoint(serviceIngestionEndpoint + "dummy_endpoint");
 
         when(httpClientMock.execute(eq(httpPostMock))).thenReturn(httpResponseMock);
         when(httpResponseMock.getStatusLine()).thenReturn(mock(StatusLine.class));

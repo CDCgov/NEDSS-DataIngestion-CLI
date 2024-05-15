@@ -94,7 +94,7 @@ Arguments:
 
 ### injecthl7 Command <a name="injecthl7-command"></a>
 
-The injecthl7 command allows developers to use the `/api/reports` endpoint of the DataIngestion Service.
+The injecthl7 command allows developers to use the `/elr/dataingestion` endpoint of the DataIngestion Service.
 
 Usage:
 
@@ -129,42 +129,42 @@ Arguments:
 
 ### status Command <a name="status-command"></a>
 
-The status command allows developers to use the `/report-status/{id}` endpoint of the DataIngestion Service.
+The status command allows developers to use the `/elr/status-by-id/{id}` endpoint of the DataIngestion Service.
 
 Usage:
 
 Mac OS:
 
 ```bash
-./NBS-DataIngestion-CLI-macos status --report-id
+./NBS-DataIngestion-CLI-macos status --elr-id
 ```
 or
 ```bash
-./NBS-DataIngestion-CLI-macos-aarch64 status --report-id
+./NBS-DataIngestion-CLI-macos-aarch64 status --elr-id
 ```
 
 Linux:
 
 ```bash
-./NBS-DataIngestion-CLI-linux status --report-id
+./NBS-DataIngestion-CLI-linux status --elr-id
 ```
 
 Windows:
 
 ```bash
-NBS-DataIngestion-CLI-windows status --report-id
+NBS-DataIngestion-CLI-windows status --elr-id
 ```
 
 You will be prompted with interactive input where you'll be providing all the required details to the CLI.
 
 Arguments:
 
-* *--report-id*: The UUID provided when the report was injected into the DataIngestion service (required).
+* *--elr-id*: The UUID provided when the HL7 message was injected into the DataIngestion service (required).
 
 
 ### hl7 validation Command <a name="hl7-validation"></a>
 
-HL7 Validate command allows developers to use the `/api/reports/hl7-validator` endpoint of the DataIngestion Service to validate any HL7 messages.
+HL7 Validate command allows developers to use the `/elr/validate-hl7` endpoint of the DataIngestion Service to validate any HL7 messages.
 
 Usage:
 
@@ -199,7 +199,7 @@ Arguments:
 
 ### Get dlt messages Command <a name="dlt-messages"></a>
 
-Get DLT Messages command allows developers to use the `/api/reports-dlt/get-error-messages` endpoint of the DataIngestion Service to view the DLT messages.
+Get DLT Messages command allows developers to use the `/elr/dlt/get-dlt-messages` endpoint of the DataIngestion Service to view the DLT messages.
 
 Usage:
 

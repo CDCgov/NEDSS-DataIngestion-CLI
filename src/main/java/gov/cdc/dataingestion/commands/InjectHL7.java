@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-@CommandLine.Command(name = "injecthl7", mixinStandardHelpOptions = true, description = "This functionality will let developers use the /api/reports endpoint of DI Service.")
+@CommandLine.Command(name = "injecthl7", mixinStandardHelpOptions = true, description = "This functionality will let developers use the /elr/dataingestion endpoint of DI Service.")
 public class InjectHL7 extends PropUtil implements Runnable {
 
     @CommandLine.Option(names = {"--hl7-file"}, description = "HL7 file name with fully qualified path", interactive = true, echo = true, required = true)
@@ -42,7 +42,7 @@ public class InjectHL7 extends PropUtil implements Runnable {
                 }
 
                 // Serving data from INT1 environment as the production doesn't have data yet
-                authModel.setServiceEndpoint(getProperty("service.env.url") + getProperty("service.env.reportsEndpoint"));
+                authModel.setServiceEndpoint(getProperty("service.env.url") + getProperty("service.env.elrIngestionEndpoint"));
                 authModel.setRequestBody(requestBody.toString());
 
                 String apiResponse = authUtil.getResponseFromDIService(authModel, "injecthl7");

@@ -36,7 +36,7 @@ class ReportStatusTest {
         System.setErr(new PrintStream(errStream));
         reportStatus = new ReportStatus();
         reportStatus.authUtil = authUtilMock;
-        when(mockProperties.getProperty("service.reportStatusEndpoint")).thenReturn("testReportStatusEndpoint");
+        when(mockProperties.getProperty("service.env.elrIngestionStatusEndpoint")).thenReturn("testElrIngestionStatusEndpoint");
     }
 
     @AfterEach
@@ -47,7 +47,7 @@ class ReportStatusTest {
 
     @Test
     void testRunSuccessfulStatus() {
-        reportStatus.reportUuid = "12345";
+        reportStatus.elrUuid = "12345";
 
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn("Success");
 
@@ -59,18 +59,18 @@ class ReportStatusTest {
 
     @Test
     void testRunNullReportId() {
-        reportStatus.reportUuid = null;
+        reportStatus.elrUuid = null;
 
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn("Success");
 
         reportStatus.run();
 
-        assertEquals("Report UUID is null or empty.", errStream.toString().trim());
+        assertEquals("ELR UUID is null or empty.", errStream.toString().trim());
     }
 
     @Test
     void testRunUserUnauthorized() {
-        reportStatus.reportUuid = "12345";
+        reportStatus.elrUuid = "12345";
         String apiResponse = "Unauthorized. Username/password is incorrect.";
 
         when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn(apiResponse);
