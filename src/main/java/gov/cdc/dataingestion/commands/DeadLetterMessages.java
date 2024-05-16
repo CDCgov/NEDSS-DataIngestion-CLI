@@ -12,7 +12,7 @@ import java.util.List;
 @CommandLine.Command(name = "dltmessages", mixinStandardHelpOptions = true, description = "This functionality to view the messages in the dead letter messages.")
 public class DeadLetterMessages  extends PropUtil implements Runnable {
 
-    @CommandLine.Option(names = {"--msg-size"}, description = "Number of messages to be displayed.Default is 10", interactive = true, echo = true, required = false)//NOSONAR
+    @CommandLine.Option(names = {"--msg-size"}, description = "Number of messages to be displayed. Default is 10", interactive = true, echo = true, required = false)//NOSONAR
     String msgsize = "10";
 
     AuthModel authModel = new AuthModel();//NOSONAR
