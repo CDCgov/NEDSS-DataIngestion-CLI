@@ -110,6 +110,7 @@ class InjectHL7Test {
 
     }
 
+    @SuppressWarnings(" java:S6126")
     private static File getFile(boolean isEmpty) throws IOException {
         File tempHL7File = File.createTempFile("test-hl7-input", ".hl7");
 
