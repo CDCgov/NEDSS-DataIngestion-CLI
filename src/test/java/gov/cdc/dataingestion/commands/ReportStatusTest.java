@@ -67,7 +67,16 @@ class ReportStatusTest {
 
         assertEquals("ELR UUID is null or empty.", errStream.toString().trim());
     }
+    @Test
+    void testRunEmptyReportId() {
+        reportStatus.elrUuid = "";
 
+        when(authUtilMock.getResponseFromDIService(any(AuthModel.class), eq("status"))).thenReturn("Success");
+
+        reportStatus.run();
+
+        assertEquals("ELR UUID is null or empty.", errStream.toString().trim());
+    }
     @Test
     void testRunUserUnauthorized() {
         reportStatus.elrUuid = "12345";
