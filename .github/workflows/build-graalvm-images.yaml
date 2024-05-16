@@ -9,9 +9,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -46,21 +46,21 @@ jobs:
 
       - if: matrix.os == 'macos-latest'
         name: Archive binary image asset for macos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: NBS-DataIngestion-CLI-macos
           path: dataingestion-cli-binary-images/
 
       - if: matrix.os == 'ubuntu-latest'
         name: Archive binary image asset for linux
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: NBS-DataIngestion-CLI-linux
           path: dataingestion-cli-binary-images/
 
       - if: matrix.os == 'windows-latest'
         name: Archive binary image asset for windows
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: NBS-DataIngestion-CLI-windows
           path: dataingestion-cli-binary-images/
