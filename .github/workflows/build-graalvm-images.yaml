@@ -1,7 +1,8 @@
 name: Data Ingestion CLI GraalVM Native Image Build Pipeline
 on:
-  pull_request:
-    branches: ["main"]
+  branches:
+    - main
+    - master
 
 jobs:
   build:
