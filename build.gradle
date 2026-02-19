@@ -21,8 +21,11 @@ plugins {
     // Apply GraalVM Native Image plugin
     id 'org.graalvm.buildtools.native' version '0.9.23'
 
-    //Sonarqube Scan
+    // Sonarqube Scan
     id 'org.sonarqube' version '4.4.1.3373'
+    
+    // Spotless formatting
+    id 'com.diffplug.spotless'  version '8.2.1'
 }
 
 
@@ -139,4 +142,21 @@ sonar {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.rootDir}/build/customJacocoReportDir/test/jacocoTestReport.xml"
     }
+}
+
+spotless {
+    // limit format enforcement to just the files changed by this feature branch
+    ratchetFrom 'origin/main'
+
+    java {
+        targetExclude '**/generated/**/*.java'
+        googleJavaFormat()
+        formatAnnotations()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn tasks.named('spotlessApply')
 }
