@@ -10,7 +10,7 @@ public class AuthModel {
 
     public String getClientId() { return clientId; }
 
-    public void setClientId(String username) { this.clientId = username; }
+            public void setClientId(String username) { this.clientId = username; }
 
     public char[] getClientSecret() { return clientSecret; }
 
